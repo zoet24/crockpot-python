@@ -1,3 +1,2 @@
 # crockpot2
-
-Hello!
+To start dev environment: python3 app.py
