@@ -1,0 +1,57 @@
+// Content Widths
+$cw-mobile: 599px;
+$cw-tablet: 1023px;
+$cw-desktop: 1919px;
+$cw-ultrawide: 1919px;
+
+// Gutters
+$g-mobile: 35px;
+$g-tablet: 7.5vw;
+$g-desktop: 7.5vw;
+$g-ultrawide: 7.5vw;
+
+@mixin containerFull($width: 100%) {
+    margin: 0 auto;
+
+    @include r(mobile) {
+      width: $width;
+      max-width: calc(100vw - #{$g-mobile} - #{$g-mobile});
+    }
+
+    @include r(tablet) {
+      width: $width;
+      max-width: calc(100vw - #{$g-tablet} - #{$g-tablet});
+    }
+
+    @include r(desktop) {
+      width: $width;
+      max-width: calc(100vw - #{$g-desktop} - #{$g-desktop});
+    }
+
+    @include r(ultrawide) {
+      width: calc(#{$width} - #{$g-ultrawide} - #{$g-ultrawide});
+      max-width: calc(#{$cw-ultrawide});
+    }
+  }
+
+
+  @mixin containerFullNoGutters($width: 100%) {
+    margin: 0 auto;
+
+    @include r(mobile) {
+      width: $width;
+    }
+
+    @include r(tablet) {
+      width: $width;
+    }
+
+    @include r(desktop) {
+      width: $width;
+    }
+
+    @include r(ultrawide) {
+      width: $width;
+      max-width: calc(#{$cw-ultrawide});
+    }
+  }

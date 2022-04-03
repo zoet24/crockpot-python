@@ -1,0 +1,37 @@
+{
+  "name": "crockpot",
+  "version": "1.0.0",
+  "description": "To start dev environment: python3 app.py",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoet24/crockpot2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoet24/crockpot2/issues"
+  },
+  "homepage": "https://github.com/zoet24/crockpot2#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "autoprefixer": "^10.4.4",
+    "babel-loader": "^8.2.4",
+    "css-loader": "^6.7.1",
+    "cssnano": "^5.1.7",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "postcss-loader": "^6.2.1",
+    "sass": "^1.49.11",
+    "sass-loader": "^12.6.0",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "npm-watch": "^0.11.0"
+  }
+}

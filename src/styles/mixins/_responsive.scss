@@ -1,0 +1,50 @@
+$breakpoints: () !default;
+
+@mixin responsive($names...) {
+    @if (type-of($names) != list) {
+        $names: ($names);
+    }
+
+    @each $name in $names {
+        $breakpoint: map-get($breakpoints, $name);
+        $minWidth: map-get($breakpoint, min-width);
+        $maxWidth: map-get($breakpoint, max-width);
+        $query: "";
+
+        @if (type-of($minWidth) != "null") {
+            $query: "(min-width: #{$minWidth})";
+        }
+        @if (type-of($minWidth) != "null") and (type-of($maxWidth) != "null") {
+            $query: "#{$query} and ";
+        }
+        @if (type-of($maxWidth) != "null") {
+            $query: "#{$query}(max-width: #{$maxWidth})";
+        }
+        @if (length($query) > 0) {
+            @media screen and #{$query} {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin create-breakpoint($name, $min: null, $max: null) {
+    @if type-of(map-get($breakpoints, $name)) == "null" {
+        $breakpoints: map-merge(
+            $breakpoints,
+            (
+                $name: (
+                    min-width: $min,
+                    max-width: $max
+                )
+            )
+        ) !global;
+    }
+}
+
+// Alias'
+@mixin r($args...) {
+    @include responsive($args...) {
+        @content;
+    };
+}

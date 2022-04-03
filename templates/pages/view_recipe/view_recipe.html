@@ -1,0 +1,8 @@
+{% set active_page = 'view_recipe' %}
+{% extends "pages/base/base.html" %}
+
+{% block content %}
+    {% for recipe in recipes %}
+        {{ recipe }}
+    {% endfor %}
+{% endblock %}

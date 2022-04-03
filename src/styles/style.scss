@@ -1,0 +1,76 @@
+// Global
+@import "mixins";
+@import "config";
+
+// Components
+@import "components";
+@import "pages";
+
+html {
+    font-size: 16px;
+    font-family: $f-primary;
+    background: $neutral--ltst;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+
+    h1 {
+        @include t_h1();
+    }
+
+    h2 {
+        @include t_h2();
+    }
+
+    h3 {
+        @include t_h3();
+    }
+
+    h4 {
+        @include t_h4();
+    }
+
+    h5 {
+        @include t_h5();
+    }
+
+    h6 {
+        @include t_h6();
+    }
+
+    p {
+        @include t_p();
+    }
+
+    a {
+        @include t_a();
+    }
+
+    ol {
+        margin: 0;
+
+        li {
+            @include t_li();
+        }
+    }
+
+    ul {
+        margin: 0;
+
+        li {
+            @include t_li();
+        }
+    }
+}
+
+section {
+    padding: $p-mobile;
+}
+
+.remove-section-padding {
+    padding: 0;
+}

@@ -1,0 +1,15 @@
+// Breakpoints
+$mobile-min: 320px;
+$mobile-max: 599px;
+$tablet-min: $mobile-max + 1;
+$tablet-max: 1023px;
+$desktop-min: $tablet-max + 1;
+$desktop-max: 1919px;
+$ultrawide-min: $desktop-max + 1;
+$ultrawide-max: null;
+
+// Responsive
+@include create-breakpoint(ultrawide, $ultrawide-min, null);
+@include create-breakpoint(desktop, $desktop-min, $desktop-max);
+@include create-breakpoint(tablet, $tablet-min, $tablet-max);
+@include create-breakpoint(mobile, null, $mobile-max);
