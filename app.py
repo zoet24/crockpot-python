@@ -17,12 +17,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-@app.route("/")
+@app.route("/1")
 def index():
     return render_template("pages/index/index.html")
 
 
-@app.route("/recipe")
+@app.route("/")
 def view_recipe():
     recipes = mongo.db.recipes.find()
     return render_template("pages/view_recipe/view_recipe.html", recipes=recipes)

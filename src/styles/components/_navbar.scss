@@ -1,0 +1,36 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    text-align: center;
+    
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+
+    width: 100%;
+    height: 12.5vh;
+
+    border-top: black solid 2px;
+    background-color: white;
+
+    &__link-wrapper {
+        width: 25%;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & h6 {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+    }
+}

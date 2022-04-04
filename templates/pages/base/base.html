@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- CSS -->
+    <script src="https://kit.fontawesome.com/5d2dff5442.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bundle.css') }}">
     
     <!-- JS -->
@@ -18,5 +19,6 @@
     {% endblock %}
 
     <!-- Bottom navbar -->
+    {% include 'components/navbar.html' %}
 </body>
 </html>
