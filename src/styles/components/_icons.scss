@@ -5,8 +5,18 @@
     height: 30px;
     width: 30px;
 
+    background: white;
     border: solid 2px black;
     border-radius: 50%;
 
     margin: 0 0.5rem;
+
+    &--no-border {
+        border: none;
+    }
+
+    &--no-size {
+        width: auto;
+        height: auto;
+    }
 }

@@ -1,8 +1,28 @@
 {% set active_page = 'view_recipe' %}
 {% extends "pages/base/base.html" %}
 
+{% block extra_title %} | View Recipe{% endblock %}
+
 {% block content %}
-    {% for recipe in recipes %}
-        {{ recipe.name }}
-    {% endfor %}
+    <!-- Header -->
+    {% with header_text=recipe.name, header_time=recipe.time %}
+        {% include 'components/header.html' %}
+    {% endwith %}
+
+    <section class="view-recipe">
+        <div class="view-recipe__container">
+            <!-- Recipe image -->
+            {% with recipe_image=recipe.image %}
+                {% include 'components/recipe-image-full.html' %}
+            {% endwith %}
+            <!-- Recipe notes -->
+            <ul class="view-recipe__notes">
+                {% for note in recipe.notes %}
+                    <li>{{ note }}</li>
+                {% endfor %}
+            </ul>
+            <!-- Servings button -->
+            <!-- Ingredients/instructions -->
+        </div>
+    </section>
 {% endblock %}

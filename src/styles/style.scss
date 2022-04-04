@@ -16,7 +16,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
 
     h1 {
         @include t_h1();
@@ -65,12 +65,4 @@ body {
             @include t_li();
         }
     }
-}
-
-section {
-    padding: $p-mobile;
-}
-
-.remove-section-padding {
-    padding: 0;
 }

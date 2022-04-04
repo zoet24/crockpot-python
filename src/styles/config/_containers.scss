@@ -15,21 +15,21 @@ $g-ultrawide: 7.5vw;
 
     @include r(mobile) {
       width: $width;
-      max-width: calc(100vw - #{$g-mobile} - #{$g-mobile});
+      max-width: calc(100vw - #{$g-mobile});
     }
 
     @include r(tablet) {
       width: $width;
-      max-width: calc(100vw - #{$g-tablet} - #{$g-tablet});
+      max-width: calc(100vw - #{$g-tablet});
     }
 
     @include r(desktop) {
       width: $width;
-      max-width: calc(100vw - #{$g-desktop} - #{$g-desktop});
+      max-width: calc(100vw - #{$g-desktop});
     }
 
     @include r(ultrawide) {
-      width: calc(#{$width} - #{$g-ultrawide} - #{$g-ultrawide});
+      width: calc(#{$width} - #{$g-ultrawide});
       max-width: calc(#{$cw-ultrawide});
     }
   }

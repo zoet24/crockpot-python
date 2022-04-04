@@ -22,10 +22,12 @@ def index():
     return render_template("pages/index/index.html")
 
 
-@app.route("/")
-def view_recipe():
-    recipes = mongo.db.recipes.find()
-    return render_template("pages/view_recipe/view_recipe.html", recipes=recipes)
+@app.route("/<recipe_id>")
+def view_recipe(recipe_id):
+    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+
+    return render_template("pages/view_recipe/view_recipe.html",
+                           recipe=recipe)
 
 
 if __name__ == "__main__":
