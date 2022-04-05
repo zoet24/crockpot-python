@@ -1,0 +1,39 @@
+.toggle-box {
+    border: black 2px solid;
+    box-sizing: border-box;
+    width: 100%;
+
+    &__toggle {
+        display: flex;
+        text-align: center;
+        position: relative;
+        background-color: lightgray;
+        border-bottom: solid black 2px;
+    }
+
+    &__toggle-input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    &__toggle-option {
+        width: 50%;
+        cursor: pointer;
+        z-index: 1;
+        padding: 0.25rem;
+    }
+
+    &__toggle-slider {
+        height: 100%;
+        width: 50%;
+        background-color: white;
+        position: absolute;
+        transition: $a-medium;
+    }
+
+    &__box {
+        display: flex;
+    }
+}
+

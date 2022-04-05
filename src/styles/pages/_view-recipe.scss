@@ -2,4 +2,13 @@
     &__container {
         @include containerFull();
     }
+
+    &__notes {
+        padding-left: 1.25rem;
+    }
+
+    &__note {
+        font-style: italic;
+        line-height: 1.25rem;
+    }
 }

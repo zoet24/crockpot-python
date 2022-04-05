@@ -15,14 +15,19 @@
             {% with recipe_image=recipe.image %}
                 {% include 'components/recipe-image-full.html' %}
             {% endwith %}
-            <!-- Recipe notes -->
-            <ul class="view-recipe__notes">
-                {% for note in recipe.notes %}
-                    <li>{{ note }}</li>
-                {% endfor %}
-            </ul>
+            <div class="spacer"></div>
             <!-- Servings button -->
+
             <!-- Ingredients/instructions -->
+            {% include 'components/toggle-box.html' %}
+            <!-- Recipe notes -->
+            <div class="view-recipe__notes-wrapper">
+                <ul class="view-recipe__notes">
+                {% for note in recipe.notes %}
+                    <li class="view-recipe__note">{{ note }}</li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
     </section>
 {% endblock %}
