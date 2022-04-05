@@ -1,18 +1,26 @@
 <div class="toggle-box">
     <div class="toggle-box__container">
-        <div class="toggle-box__toggle">
-            <input class="toggle-box__toggle-input toggle-box__toggle-input--1" type="radio" name="toggle-box__toggle-option" id="toggle-box__toggle-option--1" checked="checked">
-            <label class="toggle-box__toggle-option toggle-box__toggle-option--1" for="toggle-box__toggle-option--1">Ingredients</label>
-            <input class="toggle-box__toggle-input toggle-box__toggle-input--2" type="radio" name="toggle-box__toggle-option" id="toggle-box__toggle-option--2">
-            <label class="toggle-box__toggle-option toggle-box__toggle-option--2" for="toggle-box__toggle-option--2">Instructions</label>
-            <span class="toggle-box__toggle-slider"></span>
+        <div class="toggle toggle-box__toggle">
+            <input class="toggle__input toggle__input--1" type="radio" name="toggle__{{ option1_title }}{{ option2_title }}" id="toggle__{{ option1_title }}{{ option2_title }}__{{ option1_title }}" checked="checked">
+            <label class="toggle__option toggle__option--1" for="toggle__{{ option1_title }}{{ option2_title }}__{{ option1_title }}">{{ option1_title }}</label>
+            <input class="toggle__input toggle__input--2" type="radio" name="toggle__{{ option1_title }}{{ option2_title }}" id="toggle__{{ option1_title }}{{ option2_title }}__{{ option2_title }}">
+            <label class="toggle__option toggle__option--2" for="toggle__{{ option1_title }}{{ option2_title }}__{{ option2_title }}">{{ option2_title }}</label>
+            <span class="toggle__slider"></span>
         </div>
         <div class="toggle-box__box">
             <div class="toggle-box__box-left">
-                Box left
+                <ul>
+                    {% for item in option1_content %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
             </div>
-            <div class="toggle-box__box-right">
-                Box right
+            <div class="toggle-box__box-right hide">
+                <ol>
+                    {% for item in option2_content %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ol>
             </div>
         </div>
     </div>

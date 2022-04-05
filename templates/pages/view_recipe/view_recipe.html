@@ -16,10 +16,40 @@
                 {% include 'components/recipe-image-full.html' %}
             {% endwith %}
             <div class="spacer"></div>
+
+            <!-- Meal categories -->
+
             <!-- Servings button -->
 
             <!-- Ingredients/instructions -->
-            {% include 'components/toggle-box.html' %}
+            <div class="toggle-box">
+                <div class="toggle-box__container">
+                    <div class="toggle toggle-box__toggle">
+                        <input class="toggle__input toggle__input--1" type="radio" name="toggle__IngredientsInstructions" id="toggle__IngredientsInstructions__Ingredients" checked="checked">
+                        <label class="toggle__option toggle__option--1" for="toggle__IngredientsInstructions__Ingredients">Ingredients</label>
+                        <input class="toggle__input toggle__input--2" type="radio" name="toggle__IngredientsInstructions" id="toggle__IngredientsInstructions__Instructions">
+                        <label class="toggle__option toggle__option--2" for="toggle__IngredientsInstructions__Instructions">Instructions</label>
+                        <span class="toggle__slider"></span>
+                    </div>
+                    <div class="toggle-box__box">
+                        <div class="toggle-box__box-left">
+                            <ul>
+                                {% for ing in ings %}
+                                    <li>{{ ing[0] }} x {{ ing[1] }}{{ ing[2] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="toggle-box__box-right hide">
+                            <ol>
+                                {% for instruction in recipe.instructions %}
+                                    <li>{{ instruction }}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Recipe notes -->
             <div class="view-recipe__notes-wrapper">
                 <ul class="view-recipe__notes">
@@ -28,6 +58,8 @@
                 {% endfor %}
                 </ul>
             </div>
+            <div class="spacer"></div>
+
         </div>
     </section>
 {% endblock %}

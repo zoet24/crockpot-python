@@ -9,7 +9,7 @@
 html {
     font-size: 16px;
     font-family: $f-primary;
-    background: $neutral--ltst;
+    background: white;
 }
 
 body {
@@ -52,6 +52,7 @@ body {
 
     ol {
         margin: 0;
+        padding-left: 1.25rem;
 
         li {
             @include t_li();
@@ -60,6 +61,7 @@ body {
 
     ul {
         margin: 0;
+        padding-left: 1.25rem;
 
         li {
             @include t_li();
@@ -69,4 +71,8 @@ body {
 
 .spacer {
     padding: $p-mobile;
+}
+
+.hide {
+    display: none;
 }

@@ -9,13 +9,13 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/scripts/components/toggle-box.js":
-/*!**********************************************!*\
-  !*** ./src/scripts/components/toggle-box.js ***!
-  \**********************************************/
+/***/ "./src/scripts/components/toggle.js":
+/*!******************************************!*\
+  !*** ./src/scripts/components/toggle.js ***!
+  \******************************************/
 /***/ (() => {
 
-eval("document.addEventListener('click', function (e) {\n  if (!e.target.closest('.toggle-box__toggle-input')) return;\n  var slider = e.target.closest('.toggle-box__toggle').querySelector('.toggle-box__toggle-slider');\n\n  if (e.target.classList.contains('toggle-box__toggle-input--1')) {\n    slider.style.transform = \"translate(100%,0)\";\n  } else {\n    slider.style.transform = \"translate(0%,0)\";\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/toggle-box.js?");
+eval("// Toggle switch\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.toggle__input')) return;\n  var slider = e.target.closest('.toggle').querySelector('.toggle__slider');\n  var isToggleBox = e.target.closest('.toggle-box__container');\n\n  if (e.target.classList.contains('toggle__input--1')) {\n    slider.style.transform = \"translate(0%,0)\"; // If component is toggleBox show/hide content\n\n    if (isToggleBox !== null) {\n      isToggleBox.querySelector('.toggle-box__box-left').classList.remove(\"hide\");\n      isToggleBox.querySelector('.toggle-box__box-right').classList.add(\"hide\");\n    }\n  }\n\n  if (e.target.classList.contains('toggle__input--2')) {\n    slider.style.transform = \"translate(100%,0)\"; // If component is toggleBox show/hide content\n\n    if (isToggleBox !== null) {\n      isToggleBox.querySelector('.toggle-box__box-left').classList.add(\"hide\");\n      isToggleBox.querySelector('.toggle-box__box-right').classList.remove(\"hide\");\n    }\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/toggle.js?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("document.addEventListener('click', function (e) {\n  if (!e.target.closest
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_toggle_box__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/toggle-box */ \"./src/scripts/components/toggle-box.js\");\n/* harmony import */ var _components_toggle_box__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_toggle_box__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
 
 /***/ }),
 

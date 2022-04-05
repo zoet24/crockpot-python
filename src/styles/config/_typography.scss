@@ -182,6 +182,7 @@
     font-weight: $f-regular;
     letter-spacing: normal;
     transition: $a-short;
+    line-height: 1.25rem;
   
     // OTHER
   
@@ -211,6 +212,7 @@
     font-weight: $f-regular;
     letter-spacing: normal;
     transition: $a-short;
+    line-height: 1.25rem;
   
     // OTHER
     cursor: pointer;
@@ -239,6 +241,7 @@
   
   @mixin t_li {
     margin: 0;
+    margin-bottom: 5px;
   
     color: $neutral--drkst;
     font-size: 1rem;
@@ -246,6 +249,7 @@
     font-weight: $f-regular;
     letter-spacing: normal;
     transition: $a-short;
+    line-height: 1.25rem;
   
     // OTHER
   

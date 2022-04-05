@@ -1,3 +1,3 @@
 import '../styles/style.scss';
 
-import './components/toggle-box';
+import './components/toggle';

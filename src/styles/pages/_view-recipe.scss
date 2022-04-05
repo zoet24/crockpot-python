@@ -4,11 +4,11 @@
     }
 
     &__notes {
-        padding-left: 1.25rem;
+        border: white 2px solid;
+        box-sizing: border-box;
     }
 
     &__note {
         font-style: italic;
-        line-height: 1.25rem;
     }
 }
