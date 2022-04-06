@@ -1,3 +1,14 @@
+"""
+NAMING CONVENTION:
+- Item from database should be suffixed by DB (eg. ingsDB)
+- Item to be passed to app should not (eg. ings)
+- If you are referencing a property of an item the syntax is item_property (eg. name of a recipe is rec_name)
+- Shortcuts:
+    - Ingredient => ing
+    - Recipe => rec
+    - Category => cat
+"""
+
 import os
 from flask import (
     Flask, flash, render_template, redirect,
@@ -22,25 +33,35 @@ def index():
     return render_template("pages/index/index.html")
 
 
-@app.route("/<recipe_id>")
-def view_recipe(recipe_id):
-    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
-    ingredients = mongo.db.ingredients
+# 624713793b6773d36014fcb8 --> Spag bol
+@app.route("/viewRecipe/<rec_id>")
+def view_recipe(rec_id):
+    # Get all recipe categories, all ingredients and a single recipe from Mongo
+    recCatsDB = mongo.db.recipeCategories
+    ingsDB = mongo.db.ingredients
+    recDB = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
 
-    # Get array of ingredient names from Mongo ingredients db
-    ingNames = []
-    for ing in recipe["ingredientName"]:
-        ingName = ingredients.find_one({"_id": ObjectId(ing)})["name"]
-        ingNames.append(ingName)
+    # Get array of recipe category names from Mongo recipe categories db
+    recCat_names = []
+    for recCat in recDB["recipeCategories"]:
+        recCat_name = recCatsDB.find_one({"_id": ObjectId(recCat)})["name"]
+        recCat_names.append(recCat_name)
+
+     # Get array of ingredient names from Mongo ingredients db
+    ing_names = []
+    for ing in recDB["ingredientName"]:
+        ing_name = ingsDB.find_one({"_id": ObjectId(ing)})["name"]
+        ing_names.append(ing_name)
 
     # Zip ingredient names, quantities and units into matrix
-    ings = zip(ingNames,
-               recipe["ingredientNum"],
-               recipe["ingredientUnit"])
+    ings = zip(ing_names,
+               recDB["ingredientNum"],
+               recDB["ingredientUnit"])
 
     return render_template("pages/view_recipe/view_recipe.html",
-                           recipe=recipe,
-                           ings=ings)
+                           rec=recDB,
+                           ings=ings,
+                           recCats=recCat_names)
 
 
 if __name__ == "__main__":

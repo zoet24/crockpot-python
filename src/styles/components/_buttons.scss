@@ -1,0 +1,27 @@
+.btn-plus-minus {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__btn {
+        outline: 2px black solid;
+        border-radius: 20px;
+
+        & .icon {
+            border: none;
+            background: lightgrey;
+            margin: 0;
+        }
+    }
+
+    &__num {
+        width: 25px;
+        font-size: 1rem;
+        text-align: center;
+        border: none;
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+}

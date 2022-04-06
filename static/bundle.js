@@ -9,6 +9,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/scripts/components/plus-minus.js":
+/*!**********************************************!*\
+  !*** ./src/scripts/components/plus-minus.js ***!
+  \**********************************************/
+/***/ (() => {
+
+eval("// Plus minus button\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.btn-plus-minus__input')) return;\n  var num = e.target.closest('.btn-plus-minus__btn').querySelector('.btn-plus-minus__num');\n  var numVal = parseInt(num.value);\n  var minVal = 1;\n  var maxVal = 20;\n  var isPlus = e.target.closest('.btn-plus-minus__input--plus');\n  var isMinus = e.target.closest('.btn-plus-minus__input--minus');\n  var isViewRecipe = e.target.closest('.view-recipe');\n\n  if (isPlus !== null && numVal < maxVal) {\n    numVal += 1;\n  }\n\n  if (isMinus !== null && numVal > minVal) {\n    numVal -= 1;\n  }\n\n  num.value = numVal;\n\n  if (isViewRecipe !== null) {\n    multiplyIngs(numVal);\n  }\n}); // If on the same page as view recipe, change quantity of food\n\nfunction multiplyIngs(numVal) {\n  var targetNums = document.querySelectorAll('.btn-plus-minus__targetNum');\n  var ingNums = document.querySelectorAll('.btn-plus-minus__ingNum');\n\n  for (var i = 0; i < targetNums.length; i++) {\n    var targetNum = targetNums[i];\n    var ingNum = parseFloat(ingNums[i].innerHTML);\n    var targetNumNew = ingNum * numVal;\n    targetNum.innerHTML = targetNumNew;\n  }\n} // document.addEventListener('click', (e) => {\n//     if (!document.querySelector('.view-recipe')) return;\n//     if (!e.target.closest('.btn-plus-minus__input')) return;\n//     const ingNums = document.querySelectorAll('.btn-plus-minus__ingNum');\n//     for (var i = 0; i < ingNums.length; i++) {\n//         console.log(ingNums[i])\n//     }\n// });\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/plus-minus.js?");
+
+/***/ }),
+
 /***/ "./src/scripts/components/toggle.js":
 /*!******************************************!*\
   !*** ./src/scripts/components/toggle.js ***!
@@ -26,7 +36,7 @@ eval("// Toggle switch\ndocument.addEventListener('click', function (e) {\n  if 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
 
 /***/ }),
 

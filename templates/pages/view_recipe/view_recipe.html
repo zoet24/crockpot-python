@@ -5,21 +5,29 @@
 
 {% block content %}
     <!-- Header -->
-    {% with header_text=recipe.name, header_time=recipe.time %}
+    {% with header_text=rec.name, header_time=rec.time %}
         {% include 'components/header.html' %}
     {% endwith %}
 
     <section class="view-recipe">
         <div class="view-recipe__container">
             <!-- Recipe image -->
-            {% with recipe_image=recipe.image %}
+            {% with recipe_image=rec.image %}
                 {% include 'components/recipe-image-full.html' %}
             {% endwith %}
             <div class="spacer"></div>
 
             <!-- Meal categories -->
+            <div class="view-recipe__categories">
+                {% for cat in recCats %}
+                    <div class="text-bubble">{{ cat }}</div>
+                {% endfor %}
+            </div>
+            <div class="spacer"></div>
 
             <!-- Servings button -->
+            {% include 'components/btn-plus-minus.html' %}
+            <div class="spacer"></div>
 
             <!-- Ingredients/instructions -->
             <div class="toggle-box">
@@ -35,13 +43,13 @@
                         <div class="toggle-box__box-left">
                             <ul>
                                 {% for ing in ings %}
-                                    <li>{{ ing[0] }} x {{ ing[1] }}{{ ing[2] }}</li>
+                                    <li>{{ ing[0] }} x <span class="btn-plus-minus__targetNum">{{ ing[1] }}</span>{{ ing[2] }}<span class="btn-plus-minus__ingNum hide">{{ ing[1] }}</span></li>
                                 {% endfor %}
                             </ul>
                         </div>
                         <div class="toggle-box__box-right hide">
                             <ol>
-                                {% for instruction in recipe.instructions %}
+                                {% for instruction in rec.instructions %}
                                     <li>{{ instruction }}</li>
                                 {% endfor %}
                             </ol>
@@ -53,7 +61,7 @@
             <!-- Recipe notes -->
             <div class="view-recipe__notes-wrapper">
                 <ul class="view-recipe__notes">
-                {% for note in recipe.notes %}
+                {% for note in rec.notes %}
                     <li class="view-recipe__note">{{ note }}</li>
                 {% endfor %}
                 </ul>

@@ -3,6 +3,13 @@
         @include containerFull();
     }
 
+    &__categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
     &__notes {
         border: white 2px solid;
         box-sizing: border-box;
