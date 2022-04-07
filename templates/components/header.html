@@ -1,13 +1,20 @@
 <header class="header">
     <div class="header__container">
         <div class="header__text">
-            <div class="header__text--title">
+            <div class="header__text-title">
                 <h1>{{ header_text }}</h1>
             </div>
-            <div class="header__text--time">
-                <i class="fas fa-clock icon icon--no-border icon--no-size"></i>
-                <h4>{{ header_time }} mins</h4>
+            {% if active_page == 'view_recipe' %}
+            <div class="header__text-subtitle">
+                <div class="header__text-user">
+                    <h4>By {{ header_user }}</h4>
+                </div>
+                <div class="header__text-time">
+                    <i class="fas fa-clock icon icon--no-border icon--no-size"></i>
+                    <h4>{{ header_time }} mins</h4>
+                </div>
             </div>
+            {% endif %}
         </div>
         <a class="header__icon" href="#">
             <i class="fas fa-user icon"></i>

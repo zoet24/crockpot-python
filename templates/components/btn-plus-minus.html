@@ -3,7 +3,18 @@
         <span class="btn-plus-minus__input btn-plus-minus__input--plus">
             <i class="fas fa-plus icon"></i>
         </span>
-        <input class="btn-plus-minus__num" type="number" value="1"/>
+        <input 
+            class="btn-plus-minus__num" 
+            type="number" 
+            value="{{ btn_start }}" 
+            step="{{ btn_step }}" 
+            min="{{ btn_min }}" 
+            max="{{ btn_max }}" 
+            {% if btn_formVal %}
+                id="{{ btn_formVal }}" 
+                name="{{ btn_formVal }}"
+            {% endif %}
+        />
         <span class="btn-plus-minus__input btn-plus-minus__input--minus">
             <i class="fas fa-minus icon"></i>
         </span>

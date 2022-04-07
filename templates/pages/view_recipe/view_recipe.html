@@ -5,7 +5,7 @@
 
 {% block content %}
     <!-- Header -->
-    {% with header_text=rec.name, header_time=rec.time %}
+    {% with header_text=rec.name, header_time=rec.time, header_user=user.username %}
         {% include 'components/header.html' %}
     {% endwith %}
 
@@ -26,7 +26,9 @@
             <div class="spacer"></div>
 
             <!-- Servings button -->
-            {% include 'components/btn-plus-minus.html' %}
+            {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20" %}
+                {% include 'components/btn-plus-minus.html' %}
+            {% endwith %}
             <div class="spacer"></div>
 
             <!-- Ingredients/instructions -->
@@ -57,6 +59,7 @@
                     </div>
                 </div>
             </div>
+            <div class="spacer"></div>
 
             <!-- Recipe notes -->
             <div class="view-recipe__notes-wrapper">
@@ -66,7 +69,6 @@
                 {% endfor %}
                 </ul>
             </div>
-            <div class="spacer"></div>
 
         </div>
     </section>

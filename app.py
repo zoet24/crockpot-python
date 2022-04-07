@@ -17,6 +17,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 if os.path.exists("env.py"):
     import env
+from python.viewRecipe.viewRecipe import viewRecipeData
 
 
 app = Flask(__name__)
@@ -33,35 +34,70 @@ def index():
     return render_template("pages/index/index.html")
 
 
+@app.route("/addRecipe", methods=["GET", "POST"])
+def addRecipe():
+    if request.method == "POST":
+        # Format recipe url
+        recUrl = request.form.get("name").lower().replace(' ', '-')
+
+        # Format recipe ingredient names
+        recDB_ingNames = []
+        recIngIds = request.form.getlist("ingredientName")
+        for recIngId in recIngIds:
+            recDB_ingName = ObjectId(recIngId)
+            recDB_ingNames.append(recDB_ingName)
+
+        # Format recipe ingredient quantities
+        recServes = request.form.get("serves")
+
+        # Format recipe ingredient names
+        recDB_recCats = []
+        recCatIds = request.form.getlist("recipeCategories")
+        for recCatId in recCatIds:
+            recDB_recCat = ObjectId(recCatId)
+            recDB_recCats.append(recDB_recCat)
+
+        recDB = {
+            "name": request.form.get("name").title(),
+            "url": recUrl,
+            "time": request.form.get("time"),
+            "image": request.form.get("image"),
+            "ingredientName": recDB_ingNames,
+            "ingredientNum": request.form.getlist("ingredientNum"),
+            "ingredientUnit": request.form.getlist("ingredientUnit"),
+            "instructions": request.form.getlist("instructions"),
+            "notes": request.form.getlist("notes"),
+            "recipeCategories": recDB_recCats,
+            "user": ObjectId("624712f53b6773d36014fcb5"),
+        }
+
+        mongo.db.recipes.insert_one(recDB)
+
+        return redirect(url_for("index"))
+
+    # Get all recipe categories, all ingredients and a single recipe from Mongo
+    recCatsDB = list(mongo.db.recipeCategories.find())
+    ingsDB = list(mongo.db.ingredients.find())
+
+    return render_template("pages/add_recipe/add_recipe.html",
+                            recCats=recCatsDB,
+                            ings=ingsDB)
+
+
 # 624713793b6773d36014fcb8 --> Spag bol
 @app.route("/viewRecipe/<rec_id>")
-def view_recipe(rec_id):
-    # Get all recipe categories, all ingredients and a single recipe from Mongo
-    recCatsDB = mongo.db.recipeCategories
-    ingsDB = mongo.db.ingredients
-    recDB = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
-
-    # Get array of recipe category names from Mongo recipe categories db
-    recCat_names = []
-    for recCat in recDB["recipeCategories"]:
-        recCat_name = recCatsDB.find_one({"_id": ObjectId(recCat)})["name"]
-        recCat_names.append(recCat_name)
-
-     # Get array of ingredient names from Mongo ingredients db
-    ing_names = []
-    for ing in recDB["ingredientName"]:
-        ing_name = ingsDB.find_one({"_id": ObjectId(ing)})["name"]
-        ing_names.append(ing_name)
-
-    # Zip ingredient names, quantities and units into matrix
-    ings = zip(ing_names,
-               recDB["ingredientNum"],
-               recDB["ingredientUnit"])
+def viewRecipe(rec_id):
+    data = viewRecipeData(rec_id)
+    recDB = data[0]
+    ings = data[1]
+    recCat_names = data[2]
+    user = data[3]
 
     return render_template("pages/view_recipe/view_recipe.html",
                            rec=recDB,
                            ings=ings,
-                           recCats=recCat_names)
+                           recCats=recCat_names,
+                           user=user)
 
 
 if __name__ == "__main__":

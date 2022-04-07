@@ -5,19 +5,20 @@ document.addEventListener('click', (e) => {
     const num = e.target.closest('.btn-plus-minus__btn').querySelector('.btn-plus-minus__num');
     var numVal = parseInt(num.value);
 
-    const minVal = 1;
-    const maxVal = 20;
+    const minVal = num.getAttribute("min");
+    const maxVal = num.getAttribute("max");
+    const step = parseInt(num.getAttribute("step"));
 
     const isPlus = e.target.closest('.btn-plus-minus__input--plus');
     const isMinus = e.target.closest('.btn-plus-minus__input--minus');
     const isViewRecipe = e.target.closest('.view-recipe');
 
     if ((isPlus !== null) && (numVal < maxVal)) {
-        numVal += 1;
+        numVal += step;
     }
 
     if ((isMinus !== null) && (numVal > minVal)) {
-        numVal -= 1;
+        numVal -= step;
     }
 
     num.value = numVal;
