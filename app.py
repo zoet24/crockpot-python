@@ -57,6 +57,7 @@ def addRecipe():
             recDB_recCat = ObjectId(recCatId)
             recDB_recCats.append(recDB_recCat)
 
+        # Define new recipe for Mongo db
         recDB = {
             "name": request.form.get("name").title(),
             "url": recUrl,
@@ -71,7 +72,8 @@ def addRecipe():
             "user": ObjectId("624712f53b6773d36014fcb5"),
         }
 
-        mongo.db.recipes.insert_one(recDB)
+        # mongo.db.recipes.insert_one(recDB)
+        print(recDB)
 
         return redirect(url_for("index"))
 

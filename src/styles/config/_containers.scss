@@ -10,48 +10,69 @@ $g-tablet: 7.5vw;
 $g-desktop: 7.5vw;
 $g-ultrawide: 7.5vw;
 
+@mixin container300($width: 300px) {
+  margin: 0 auto;
+
+  @include r(mobile) {
+    width: $width;
+  }
+
+  @include r(tablet) {
+    width: $width;
+  }
+
+  @include r(desktop) {
+    width: $width;
+  }
+
+  @include r(ultrawide) {
+    width: $width;
+    max-width: calc(#{$cw-ultrawide});
+  }
+}
+
 @mixin containerFull($width: 100%) {
-    margin: 0 auto;
+  margin: 0 auto;
 
-    @include r(mobile) {
-      width: $width;
-      max-width: calc(100vw - #{$g-mobile});
-    }
-
-    @include r(tablet) {
-      width: $width;
-      max-width: calc(100vw - #{$g-tablet});
-    }
-
-    @include r(desktop) {
-      width: $width;
-      max-width: calc(100vw - #{$g-desktop});
-    }
-
-    @include r(ultrawide) {
-      width: calc(#{$width} - #{$g-ultrawide});
-      max-width: calc(#{$cw-ultrawide});
-    }
+  @include r(mobile) {
+    width: $width;
+    max-width: calc(100vw - #{$g-mobile});
   }
 
-
-  @mixin containerFullNoGutters($width: 100%) {
-    margin: 0 auto;
-
-    @include r(mobile) {
-      width: $width;
-    }
-
-    @include r(tablet) {
-      width: $width;
-    }
-
-    @include r(desktop) {
-      width: $width;
-    }
-
-    @include r(ultrawide) {
-      width: $width;
-      max-width: calc(#{$cw-ultrawide});
-    }
+  @include r(tablet) {
+    width: $width;
+    max-width: calc(100vw - #{$g-tablet});
   }
+
+  @include r(desktop) {
+    width: $width;
+    max-width: calc(100vw - #{$g-desktop});
+  }
+
+  @include r(ultrawide) {
+    width: calc(#{$width} - #{$g-ultrawide});
+    max-width: calc(#{$cw-ultrawide});
+  }
+}
+
+
+@mixin containerFullNoGutters($width: 100%) {
+  margin: 0 auto;
+
+  @include r(mobile) {
+    width: $width;
+  }
+
+  @include r(tablet) {
+    width: $width;
+  }
+
+  @include r(desktop) {
+    width: $width;
+  }
+
+  @include r(ultrawide) {
+    width: $width;
+    max-width: calc(#{$cw-ultrawide});
+  }
+}

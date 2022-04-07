@@ -1,0 +1,72 @@
+.form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 0.5rem;
+
+        &--50 {
+            width: 50%;
+        }
+
+        &--center {
+            text-align: center;
+            align-items: center;
+        }
+
+        &--has-subs {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        & label {
+            font-size: 1rem;
+            padding: 0.25rem;
+            padding-bottom: 0;
+        }
+
+        & input {
+            font-size: 1rem;
+            padding: 0.25rem;
+        }
+
+        & select {
+            font-size: 1rem;
+            padding: 0.25rem;
+        }
+    }
+
+    &__inputs {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__subrow {
+        width: 100%;
+        
+        &--20 {
+            width: 20%;
+        }
+
+        &--50 {
+            width: 50%;
+        }
+
+        & input {
+            width: 100%;
+        }
+
+        & input[type=number] {
+            width: calc(100% - 12px);
+        }
+
+        & select {
+            width: 100%;
+        }
+    }
+}

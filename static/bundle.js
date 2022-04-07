@@ -9,6 +9,16 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/scripts/components/add-remove.js":
+/*!**********************************************!*\
+  !*** ./src/scripts/components/add-remove.js ***!
+  \**********************************************/
+/***/ (() => {
+
+eval("// Add remove rows on recipe forms\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.btn-add-remove')) return;\n  var isAdd = e.target.closest('.btn-add-remove__input--add');\n  var isRemove = e.target.closest('.btn-add-remove__input--remove');\n  var targetBtns = e.target.closest('.btn-add-remove');\n  var targetRow = e.target.closest('.form__row');\n  var targetInputs = targetRow.querySelectorAll('.form__inputs');\n  var targetInputsNum = targetInputs.length;\n\n  if (isAdd !== null) {\n    var cloneInput = targetInputs[0].cloneNode(true);\n    targetRow.insertBefore(cloneInput, targetBtns);\n  }\n\n  if (isRemove !== null) {\n    if (targetRow.querySelectorAll('.form__inputs').length > 1) {\n      var cloneInputRemove = targetInputs[targetInputsNum - 1];\n      cloneInputRemove.parentNode.removeChild(cloneInputRemove);\n    }\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/add-remove.js?");
+
+/***/ }),
+
 /***/ "./src/scripts/components/plus-minus.js":
 /*!**********************************************!*\
   !*** ./src/scripts/components/plus-minus.js ***!
@@ -36,7 +46,7 @@ eval("// Toggle switch\ndocument.addEventListener('click', function (e) {\n  if 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/add-remove */ \"./src/scripts/components/add-remove.js\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_add_remove__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
 
 /***/ }),
 

@@ -11,96 +11,110 @@
 
     <section class="add-recipe">
         <div class="add-recipe__container">
-            <form class="add-recipe__form" method="POST" action="{{ url_for('addRecipe') }}">
+            <form class="form add-recipe__form" method="POST" action="{{ url_for('addRecipe') }}">
                 <!-- Recipe name -->
-                <div class="add-recipe__form-component add-recipe__form-name">
-                    <label for="name">Recipe:</label>
-                    <input type="text" id="name" name="name">
+                <div class="form__row">
+                    <h4>Recipe:</h4>
+                    <input type="text" name="name">
+                </div>
+
+                <!-- Image -->
+                <div class="form__row">
+                    <h4>Image:</h4>
+                    <input type="text" name="image">
                 </div>
 
                 <!-- Time -->
-                <div class="add-recipe__form-component add-recipe__form-time">
-                    <label for="time">Time:</label>
+                <div class="form__row form__row--50 form__row--center">
+                    <h4>Time:</h4>
                     {% with btn_start="30", btn_step="5", btn_min="10", btn_max="300", btn_formVal="time" %}
                         {% include 'components/btn-plus-minus.html' %}
                     {% endwith %}
                 </div>
 
-                <!-- Image -->
-                <div class="add-recipe__form-component add-recipe__form-image">
-                    <label for="image">Image:</label>
-                    <input type="text" id="image" name="image">
-                </div>
-
-                <!-- Categories (select dropdown, multiple values) -->
-                <div class="add-recipe__form-component add-recipe__form-categories">
-                    <label for="recipeCategories">Categories:</label>
-                    <select id="recipeCategories" name="recipeCategories">
-                        {% for cat in recCats %}
-                            <option label="{{cat.name}}" value="{{cat._id}}"></option>
-                        {% endfor %}
-                    </select>
-                </div>
-
                 <!-- Serves -->
-                <div class="add-recipe__form-component add-recipe__form-serves">
-                    <label for="serves">Serves:</label>
+                <div class="form__row form__row--50 form__row--center">
+                    <h4>Serves:</h4>
                     {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20", btn_formVal="serves" %}
                         {% include 'components/btn-plus-minus.html' %}
                     {% endwith %}
                 </div>
-                
-                <!-- Ingredients - name (select dropdown, multiple values) -->
-                <div class="add-recipe__form-component add-recipe__form-ing-name">
-                    <label for="ingredientName">Ingredient:</label>
-                    <select id="ingredientName" name="ingredientName">
-                        {% for ing in ings %}
-                            <option label="{{ing.name}}" value="{{ing._id}}"></option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <!-- Ingredients - quantity -->
-                <div class="add-recipe__form-component add-recipe__form-ing-num">
-                    <label for="ingredientNum">Quantity:</label>
-                    <input 
-                        type="number" 
-                        value="1" 
-                        step="0.01" 
-                        min="0.01" 
-                        max="10000" 
-                        id="ingredientNum" 
-                        name="ingredientNum"
-                    />
+
+                <!-- Categories (select dropdown, multiple values) -->
+                <div class="form__row">
+                    <h4>Categories:</h4>
+                    <div class="form__inputs">
+                        <select name="recipeCategories">
+                            {% for cat in recCats %}
+                                <option label="{{cat.name}}" value="{{cat._id}}"></option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="btn-add-remove">
+                        <span class="btn-add-remove__input btn-add-remove__input--add">
+                            <i class="fas fa-plus icon"></i>
+                        </span>
+                        <span class="btn-add-remove__input btn-add-remove__input--remove">
+                            <i class="fas fa-minus icon"></i>
+                        </span>
+                    </div>
                 </div>
 
-                <!-- Ingredients - unit -->
-                <div class="add-recipe__form-component add-recipe__form-ing-unit">
-                    <label for="ingredientUnit">Unit:</label>
-                    <select id="ingredientUnit" name="ingredientUnit">
-                        <option label="-" value=""></option>
-                        <option label="g" value="g"></option>
-                        <option label="ml" value="ml"></option>
-                        <option label="tsp" value=" tsp"></option>
-                        <option label="tbsp" value=" tbsp"></option>
-                        <option label="cans" value=" cans"></option>
-                    </select>
+                <div class="form__row form__row--has-subs">
+                    <div class="form__subrow">
+                        <h4>Ingredients:</h4>
+                    </div>
+
+                    <!-- Ingredients - name (select dropdown, multiple values) -->
+                    <div class="form__subrow form__subrow--50">
+                        <select name="ingredientName">
+                            {% for ing in ings %}
+                                <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Ingredients - quantity -->
+                    <div class="form__subrow form__subrow--20">
+                        <input 
+                            type="number" 
+                            value="1" 
+                            step="0.01" 
+                            min="0.01" 
+                            max="10000" 
+                            name="ingredientNum"
+                        />
+                    </div>
+
+                    <!-- Ingredients - unit -->
+                    <div class="form__subrow form__subrow--20">
+                        <select name="ingredientUnit">
+                            <option label="-" value=""></option>
+                            <option label="g" value="g"></option>
+                            <option label="ml" value="ml"></option>
+                            <option label="tsp" value=" tsp"></option>
+                            <option label="tbsp" value=" tbsp"></option>
+                            <option label="cans" value=" cans"></option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Instructions -->
-                <div class="add-recipe__form-component add-recipe__form-instructions">
-                    <label for="instructions">Instructions:</label>
-                    <input type="text" id="instructions" name="instructions">
+                <div class="form__row">
+                    <h4>Instructions:</h4>
+                    <input type="text" name="instructions">
                 </div>
 
                 <!-- Tips -->
-                <div class="add-recipe__form-component add-recipe__form-notes">
-                    <label for="notes">Notes:</label>
-                    <input type="text" id="notes" name="notes">
+                <div class="form__row">
+                    <h4>Notes:</h4>
+                    <input type="text" name="notes">
                 </div>
 
                 <!-- Submit -->
-                <input type="submit" value="Submit">
+                <div class="form__row form__row--center">
+                    <input class="btn" type="submit" value="Submit">
+                </div>
             </form>
 
         </div>

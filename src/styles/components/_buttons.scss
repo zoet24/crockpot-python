@@ -1,3 +1,15 @@
+.btn {
+    border: 2px black solid;
+    border-radius: 20px;
+    background: white;
+    font-size: 1rem;
+    text-align: center;
+    width: fit-content;
+    min-width: 125px;
+    margin: 0.25rem;
+    padding: 0.5rem!important;
+}
+
 .btn-plus-minus {
     width: 100%;
     display: flex;
@@ -24,4 +36,10 @@
             outline: none;
         }
     }
+}
+
+.btn-add-remove {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem;
 }
