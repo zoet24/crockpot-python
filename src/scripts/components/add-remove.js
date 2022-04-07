@@ -11,12 +11,13 @@ document.addEventListener('click', (e) => {
     const targetInputsNum = targetInputs.length;
 
     if (isAdd !== null) {
-        const cloneInput = targetInputs[0].cloneNode(true);
+        var cloneInput = targetInputs[0].cloneNode(true);
+        cloneInput.classList.remove("hide");
         targetRow.insertBefore(cloneInput, targetBtns);
     }
 
     if (isRemove !== null) {
-        if (targetRow.querySelectorAll('.form__inputs').length > 1) {
+        if (targetRow.querySelectorAll('.form__inputs').length > 2) {
             const cloneInputRemove = targetInputs[(targetInputsNum - 1)]
             cloneInputRemove.parentNode.removeChild(cloneInputRemove)
         }

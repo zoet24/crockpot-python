@@ -43,6 +43,13 @@
                 <!-- Categories (select dropdown, multiple values) -->
                 <div class="form__row">
                     <h4>Categories:</h4>
+                    <div class="form__inputs hide">
+                        <select name="recipeCategories">
+                            {% for cat in recCats %}
+                                <option label="{{cat.name}}" value="{{cat._id}}"></option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="form__inputs">
                         <select name="recipeCategories">
                             {% for cat in recCats %}
@@ -50,14 +57,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="btn-add-remove">
-                        <span class="btn-add-remove__input btn-add-remove__input--add">
-                            <i class="fas fa-plus icon"></i>
-                        </span>
-                        <span class="btn-add-remove__input btn-add-remove__input--remove">
-                            <i class="fas fa-minus icon"></i>
-                        </span>
-                    </div>
+                    {% include 'components/btn-add-remove.html' %}
                 </div>
 
                 <div class="form__row form__row--has-subs">
@@ -102,13 +102,25 @@
                 <!-- Instructions -->
                 <div class="form__row">
                     <h4>Instructions:</h4>
-                    <input type="text" name="instructions">
+                    <div class="form__inputs hide">
+                        <input type="text" name="instructions">
+                    </div>
+                    <div class="form__inputs">
+                        <input type="text" name="instructions">
+                    </div>
+                    {% include 'components/btn-add-remove.html' %}
                 </div>
 
                 <!-- Tips -->
                 <div class="form__row">
                     <h4>Notes:</h4>
-                    <input type="text" name="notes">
+                    <div class="form__inputs hide">
+                        <input type="text" name="notes">
+                    </div>
+                    <div class="form__inputs">
+                        <input type="text" name="notes">
+                    </div>
+                    {% include 'components/btn-add-remove.html' %}
                 </div>
 
                 <!-- Submit -->

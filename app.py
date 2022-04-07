@@ -72,8 +72,8 @@ def addRecipe():
             "user": ObjectId("624712f53b6773d36014fcb5"),
         }
 
-        # mongo.db.recipes.insert_one(recDB)
-        print(recDB)
+        mongo.db.recipes.insert_one(recDB)
+        # print(recDB)
 
         return redirect(url_for("index"))
 
