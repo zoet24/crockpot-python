@@ -1,0 +1,23 @@
+.recipe-tile {
+    width: 48vw;
+    margin-top: 1.5vw;
+    position: relative;
+
+    & .recipe-image__icons {
+        justify-content: space-between;
+    }
+
+    &__name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        padding: 0.5rem;
+        background: rgba(0,0,0,0.5);
+
+        & h4 {
+            line-height: 1.25rem;
+        }
+    }
+}

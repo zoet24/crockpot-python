@@ -43,19 +43,41 @@ def addRecipe():
         # Format recipe ingredient names
         recDB_ingNames = []
         recIngIds = request.form.getlist("ingredientName")
+        recIngIds.pop(0)
         for recIngId in recIngIds:
             recDB_ingName = ObjectId(recIngId)
             recDB_ingNames.append(recDB_ingName)
 
-        # Format recipe ingredient quantities
+        # Format recipe ingredient quantities to get quantities for 1 portion
         recServes = request.form.get("serves")
+        recDB_ingNums = request.form.getlist("ingredientNum")
+        recDB_ingNums.pop(0)
+        recDB_ingNumsOne = []
+        for recDB_ingNum in recDB_ingNums:
+            print(recDB_ingNum)
+            print(recServes)
+            recDB_ingNumOne = float(recDB_ingNum)/float(recServes)
+            print(recDB_ingNumOne)
+            recDB_ingNumsOne.append(recDB_ingNumOne)
 
         # Format recipe ingredient names
         recDB_recCats = []
         recCatIds = request.form.getlist("recipeCategories")
+        recCatIds.pop(0)
+
         for recCatId in recCatIds:
             recDB_recCat = ObjectId(recCatId)
             recDB_recCats.append(recDB_recCat)
+
+        # Remove hidden add/remove value from form entries
+        recDB_ingUnits = request.form.getlist("ingredientUnit")
+        recDB_ingUnits.pop(0)
+
+        recDB_instructions = request.form.getlist("instructions")
+        recDB_instructions.pop(0)
+
+        recDB_notes = request.form.getlist("notes")
+        recDB_notes.pop(0)
 
         # Define new recipe for Mongo db
         recDB = {
@@ -64,18 +86,20 @@ def addRecipe():
             "time": request.form.get("time"),
             "image": request.form.get("image"),
             "ingredientName": recDB_ingNames,
-            "ingredientNum": request.form.getlist("ingredientNum"),
-            "ingredientUnit": request.form.getlist("ingredientUnit"),
-            "instructions": request.form.getlist("instructions"),
-            "notes": request.form.getlist("notes"),
+            "ingredientNum": recDB_ingNumsOne,
+            "ingredientUnit": recDB_ingUnits,
+            "instructions": recDB_instructions,
+            "notes": recDB_notes,
             "recipeCategories": recDB_recCats,
             "user": ObjectId("624712f53b6773d36014fcb5"),
         }
 
         mongo.db.recipes.insert_one(recDB)
-        # print(recDB)
 
-        return redirect(url_for("index"))
+        # Find new ID and redirect to new recipe
+        newRecDB_Id = list(mongo.db.recipes.find().skip(mongo.db.recipes.count() - 1))[0]["_id"]
+
+        return redirect(url_for("viewRecipe", rec_id=newRecDB_Id))
 
     # Get all recipe categories, all ingredients and a single recipe from Mongo
     recCatsDB = list(mongo.db.recipeCategories.find())
@@ -84,6 +108,23 @@ def addRecipe():
     return render_template("pages/add_recipe/add_recipe.html",
                             recCats=recCatsDB,
                             ings=ingsDB)
+
+
+@app.route("/browse")
+def browse():
+    # Get all recipes from Mongo db
+    recsDB = list(mongo.db.recipes.find())
+
+    return render_template("pages/browse_recipe/browse_recipe.html",
+                            recs=recsDB)
+
+
+@app.route("/deleteRecipe/<rec_id>")
+def deleteRecipe(rec_id):
+    rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
+    mongo.db.recipes.remove({"_id": ObjectId(rec_id)})
+
+    return redirect(url_for("browse"))
 
 
 # 624713793b6773d36014fcb8 --> Spag bol

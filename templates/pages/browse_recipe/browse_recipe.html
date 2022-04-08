@@ -1,0 +1,21 @@
+{% set active_page = 'browse_recipe' %}
+{% extends "pages/base/base.html" %}
+
+{% block extra_title %} | Browse{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    {% with header_text="Browse Recipes" %}
+        {% include 'components/header.html' %}
+    {% endwith %}
+
+    <section class="browse-recipe">
+        <div class="browse-recipe__container">
+            {% for rec in recs %}
+                {% with recipe_id=rec._id, recipe_name=rec.name, recipe_image=rec.image %}
+                    {% include 'components/recipe-image-tile.html' %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

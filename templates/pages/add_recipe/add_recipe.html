@@ -61,42 +61,79 @@
                 </div>
 
                 <div class="form__row form__row--has-subs">
-                    <div class="form__subrow">
-                        <h4>Ingredients:</h4>
+                    <h4>Ingredients:</h4>
+                    <div class="form__inputs form__inputs--subrow hide">
+                        <!-- Ingredients - name (select dropdown, multiple values) -->
+                        <div class="form__subrow form__subrow--50">
+                            <select name="ingredientName">
+                                {% for ing in ings %}
+                                    <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Ingredients - quantity -->
+                        <div class="form__subrow form__subrow--20">
+                            <input 
+                                type="number" 
+                                value="1" 
+                                step="0.01" 
+                                min="0.01" 
+                                max="10000" 
+                                name="ingredientNum"
+                            />
+                        </div>
+
+                        <!-- Ingredients - unit -->
+                        <div class="form__subrow form__subrow--20">
+                            <select name="ingredientUnit">
+                                <option label="-" value=""></option>
+                                <option label="g" value="g"></option>
+                                <option label="ml" value="ml"></option>
+                                <option label="tsp" value=" tsp"></option>
+                                <option label="tbsp" value=" tbsp"></option>
+                                <option label="cans" value=" cans"></option>
+                            </select>
+                        </div>
+
                     </div>
 
-                    <!-- Ingredients - name (select dropdown, multiple values) -->
-                    <div class="form__subrow form__subrow--50">
-                        <select name="ingredientName">
-                            {% for ing in ings %}
-                                <option label="{{ing.name}}" value="{{ing._id}}"></option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <div class="form__inputs form__inputs--subrow">
+                        <!-- Ingredients - name (select dropdown, multiple values) -->
+                        <div class="form__subrow form__subrow--50">
+                            <select name="ingredientName">
+                                {% for ing in ings %}
+                                    <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <!-- Ingredients - quantity -->
-                    <div class="form__subrow form__subrow--20">
-                        <input 
-                            type="number" 
-                            value="1" 
-                            step="0.01" 
-                            min="0.01" 
-                            max="10000" 
-                            name="ingredientNum"
-                        />
-                    </div>
+                        <!-- Ingredients - quantity -->
+                        <div class="form__subrow form__subrow--20">
+                            <input 
+                                type="number" 
+                                value="1" 
+                                step="0.01" 
+                                min="0.01" 
+                                max="10000" 
+                                name="ingredientNum"
+                            />
+                        </div>
 
-                    <!-- Ingredients - unit -->
-                    <div class="form__subrow form__subrow--20">
-                        <select name="ingredientUnit">
-                            <option label="-" value=""></option>
-                            <option label="g" value="g"></option>
-                            <option label="ml" value="ml"></option>
-                            <option label="tsp" value=" tsp"></option>
-                            <option label="tbsp" value=" tbsp"></option>
-                            <option label="cans" value=" cans"></option>
-                        </select>
+                        <!-- Ingredients - unit -->
+                        <div class="form__subrow form__subrow--20">
+                            <select name="ingredientUnit">
+                                <option label="-" value=""></option>
+                                <option label="g" value="g"></option>
+                                <option label="ml" value="ml"></option>
+                                <option label="tsp" value=" tsp"></option>
+                                <option label="tbsp" value=" tbsp"></option>
+                                <option label="cans" value=" cans"></option>
+                            </select>
+                        </div>
+
                     </div>
+                    {% include 'components/btn-add-remove.html' %}
                 </div>
 
                 <!-- Instructions -->

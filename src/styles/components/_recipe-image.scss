@@ -1,6 +1,6 @@
 .recipe-image {
     border: black 2px solid;
-    width: 50%;
+    width: 100%;
     overflow: hidden;
     box-sizing: border-box;
 
@@ -10,8 +10,6 @@
     }
 
     &--full {
-        width: 100%;
-
         & .recipe-image__container {
             padding-bottom: 50%;
         }

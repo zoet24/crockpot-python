@@ -1,0 +1,9 @@
+.browse-recipe {
+    &__container {
+        @include containerFullNoGutters();
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+}
