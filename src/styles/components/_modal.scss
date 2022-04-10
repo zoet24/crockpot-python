@@ -1,0 +1,33 @@
+.modal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__container {
+        background: white;
+        border: 2px black solid;
+        width: calc(100% - 70px);
+        height: fit-content;
+    }
+
+    &__content {
+        padding: 1rem;
+    }
+
+    &__text {
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+    }
+}

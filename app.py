@@ -54,10 +54,9 @@ def addRecipe():
         recDB_ingNums.pop(0)
         recDB_ingNumsOne = []
         for recDB_ingNum in recDB_ingNums:
-            print(recDB_ingNum)
-            print(recServes)
             recDB_ingNumOne = float(recDB_ingNum)/float(recServes)
-            print(recDB_ingNumOne)
+            if recDB_ingNumOne.is_integer():
+                recDB_ingNumOne = int(recDB_ingNumOne)
             recDB_ingNumsOne.append(recDB_ingNumOne)
 
         # Format recipe ingredient names

@@ -45,7 +45,7 @@
                         <div class="toggle-box__box-left">
                             <ul>
                                 {% for ing in ings %}
-                                    <li>{{ ing[0] }} x <span class="btn-plus-minus__targetNum">{{ ing[1] }}</span>{{ ing[2] }}<span class="btn-plus-minus__ingNum hide">{{ ing[1] }}</span></li>
+                                    <li>{{ ing[0] }} x <span class="btn-plus-minus__targetNum">{{ ing[1]|round(2) }}</span>{{ ing[2] }}<span class="btn-plus-minus__ingNum btn-plus-minus__targetNum--hidden hide">{{ ing[1] }}</span></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -72,4 +72,23 @@
 
         </div>
     </section>
+    
+    <!-- "Are you sure" delete modal? -->
+    <div class="modal">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    Text
+                </div>
+                <div class="modal__buttons">
+                    <div class="btn btn--sm modal__button modal__button--yes">
+                        Yes
+                    </div>
+                    <div class="btn btn--sm modal__button modal__button--no">
+                        No
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
