@@ -29,7 +29,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 mongo = PyMongo(app)
 
 
-@app.route("/1")
+@app.route("/")
 def index():
     return render_template("pages/index/index.html")
 

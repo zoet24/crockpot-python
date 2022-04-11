@@ -19,6 +19,16 @@ eval("// Add remove rows on recipe forms\ndocument.addEventListener('click', fun
 
 /***/ }),
 
+/***/ "./src/scripts/components/modal.js":
+/*!*****************************************!*\
+  !*** ./src/scripts/components/modal.js ***!
+  \*****************************************/
+/***/ (() => {
+
+eval("// Open/close modal\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.modal__buttons')) return;\n  var modal = document.querySelector('.modal');\n  var isOpen = document.querySelector('.modal__button--open');\n  var isClose = e.target.closest('.modal__button--close');\n  console.log(modal, isOpen, isClose);\n\n  if (isOpen !== null) {\n    modal.classList.remove(\"hide\");\n  }\n\n  if (isClose !== null) {\n    modal.classList.add(\"hide\");\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/modal.js?");
+
+/***/ }),
+
 /***/ "./src/scripts/components/plus-minus.js":
 /*!**********************************************!*\
   !*** ./src/scripts/components/plus-minus.js ***!
@@ -46,7 +56,7 @@ eval("// Toggle switch\ndocument.addEventListener('click', function (e) {\n  if 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/add-remove */ \"./src/scripts/components/add-remove.js\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_add_remove__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/add-remove */ \"./src/scripts/components/add-remove.js\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_add_remove__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modal */ \"./src/scripts/components/modal.js\");\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_modal__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_4__);\n\n\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
 
 /***/ }),
 
