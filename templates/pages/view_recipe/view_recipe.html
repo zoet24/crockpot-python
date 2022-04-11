@@ -18,12 +18,14 @@
             <div class="spacer"></div>
 
             <!-- Meal categories -->
+            {% if recCats %}
             <div class="view-recipe__categories">
                 {% for cat in recCats %}
                     <div class="text-bubble">{{ cat }}</div>
                 {% endfor %}
             </div>
             <div class="spacer"></div>
+            {% endif %}
 
             <!-- Servings button -->
             {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20" %}
@@ -50,11 +52,13 @@
                             </ul>
                         </div>
                         <div class="toggle-box__box-right hide">
+                            {% if rec.instructions|length > 1 %}
                             <ol>
                                 {% for instruction in rec.instructions %}
                                     <li>{{ instruction }}</li>
                                 {% endfor %}
                             </ol>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -62,6 +66,7 @@
             <div class="spacer"></div>
 
             <!-- Recipe notes -->
+            {% if rec.notes|length > 1 %}
             <div class="view-recipe__notes-wrapper">
                 <ul class="view-recipe__notes">
                 {% for note in rec.notes %}
@@ -69,6 +74,7 @@
                 {% endfor %}
                 </ul>
             </div>
+            {% endif %}
 
         </div>
     </section>

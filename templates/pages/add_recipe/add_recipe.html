@@ -61,7 +61,12 @@
                 </div>
 
                 <div class="form__row form__row--has-subs">
-                    <h4>Ingredients:</h4>
+                    <h4 class="form__title-w-icons">
+                        <div class="modal__buttons modal__buttons--add-ingredient">
+                            <i class="fas fa-plus icon modal__button--open modal__button-add-ingredient--open"></i>
+                        </div>
+                        Ingredients:
+                    </h4>
                     <div class="form__inputs form__inputs--subrow hide">
                         <!-- Ingredients - name (select dropdown, multiple values) -->
                         <div class="form__subrow form__subrow--50">
@@ -168,4 +173,37 @@
 
         </div>
     </section>
+    
+    <!-- Add ingredients modal -->
+    <div class="modal modal--add-ingredient">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <form class="form" method="POST" action="{{ url_for('addIng') }}">
+                        <!-- Recipe name -->
+                        <div class="form__row">
+                            <h4>Ingredient:</h4>
+                            <input type="text" name="name">
+                        </div>
+                        <div class="form__row">
+                            <h4>Category:</h4>
+                            <select name="category">
+                                {% for ingCat in ingCats %}
+                                    <option label="{{ingCat.name}}" value="{{ingCat._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal__buttons modal__buttons--add-ingredient">
+                            <div class="modal__button modal__button--yes modal__button-add-ingredient--yes">
+                                <input class="btn btn--sm" type="submit" value="Add">
+                            </div>
+                            <div class="btn btn--sm modal__button modal__button--close modal__button-add-ingredient--close">
+                                Close
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
