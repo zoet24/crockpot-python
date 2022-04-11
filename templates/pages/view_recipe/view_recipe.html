@@ -79,20 +79,20 @@
         </div>
     </section>
     
-    <!-- "Are you sure" delete modal? -->
-    <div class="modal hide">
+    <!-- Delete recipe modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--delete-recipe hide">
         <div class="modal__container">
             <div class="modal__content">
                 <div class="modal__text">
                     Are you sure you want to delete {{rec.name}}?
                 </div>
-                <div class="modal__buttons">
+                <div class="modal__buttons modal__buttons--delete-recipe">
                     <a class="modal__button modal__button--yes" href="/deleteRecipe/{{rec._id}}">
                         <div class="btn btn--sm">
                             Yes
                         </div>
                     </a>
-                    <div class="btn btn--sm modal__button modal__button--close">
+                    <div class="btn btn--sm modal__button modal__button--close modal__button--close--delete-recipe">
                         No
                     </div>
                 </div>

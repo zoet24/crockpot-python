@@ -65,10 +65,25 @@ def addIng():
     ingDB = {
         "name": request.form.get("name").title(),
         "url": ingUrl,
-        "category": request.form.get("category")
+        "category": ObjectId(request.form.get("category"))
     }
 
     mongo.db.ingredients.insert_one(ingDB)
+
+    return redirect(url_for("addRecipe"))
+
+
+@app.route("/addCat", methods=["POST"])
+def addCat():
+    # Format recipe url
+    catUrl = request.form.get("name").lower().replace(' ', '-')
+
+    catDB = {
+        "name": request.form.get("name").title(),
+        "url": catUrl
+    }
+
+    mongo.db.recipeCategories.insert_one(catDB)
 
     return redirect(url_for("addRecipe"))
 

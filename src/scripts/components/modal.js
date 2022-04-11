@@ -4,8 +4,8 @@ document.addEventListener('click', (e) => {
     
     const modalIdentifier = e.target.closest('.modal__buttons').classList[1].split("--")[1];
     const modal = document.querySelector(`.modal--${modalIdentifier}`);
-    const isOpen = document.querySelector(`.modal__button-${modalIdentifier}--open`);
-    const isClose = e.target.closest(`.modal__button-${modalIdentifier}--close`);
+    const isOpen = document.querySelector(`.modal__button--open--${modalIdentifier}`);
+    const isClose = e.target.closest(`.modal__button--close--${modalIdentifier}`);
 
     if (isOpen !== null) {
         modal.classList.remove("hide");
