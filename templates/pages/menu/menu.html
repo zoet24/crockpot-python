@@ -1,0 +1,43 @@
+{% set active_page = 'menu' %}
+{% extends "pages/base/base.html" %}
+
+{% block extra_title %} | Menu{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    {% with header_text="Menu" %}
+        {% include 'components/header.html' %}
+    {% endwith %}
+
+    <section class="menu">
+        <div class="menu__container">
+            {% for menuRec in menuRecs %}
+            <div class="menu__item">
+                <div class="menu__item-image-wrapper">
+                    <div class="menu__item-image">
+                        <img src="{{ menuRec[2] }}" alt="">
+                    </div>
+                </div>
+                <div class="menu__item-content-wrapper">
+                    <div class="menu__item-name">
+                        <h2>{{ menuRec[1] }}</h2>
+                    </div>
+                    <div class="menu__item-icons">
+                        <div class="menu__item-serving">
+                            {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20" %}
+                                {% include 'components/btn-plus-minus.html' %}
+                            {% endwith %}
+                        </div>
+                        <div class="menu__item-icons-wrapper">
+                            <i class="fas fa-utensils icon"></i>
+                        </div>
+                        <div class="menu__item-icons-wrapper">
+                            <i class="fas fa-heart icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

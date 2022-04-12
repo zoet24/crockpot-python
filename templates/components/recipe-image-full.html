@@ -1,12 +1,14 @@
 <div class="recipe-image recipe-image--full">
     <div class="recipe-image__container">
         <div class="recipe-image__icons">
-            <i class="fas fa-utensils icon"></i>
+            <a class="recipe-image__link-wrapper" href="/menu/{{rec._id}}">
+                <i class="fas fa-utensils icon"></i>
+            </a>
             <i class="fas fa-heart icon"></i>
             <a class="recipe-image__link-wrapper" href="/editRecipe/{{rec._id}}">
                 <i class="fas fa-edit icon"></i>
             </a>
-            <div class="recipe-image__link-wrapper modal__buttons modal__buttons--delete-recipe">
+            <div class="modal__buttons modal__buttons--delete-recipe recipe-image__link-wrapper">
                 <i class="fas fa-trash icon modal__button--open modal__button--open--delete-recipe"></i>
             </div>
         </div>

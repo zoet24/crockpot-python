@@ -18,6 +18,7 @@ from bson.objectid import ObjectId
 if os.path.exists("env.py"):
     import env
 from python.addRecipe.addRecipe import addRecipePost
+from python.editRecipe.editRecipe import editRecipeData, editRecipePost
 from python.viewRecipe.viewRecipe import viewRecipeData
 
 
@@ -107,26 +108,51 @@ def deleteRecipe(rec_id):
 
 @app.route("/editRecipe/<rec_id>", methods=["GET", "POST"])
 def editRecipe(rec_id):
+    if request.method == "POST":
+        # python > editRecipe > editRecipe.py
+        editRecipePost(rec_id)
+
+        return redirect(url_for("viewRecipe", rec_id=rec_id))
+
     # python > viewRecipe > viewRecipe.py
-    data = viewRecipeData(rec_id)
+    data = editRecipeData(rec_id)
     recDB = data[0]
     ings = data[1]
+    recCats = data[2]
 
     # Get all recipe categories, all ingredients categories and all ingredients from Mongo
     ingCatsDB = list(mongo.db.ingredientCategories.find())
     recCatsDB = list(mongo.db.recipeCategories.find())
     ingsDB = list(mongo.db.ingredients.find())
 
-    # Need to zip ingredients
-    # Need to get recipeNames not IDs
-    # Maybe write similar (not same) viewRecipe?
-
     return render_template("pages/edit_recipe/edit_recipe.html",
                             ingCats=ingCatsDB,
-                            recCats=recCatsDB,
+                            recCatsAll=recCatsDB,
                             ingsAll=ingsDB,
                             rec=recDB,
-                            ingsRec=ings)
+                            ingsRec=ings,
+                            recCatsRec=recCats)
+
+
+@app.route("/menu/<rec_id>")
+def isMenu(rec_id):
+    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
+    userFavRecIds = user["isFav"]
+
+    userFavRecsNames = []
+    userFavRecsImages = []
+    for userFavRecId in userFavRecIds:
+        userFavRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})["name"]
+        userFavRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})["image"]
+        userFavRecsNames.append(userFavRec_name)
+        userFavRecsImages.append(userFavRec_image)
+
+    userFavRecs = zip(userFavRecIds,
+                      userFavRecsNames,
+                      userFavRecsImages)
+
+    return render_template("pages/menu/menu.html",
+                            menuRecs=userFavRecs)
 
 
 # 624713793b6773d36014fcb8 --> Spag bol
