@@ -12,7 +12,7 @@
     <section class="view-recipe">
         <div class="view-recipe__container">
             <!-- Recipe image -->
-            {% with recipe_image=rec.image %}
+            {% with recipe_id=rec._id, recipe_image=rec.image %}
                 {% include 'components/recipe-image-full.html' %}
             {% endwith %}
             <div class="spacer"></div>

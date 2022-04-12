@@ -1,0 +1,5 @@
+.edit-recipe {
+    &__container {
+        @include container300();
+    }
+}

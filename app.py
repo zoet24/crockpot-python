@@ -46,7 +46,7 @@ def addRecipe():
 
         return redirect(url_for("viewRecipe", rec_id=newRecDB_Id))
 
-    # Get all recipe categories, all ingredients and a single recipe from Mongo
+    # Get all recipe categories, all ingredients categories and all ingredients from Mongo
     ingCatsDB = list(mongo.db.ingredientCategories.find())
     recCatsDB = list(mongo.db.recipeCategories.find())
     ingsDB = list(mongo.db.ingredients.find())
@@ -103,6 +103,30 @@ def deleteRecipe(rec_id):
     mongo.db.recipes.remove({"_id": ObjectId(rec_id)})
 
     return redirect(url_for("browse"))
+
+
+@app.route("/editRecipe/<rec_id>", methods=["GET", "POST"])
+def editRecipe(rec_id):
+    # python > viewRecipe > viewRecipe.py
+    data = viewRecipeData(rec_id)
+    recDB = data[0]
+    ings = data[1]
+
+    # Get all recipe categories, all ingredients categories and all ingredients from Mongo
+    ingCatsDB = list(mongo.db.ingredientCategories.find())
+    recCatsDB = list(mongo.db.recipeCategories.find())
+    ingsDB = list(mongo.db.ingredients.find())
+
+    # Need to zip ingredients
+    # Need to get recipeNames not IDs
+    # Maybe write similar (not same) viewRecipe?
+
+    return render_template("pages/edit_recipe/edit_recipe.html",
+                            ingCats=ingCatsDB,
+                            recCats=recCatsDB,
+                            ingsAll=ingsDB,
+                            rec=recDB,
+                            ingsRec=ings)
 
 
 # 624713793b6773d36014fcb8 --> Spag bol

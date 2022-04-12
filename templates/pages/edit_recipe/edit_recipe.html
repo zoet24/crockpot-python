@@ -1,0 +1,252 @@
+{% set active_page = 'add_recipe' %}
+{% extends "pages/base/base.html" %}
+
+{% block extra_title %} | Edit Recipe{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    {% with header_text="Edit Recipe" %}
+        {% include 'components/header.html' %}
+    {% endwith %}
+
+    <section class="edit-recipe">
+        <div class="edit-recipe__container">
+            <form class="form edit-recipe__form" method="POST" action="{{ url_for('editRecipe', rec_id=rec._id) }}">
+                <!-- Recipe name -->
+                <div class="form__row">
+                    <h4>Recipe:</h4>
+                    <input type="text" name="name" value="{{ rec.name }}">
+                </div>
+
+                <!-- Image -->
+                <div class="form__row">
+                    <h4>Image:</h4>
+                    <input type="text" name="image" value="{{ rec.image }}">
+                </div>
+
+                <!-- Time -->
+                <div class="form__row form__row--50 form__row--center">
+                    <h4>Time:</h4>
+                    {% with btn_start=rec.time, btn_step="5", btn_min="10", btn_max="300", btn_formVal="time" %}
+                        {% include 'components/btn-plus-minus.html' %}
+                    {% endwith %}
+                </div>
+
+                <!-- Serves -->
+                <div class="form__row form__row--50 form__row--center">
+                    <h4>Serves:</h4>
+                    {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20", btn_formVal="serves" %}
+                        {% include 'components/btn-plus-minus.html' %}
+                    {% endwith %}
+                </div>
+
+                <!-- Categories (select dropdown, multiple values) -->
+                <div class="form__row">
+                    <h4 class="form__title-w-icons">
+                        <div class="modal__buttons modal__buttons--add-category">
+                            <i class="fas fa-plus icon modal__button--open modal__button--open--add-category"></i>
+                        </div>
+                        Categories:
+                    </h4>
+                    <div class="form__inputs hide">
+                        <select name="recipeCategories">
+                            {% for cat in recCats %}
+                                <option label="{{cat.name}}" value="{{cat._id}}"></option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% for cat in rec.recipeCategories %}
+                    <div class="form__inputs">
+                        <select name="recipeCategories">
+                            <option label="{{cat}}" value="{{cat}}"></option>
+                            {% for cat in recCats %}
+                                <option label="{{cat.name}}" value="{{cat._id}}"></option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                    {% include 'components/btn-add-remove.html' %}
+                </div>
+
+                <div class="form__row form__row--has-subs">
+                    <h4 class="form__title-w-icons">
+                        <div class="modal__buttons modal__buttons--add-ingredient">
+                            <i class="fas fa-plus icon modal__button--open modal__button--open--add-ingredient"></i>
+                        </div>
+                        Ingredients:
+                    </h4>
+                    <div class="form__inputs form__inputs--subrow hide">
+                        <!-- Ingredients - name (select dropdown, multiple values) -->
+                        <div class="form__subrow form__subrow--50">
+                            <select name="ingredientName">
+                                {% for ing in ings %}
+                                    <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Ingredients - quantity -->
+                        <div class="form__subrow form__subrow--20">
+                            <input 
+                                type="number" 
+                                value="1" 
+                                step="0.01" 
+                                min="0.01" 
+                                max="10000" 
+                                name="ingredientNum"
+                            />
+                        </div>
+
+                        <!-- Ingredients - unit -->
+                        <div class="form__subrow form__subrow--20">
+                            <select name="ingredientUnit">
+                                <option label="-" value=""></option>
+                                <option label="g" value="g"></option>
+                                <option label="ml" value="ml"></option>
+                                <option label="tsp" value=" tsp"></option>
+                                <option label="tbsp" value=" tbsp"></option>
+                                <option label="cans" value=" cans"></option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    {% for ing in rec.ingredientName %}
+                    <div class="form__inputs form__inputs--subrow">
+                        <!-- Ingredients - name (select dropdown, multiple values) -->
+                        <div class="form__subrow form__subrow--50">
+                            <select name="ingredientName">
+                                {% for ing in ingsAll %}
+                                    <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Ingredients - quantity -->
+                        <div class="form__subrow form__subrow--20">
+                            <input 
+                                type="number" 
+                                value="1" 
+                                step="0.01" 
+                                min="0.01" 
+                                max="10000" 
+                                name="ingredientNum"
+                            />
+                        </div>
+
+                        <!-- Ingredients - unit -->
+                        <div class="form__subrow form__subrow--20">
+                            <select name="ingredientUnit">
+                                <option label="-" value=""></option>
+                                <option label="g" value="g"></option>
+                                <option label="ml" value="ml"></option>
+                                <option label="tsp" value=" tsp"></option>
+                                <option label="tbsp" value=" tbsp"></option>
+                                <option label="cans" value=" cans"></option>
+                            </select>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+                    {% include 'components/btn-add-remove.html' %}
+                </div>
+
+                <!-- Instructions -->
+                <div class="form__row">
+                    <h4>Instructions:</h4>
+                    <div class="form__inputs hide">
+                        <input type="text" name="instructions">
+                    </div>
+                    {% for instruction in rec.instructions %}
+                    <div class="form__inputs">
+                        <input type="text" name="instructions" value="{{ instruction }}">
+                    </div>
+                    {% endfor %}
+                    {% include 'components/btn-add-remove.html' %}
+                </div>
+
+                <!-- Tips -->
+                <div class="form__row">
+                    <h4>Notes:</h4>
+                    <div class="form__inputs hide">
+                        <input type="text" name="notes">
+                    </div>
+                    {% for note in rec.notes %}
+                    <div class="form__inputs">
+                        <input type="text" name="notes" value="{{ note }}">
+                    </div>
+                    {% endfor %}
+                    {% include 'components/btn-add-remove.html' %}
+                </div>
+
+                <!-- Submit -->
+                <div class="form__row form__row--center">
+                    <input class="btn" type="submit" value="Submit">
+                </div>
+            </form>
+
+            {{ rec }}
+            {{ ingsRec }}
+
+        </div>
+    </section>
+    
+    <!-- Add recipe category modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--add-category hide">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <form class="form" method="POST" action="{{ url_for('addCat') }}">
+                        <!-- Recipe name -->
+                        <div class="form__row">
+                            <h4>Category:</h4>
+                            <input type="text" name="name">
+                        </div>
+                        <div class="modal__buttons modal__buttons--add-category">
+                            <div class="modal__button modal__button--yes">
+                                <input class="btn btn--sm" type="submit" value="Add">
+                            </div>
+                            <div class="btn btn--sm modal__button modal__button--close modal__button--close--add-category">
+                                Close
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add ingredients modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--add-ingredient hide">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <form class="form" method="POST" action="{{ url_for('addIng') }}">
+                        <!-- Recipe name -->
+                        <div class="form__row">
+                            <h4>Ingredient:</h4>
+                            <input type="text" name="name">
+                        </div>
+                        <div class="form__row">
+                            <h4>Category:</h4>
+                            <select name="category">
+                                {% for ingCat in ingCats %}
+                                    <option label="{{ingCat.name}}" value="{{ingCat._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal__buttons modal__buttons--add-ingredient">
+                            <div class="modal__button modal__button--yes">
+                                <input class="btn btn--sm" type="submit" value="Add">
+                            </div>
+                            <div class="btn btn--sm modal__button modal__button--close modal__button--close--add-ingredient">
+                                Close
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

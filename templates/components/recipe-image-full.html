@@ -3,7 +3,9 @@
         <div class="recipe-image__icons">
             <i class="fas fa-utensils icon"></i>
             <i class="fas fa-heart icon"></i>
-            <i class="fas fa-edit icon"></i>
+            <a class="recipe-image__link-wrapper" href="/editRecipe/{{rec._id}}">
+                <i class="fas fa-edit icon"></i>
+            </a>
             <div class="recipe-image__link-wrapper modal__buttons modal__buttons--delete-recipe">
                 <i class="fas fa-trash icon modal__button--open modal__button--open--delete-recipe"></i>
             </div>
