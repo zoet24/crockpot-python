@@ -3,7 +3,6 @@
     text-align: center;
     position: relative;
     background-color: lightgray;
-    border-bottom: solid black 2px;
 
     &__input {
         opacity: 0;
@@ -25,6 +24,18 @@
         position: absolute;
         transition: $a-medium;
     }
+
+    &--border {
+        border: black solid 2px;
+    }
+
+    &--rounded {
+        border-radius: 20px;
+
+        & .toggle__slider {
+            border-radius: 20px;
+        }
+    }
 }
 
 .toggle-box {
@@ -32,8 +43,17 @@
     box-sizing: border-box;
     width: 100%;
 
+    &--no-border {
+        border: none;
+    }
+
+    &__toggle {
+        border-bottom: solid black 2px;
+    }
+
     &__box {
         display: flex;
+        flex-direction: column;
         padding: 0.5rem;
     }
 }

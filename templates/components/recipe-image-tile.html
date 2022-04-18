@@ -8,9 +8,11 @@
                             <i class="fas fa-utensils icon"></i>
                         </button>
                     </form>
-                    <div class="recipe-image__link-wrapper">
-                        <i class="fas fa-heart icon"></i>
-                    </div>
+                    <form class="recipe-image__link-wrapper" action="/fav/{{rec._id}}">
+                        <button class="recipe-image__link-submit" type="submit">
+                            <i class="fas fa-heart icon"></i>
+                        </button>
+                    </form>
                 </div>
                 <div class="recipe-image__img">
                     <img src="{{ recipe_image }}" alt="">

@@ -134,25 +134,59 @@ def editRecipe(rec_id):
                             recCatsRec=recCats)
 
 
+@app.route("/fav/<rec_id>")
+def isFav(rec_id):
+    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
+
+    # If recipe is already on favs, remove it
+    if ObjectId(rec_id) in user["isFav"]:
+        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+                                  {'$pull': {"isFav": ObjectId(rec_id)}})
+    # Otherwise add it to favs
+    else:
+        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+                                  {'$push': {"isFav": ObjectId(rec_id)}})
+
+    return render_template("pages/index/index.html")
+
+
 @app.route("/menu/<rec_id>")
 def isMenu(rec_id):
     user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
-    userFavRecIds = user["isFav"]
 
-    userFavRecsNames = []
-    userFavRecsImages = []
-    for userFavRecId in userFavRecIds:
-        userFavRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})["name"]
-        userFavRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})["image"]
-        userFavRecsNames.append(userFavRec_name)
-        userFavRecsImages.append(userFavRec_image)
+    # If recipe is already on menu, remove it
+    if ObjectId(rec_id) in user["isMenu"]:
+        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+                                  {'$pull': {"isMenu": ObjectId(rec_id)}})
+    # Otherwise add it to menu
+    else:
+        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+                                  {'$push': {"isMenu": ObjectId(rec_id)}})
 
-    userFavRecs = zip(userFavRecIds,
-                      userFavRecsNames,
-                      userFavRecsImages)
+    return redirect(url_for("menu"))
+
+
+@app.route("/menu")
+def menu():
+    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
+    userMenuRecIds = user["isMenu"]
+
+    print(userMenuRecIds)
+
+    userMenuRecsNames = []
+    userMenuRecsImages = []
+    for userMenuRecId in userMenuRecIds:
+        userMenuRec_name = mongo.db.recipes.find_one({"_id": ObjectId(userMenuRecId)})["name"]
+        userMenuRec_image = mongo.db.recipes.find_one({"_id": ObjectId(userMenuRecId)})["image"]
+        userMenuRecsNames.append(userMenuRec_name)
+        userMenuRecsImages.append(userMenuRec_image)
+
+    userMenuRecs = zip(userMenuRecIds,
+                      userMenuRecsNames,
+                      userMenuRecsImages)
 
     return render_template("pages/menu/menu.html",
-                            menuRecs=userFavRecs)
+                           menuRecs=userMenuRecs)
 
 
 # 624713793b6773d36014fcb8 --> Spag bol

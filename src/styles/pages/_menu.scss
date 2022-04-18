@@ -3,8 +3,13 @@
         @include containerFull();
     }
 
+    &__item-wrapper {
+        text-decoration: none!important;
+    }
+
     &__item {
         display: flex;
+        align-items: center;
         border: black 2px solid;
         width: 100%;
         margin-top: 1rem;
@@ -15,6 +20,10 @@
         width: 40%;
         padding-bottom: 30%;
         position: relative;
+    }
+
+    &__item-name {
+        margin-bottom: 5px;
     }
 
     &__item-image {
