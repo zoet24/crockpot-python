@@ -71,7 +71,7 @@ def addRecipePost():
         "instructions": recDB_instructions,
         "notes": recDB_notes,
         "recipeCategories": recDB_recCats,
-        "user": ObjectId("624712f53b6773d36014fcb5"),
+        "user": ObjectId("624715013b6773d36014fcbc"),
     }
 
     mongo.db.recipes.insert_one(recDB)

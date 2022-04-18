@@ -25,20 +25,23 @@
                         <div class="toggle-box__box-left">
                             <!-- Show recipes on menu -->
                             {% for menuRec in menuRecs %}
-                            <a href="/viewRecipe/{{menuRec[0]}}" class="menu__item-wrapper">
                                 <div class="menu__item">
                                     <div class="menu__item-image-wrapper">
-                                        <div class="menu__item-image">
-                                            <img src="{{ menuRec[2] }}" alt="">
-                                        </div>
+                                        <a href="/viewRecipe/{{menuRec[0]}}">
+                                            <div class="menu__item-image">
+                                                <img src="{{ menuRec[2] }}" alt="">
+                                            </div>
+                                        </a>
                                     </div>
                                     <div class="menu__item-content-wrapper">
-                                        <div class="menu__item-name">
-                                            <h2>{{ menuRec[1] }}</h2>
-                                        </div>
+                                        <a href="/viewRecipe/{{menuRec[0]}}" class="menu__item-name-wrapper">
+                                            <div class="menu__item-name">
+                                                <h2>{{ menuRec[1] }}</h2>
+                                            </div>
+                                        </a>
                                         <div class="menu__item-icons">
                                             <div class="menu__item-serving">
-                                                {% with btn_start="1", btn_step="1", btn_min="1", btn_max="20" %}
+                                                {% with btn_start=menuRec[3], btn_step="1", btn_min="1", btn_max="20" %}
                                                     {% include 'components/btn-plus-minus.html' %}
                                                 {% endwith %}
                                             </div>
@@ -55,7 +58,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
                             {% endfor %}
                         </div>
                         <div class="toggle-box__box-right hide">
@@ -64,7 +66,19 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
+
+    <!-- Update menu button -->
+    <form method="POST" action="{{ url_for('updateMenu') }}">
+        <div class="hide">
+            {% for menuRec in menuRecs %}
+                <input type="text" name="id-{{loop.index}}" value="{{ menuRec[0] }}">
+                <input type="number" name="serves-{{loop.index}}" class="menu__item-serving-val">
+            {% endfor %}
+        </div>
+        <input class="btn btn--fixed" type="submit" value="Update menu">
+    </form>
+
+    {% include 'pages/menu/includes/js-updateMenu.html' %}
 {% endblock %}

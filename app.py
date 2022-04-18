@@ -136,15 +136,15 @@ def editRecipe(rec_id):
 
 @app.route("/fav/<rec_id>")
 def isFav(rec_id):
-    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
 
     # If recipe is already on favs, remove it
     if ObjectId(rec_id) in user["isFav"]:
-        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
                                   {'$pull': {"isFav": ObjectId(rec_id)}})
     # Otherwise add it to favs
     else:
-        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
+        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
                                   {'$push': {"isFav": ObjectId(rec_id)}})
 
     return render_template("pages/index/index.html")
@@ -152,41 +152,81 @@ def isFav(rec_id):
 
 @app.route("/menu/<rec_id>")
 def isMenu(rec_id):
-    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    userMenuRecs = user["isMenu"]
+
+    userMenuRecsIds = []
+    for rec in userMenuRecs:
+        userMenuRec_id = rec["id"]
+        userMenuRecsIds.append(userMenuRec_id)
+
+    userMenuRecDB = {
+        "id": ObjectId(rec_id),
+        "serves": 4
+    }
 
     # If recipe is already on menu, remove it
-    if ObjectId(rec_id) in user["isMenu"]:
-        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
-                                  {'$pull': {"isMenu": ObjectId(rec_id)}})
+    if ObjectId(rec_id) in userMenuRecsIds:
+        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+                                  {'$pull': {"isMenu": userMenuRecDB}})
     # Otherwise add it to menu
     else:
-        mongo.db.users.update_one({"_id": ObjectId("624712f53b6773d36014fcb5")},
-                                  {'$push': {"isMenu": ObjectId(rec_id)}})
+        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+                                  {'$push': {"isMenu": userMenuRecDB}})
 
     return redirect(url_for("menu"))
 
 
+@app.route("/updateMenu", methods=["GET", "POST"])
+def updateMenu():
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    userMenuRecs = user["isMenu"]
+
+    if request.method == "POST":
+        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+                              {'$set': {'isMenu': [] }})
+
+        for index, rec in enumerate(userMenuRecs):
+            userMenuRecId = request.form.get(f'id-{index+1}')
+            userMenuRecServes = request.form.get(f'serves-{index+1}')
+            userMenuRec = {
+                "id": userMenuRecId,
+                "serves": userMenuRecServes
+            }
+            mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+                                      {'$push': {"isMenu": userMenuRec}})
+
+        return redirect(url_for("menu"))
+
+
 @app.route("/menu")
 def menu():
-    user = mongo.db.users.find_one({"_id": ObjectId("624712f53b6773d36014fcb5")})
-    userMenuRecIds = user["isMenu"]
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    userMenuRecs = user["isMenu"]
 
-    print(userMenuRecIds)
-
+    userMenuRecsIds = []
     userMenuRecsNames = []
     userMenuRecsImages = []
-    for userMenuRecId in userMenuRecIds:
-        userMenuRec_name = mongo.db.recipes.find_one({"_id": ObjectId(userMenuRecId)})["name"]
-        userMenuRec_image = mongo.db.recipes.find_one({"_id": ObjectId(userMenuRecId)})["image"]
+    userMenuRecsServes = []
+
+    for rec in userMenuRecs:
+        userMenuRec_id = rec["id"]
+        userMenuRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec["id"])})["name"]
+        userMenuRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec["id"])})["image"]
+        userMenuRec_serves = rec["serves"]
+
+        userMenuRecsIds.append(userMenuRec_id)
         userMenuRecsNames.append(userMenuRec_name)
         userMenuRecsImages.append(userMenuRec_image)
+        userMenuRecsServes.append(userMenuRec_serves)
 
-    userMenuRecs = zip(userMenuRecIds,
-                      userMenuRecsNames,
-                      userMenuRecsImages)
+    userMenuRecs = zip(userMenuRecsIds,
+                       userMenuRecsNames,
+                       userMenuRecsImages,
+                       userMenuRecsServes)
 
     return render_template("pages/menu/menu.html",
-                           menuRecs=userMenuRecs)
+                           menuRecs=list(userMenuRecs))
 
 
 # 624713793b6773d36014fcb8 --> Spag bol

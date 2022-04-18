@@ -1,0 +1,21 @@
+<script>
+    window.addEventListener('load', (e) => {
+        var inputs = document.querySelectorAll('.btn-plus-minus__num');
+        var targets = document.querySelectorAll('.menu__item-serving-val');
+
+        for (var i = 0; i < inputs.length; i++) {
+            targets[i].value = inputs[i].value;
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.btn-plus-minus__input')) return;
+
+        var inputs = document.querySelectorAll('.btn-plus-minus__num');
+        var targets = document.querySelectorAll('.menu__item-serving-val');
+
+        for (var i = 0; i < inputs.length; i++) {
+            targets[i].value = inputs[i].value;
+        }
+    });
+</script>
