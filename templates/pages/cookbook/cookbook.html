@@ -31,8 +31,8 @@
                         </div>
                         <div class="toggle-box__box-right toggle-box__box--justify-around hide">
                             <!-- Show my recipes -->
-                            {% for favRec in favRecs %}
-                                {% with recipe_id=favRec[0], recipe_name=favRec[1], recipe_image=favRec[2] %}
+                            {% for myRec in myRecs %}
+                                {% with recipe_id=myRec[0], recipe_name=myRec[1], recipe_image=myRec[2] %}
                                     {% include 'components/recipe-image-tile.html' %}
                                 {% endwith %}
                             {% endfor %}

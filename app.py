@@ -100,16 +100,17 @@ def browse():
 
 @app.route("/cookbook")
 def cookbook():
+    recsDB = list(mongo.db.recipes.find())
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
     userFavRecs = user["isFav"]
 
+    # Get favourite recipes
     userFavRecsIds = []
     userFavRecsNames = []
     userFavRecsImages = []
 
     for rec in userFavRecs:
         userFavRec_id = rec
-        print(rec)
         userFavRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["name"]
         userFavRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["image"]
 
@@ -117,15 +118,32 @@ def cookbook():
         userFavRecsNames.append(userFavRec_name)
         userFavRecsImages.append(userFavRec_image)
 
-    print(userFavRecsIds)
-    print(userFavRecsNames)
-
     userFavRecs = zip(userFavRecsIds,
                       userFavRecsNames,
                       userFavRecsImages)
 
+    # Get my recipes
+    userMyRecsIds = []
+    userMyRecsNames = []
+    userMyRecsImages = []
+
+    for rec in recsDB:
+        if str(rec["user"]) == "624715013b6773d36014fcbc":
+            userMyRec_id = rec["_id"]
+            userMyRec_name = rec["name"]
+            userMyRec_image = rec["image"]
+
+            userMyRecsIds.append(userMyRec_id)
+            userMyRecsNames.append(userMyRec_name)
+            userMyRecsImages.append(userMyRec_image)
+
+    userMyRecs = zip(userMyRecsIds,
+                      userMyRecsNames,
+                      userMyRecsImages)
+
     return render_template("pages/cookbook/cookbook.html",
-                           favRecs=list(userFavRecs))
+                           favRecs=list(userFavRecs),
+                           myRecs=list(userMyRecs))
 
 
 @app.route("/deleteRecipe/<rec_id>")
