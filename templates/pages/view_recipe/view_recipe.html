@@ -66,7 +66,7 @@
             <div class="spacer"></div>
 
             <!-- Recipe notes -->
-            {% if rec.notes|length > 1 %}
+            {% if rec.notes|length > 0 %}
             <div class="view-recipe__notes-wrapper">
                 <ul class="view-recipe__notes">
                 {% for note in rec.notes %}

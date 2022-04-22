@@ -1,0 +1,45 @@
+{% set active_page = 'cookbook' %}
+{% extends "pages/base/base.html" %}
+
+{% block extra_title %} | Cookbook{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    {% with header_text="Cookbook" %}
+        {% include 'components/header.html' %}
+    {% endwith %}
+
+    <section class="cookbook">
+        <div class="cookbook__container">
+            <div class="toggle-box toggle-box--no-border">
+                <div class="toggle-box__container">
+                    <div class="toggle toggle--rounded toggle--border toggle-box__toggle">
+                        <input class="toggle__input toggle__input--1" type="radio" name="toggle__FavsUser" id="toggle__FavsUser__Favs" checked="checked">
+                        <label class="toggle__option toggle__option--1" for="toggle__FavsUser__Favs">Favorites</label>
+                        <input class="toggle__input toggle__input--2" type="radio" name="toggle__FavsUser" id="toggle__FavsUser__User">
+                        <label class="toggle__option toggle__option--2" for="toggle__FavsUser__User">My Recipes</label>
+                        <span class="toggle__slider"></span>
+                    </div>
+                    <div class="toggle-box__box toggle-box__box--px-0 toggle-box__box--py-0">
+                        <div class="toggle-box__box-left toggle-box__box--justify-around">
+                            <!-- Show fav recipes -->
+                            {% for favRec in favRecs %}
+                                {% with recipe_id=favRec[0], recipe_name=favRec[1], recipe_image=favRec[2] %}
+                                    {% include 'components/recipe-image-tile.html' %}
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+                        <div class="toggle-box__box-right toggle-box__box--justify-around hide">
+                            <!-- Show my recipes -->
+                            {% for favRec in favRecs %}
+                                {% with recipe_id=favRec[0], recipe_name=favRec[1], recipe_image=favRec[2] %}
+                                    {% include 'components/recipe-image-tile.html' %}
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

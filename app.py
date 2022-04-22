@@ -98,6 +98,36 @@ def browse():
                             recs=recsDB)
 
 
+@app.route("/cookbook")
+def cookbook():
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    userFavRecs = user["isFav"]
+
+    userFavRecsIds = []
+    userFavRecsNames = []
+    userFavRecsImages = []
+
+    for rec in userFavRecs:
+        userFavRec_id = rec
+        print(rec)
+        userFavRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["name"]
+        userFavRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["image"]
+
+        userFavRecsIds.append(userFavRec_id)
+        userFavRecsNames.append(userFavRec_name)
+        userFavRecsImages.append(userFavRec_image)
+
+    print(userFavRecsIds)
+    print(userFavRecsNames)
+
+    userFavRecs = zip(userFavRecsIds,
+                      userFavRecsNames,
+                      userFavRecsImages)
+
+    return render_template("pages/cookbook/cookbook.html",
+                           favRecs=list(userFavRecs))
+
+
 @app.route("/deleteRecipe/<rec_id>")
 def deleteRecipe(rec_id):
     rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
@@ -147,7 +177,7 @@ def isFav(rec_id):
         mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
                                   {'$push': {"isFav": ObjectId(rec_id)}})
 
-    return render_template("pages/index/index.html")
+    return redirect(url_for("cookbook"))
 
 
 @app.route("/menu/<rec_id>")
