@@ -1,4 +1,6 @@
 .view-recipe {
+    margin-top: -1.5vw;
+
     &__container {
         @include containerFull();
     }

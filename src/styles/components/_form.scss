@@ -3,6 +3,10 @@
     flex-direction: row;
     flex-wrap: wrap;
 
+    &--center {
+        justify-content: center;
+    }
+
     &__row {
         display: flex;
         flex-direction: column;

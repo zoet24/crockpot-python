@@ -225,6 +225,18 @@ def isMenu(rec_id):
     return redirect(url_for("menu"))
 
 
+@app.route("/clearMenu", methods=["GET", "POST"])
+def clearMenu():
+    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    userMenuRecs = user["isMenu"]
+
+    if request.method == "POST":
+        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+                              {'$set': {'isMenu': [] }})
+
+        return redirect(url_for("menu"))
+
+
 @app.route("/updateMenu", methods=["GET", "POST"])
 def updateMenu():
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
@@ -249,32 +261,102 @@ def updateMenu():
 
 @app.route("/menu")
 def menu():
+    # Find user and all recipe ObjectIds on their menu
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
     userMenuRecs = user["isMenu"]
 
+    # Set empty arrays for menu recipe ids, names, images and serving numbers; shopping list ingredient names, numbers and units
     userMenuRecsIds = []
     userMenuRecsNames = []
     userMenuRecsImages = []
     userMenuRecsServes = []
+    userShoppingIngNames = []
+    userShoppingIngNums = []
+    userShoppingIngUnits = []
 
+    # Add menu and shopping list information into empty arrays
     for rec in userMenuRecs:
+        userMenuRec = mongo.db.recipes.find_one({"_id": ObjectId(rec["id"])})
+
+        # Menu recipes
         userMenuRec_id = rec["id"]
-        userMenuRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec["id"])})["name"]
-        userMenuRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec["id"])})["image"]
-        userMenuRec_serves = rec["serves"]
+        userMenuRec_serves = int(rec["serves"])
+        userMenuRec_name = userMenuRec["name"]
+        userMenuRec_image = userMenuRec["image"]
 
         userMenuRecsIds.append(userMenuRec_id)
         userMenuRecsNames.append(userMenuRec_name)
         userMenuRecsImages.append(userMenuRec_image)
         userMenuRecsServes.append(userMenuRec_serves)
 
+        # Shopping list
+        userMenuRec_ingNames = userMenuRec["ingredientName"]
+        userMenuRec_ingNums = userMenuRec["ingredientNum"]
+        userMenuRec_ingUnits = userMenuRec["ingredientUnit"]
+
+        # Get array of all ingredients in shopping list (duplicates)
+        for ingName in userMenuRec_ingNames:
+            ingNameDB = mongo.db.ingredients.find_one({"_id": ingName})["name"]
+            userShoppingIngNames.append(ingNameDB)
+
+        for ingNum in userMenuRec_ingNums:
+            userShoppingIngNums.append((ingNum*userMenuRec_serves))
+
+        for ingUnit in userMenuRec_ingUnits:
+            userShoppingIngUnits.append(ingUnit)
+
+    # Add duplicate shopping list values together
+    userShoppingIngNamesEdit = []
+    userShoppingIngNumsEdit = []
+    userShoppingIngUnitsEdit = []
+    i = 0
+    imax = len(userShoppingIngNames)
+
+    while i < imax:
+        userShoppingIngName = userShoppingIngNames[i]
+        userShoppingIngNum = userShoppingIngNums[i]
+        userShoppingIngUnit = userShoppingIngUnits[i]
+
+        # If the ingredient is already in the shopping list...
+        if userShoppingIngName in userShoppingIngNamesEdit:
+            # Find index of matching ingredient name
+            index = userShoppingIngNamesEdit.index(userShoppingIngName)
+
+            # Find quantities and units of matching ingredients
+            numOne = int(userShoppingIngNumsEdit[index])
+            numTwo = int(userShoppingIngNum)
+            unitOne = userShoppingIngUnitsEdit[index]
+            unitTwo = userShoppingIngUnit
+
+            # If the units of the two matching ingredients are the same, sum the quantities and don't add ingredients name to list
+            if unitOne == unitTwo:
+                userShoppingIngNumsEdit[index] = numOne + numTwo
+            # If the units of the two matching ingredients are not the same, do not sum the quantities and add ingredients name to list
+            else:
+                userShoppingIngNamesEdit.append(userShoppingIngName)
+                userShoppingIngNumsEdit.append(userShoppingIngNum)
+                userShoppingIngUnitsEdit.append(userShoppingIngUnit)
+            i += 1
+        # If ingredient name is not on list of menu ingredients names add ingredients name to list
+        else:
+            userShoppingIngNamesEdit.append(userShoppingIngName)
+            userShoppingIngNumsEdit.append(userShoppingIngNum)
+            userShoppingIngUnitsEdit.append(userShoppingIngUnit)
+            i += 1
+
     userMenuRecs = zip(userMenuRecsIds,
                        userMenuRecsNames,
                        userMenuRecsImages,
                        userMenuRecsServes)
 
+    userShoppingList = zip(userShoppingIngNamesEdit,
+                           userShoppingIngNumsEdit,
+                           userShoppingIngUnitsEdit)
+
     return render_template("pages/menu/menu.html",
-                           menuRecs=list(userMenuRecs))
+                           menuRecs=list(userMenuRecs),
+                           shoppingList=list(userShoppingList)
+                          )
 
 
 # 624713793b6773d36014fcb8 --> Spag bol

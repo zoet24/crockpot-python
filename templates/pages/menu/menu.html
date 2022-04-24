@@ -60,7 +60,11 @@
                             {% endfor %}
                         </div>
                         <div class="toggle-box__box-right hide">
-                            Shopping list
+                            {% for ings in shoppingList %}
+                                {{ ings[0] }}
+                                {{ ings[1] }}
+                                {{ ings[2] }}<br>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -69,15 +73,43 @@
     </section>
 
     <!-- Update menu button -->
-    <form method="POST" action="{{ url_for('updateMenu') }}">
-        <div class="hide">
-            {% for menuRec in menuRecs %}
-                <input type="text" name="id-{{loop.index}}" value="{{ menuRec[0] }}">
-                <input type="number" name="serves-{{loop.index}}" class="menu__item-serving-val">
-            {% endfor %}
+    <div class="menu__fixed-btns">
+        <form method="POST" action="{{ url_for('updateMenu') }}">
+            <div class="hide">
+                {% for menuRec in menuRecs %}
+                    <input type="text" name="id-{{loop.index}}" value="{{ menuRec[0] }}">
+                    <input type="number" name="serves-{{loop.index}}" class="menu__item-serving-val">
+                {% endfor %}
+            </div>
+            <div class="btn">
+                <input type="submit" value="Update menu">
+            </div>
+        </form>
+        <div class="modal__buttons modal__buttons--clear-menu modal__button--open--clear-menu btn">
+            Clear menu
         </div>
-        <input class="btn btn--fixed" type="submit" value="Update menu">
-    </form>
+    </div>
+
+    <!-- Are you sure you want to clear menu? modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--clear-menu hide">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <form class="form form--center" method="POST" action="{{ url_for('clearMenu') }}">
+                        <h4>Are you sure you want to clear your menu?</h4>
+                        <div class="modal__buttons modal__buttons--clear-menu">
+                            <div class="modal__button modal__button--yes btn btn--sm">
+                                <input class="" type="submit" value="Yes">
+                            </div>
+                            <div class="btn btn--sm modal__button modal__button--close modal__button--close--clear-menu">
+                                No
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {% include 'pages/menu/includes/js-updateMenu.html' %}
 {% endblock %}

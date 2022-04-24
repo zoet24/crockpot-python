@@ -25,7 +25,7 @@ eval("// Add remove rows on recipe forms\ndocument.addEventListener('click', fun
   \*****************************************/
 /***/ (() => {
 
-eval("// Open/close modal\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.modal__buttons')) return;\n  var modalIdentifier = e.target.closest('.modal__buttons').classList[1].split(\"--\")[1];\n  var modal = document.querySelector(\".modal--\".concat(modalIdentifier));\n  var isOpen = document.querySelector(\".modal__button--open--\".concat(modalIdentifier));\n  var isClose = e.target.closest(\".modal__button--close--\".concat(modalIdentifier));\n\n  if (isOpen !== null) {\n    modal.classList.remove(\"hide\");\n  }\n\n  if (isClose !== null) {\n    modal.classList.add(\"hide\");\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/modal.js?");
+eval("// Open/close modal\ndocument.addEventListener('click', function (e) {\n  if (!e.target.closest('.modal__buttons')) return; // console.log(e.target)\n\n  var modalIdentifier = e.target.closest('.modal__buttons').classList[1].split(\"--\")[1];\n  var modal = document.querySelector(\".modal--\".concat(modalIdentifier));\n  var isOpen = document.querySelector(\".modal__button--open--\".concat(modalIdentifier));\n  var isClose = e.target.closest(\".modal__button--close--\".concat(modalIdentifier)); // console.log(modalIdentifier, modal, isOpen, isClose)\n\n  if (isOpen !== null) {\n    modal.classList.remove(\"hide\");\n  }\n\n  if (isClose !== null) {\n    modal.classList.add(\"hide\");\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/modal.js?");
 
 /***/ }),
 
