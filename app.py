@@ -47,15 +47,18 @@ def addRecipe():
 
         return redirect(url_for("viewRecipe", rec_id=newRecDB_Id))
 
-    # Get all recipe categories, all ingredients categories and all ingredients from Mongo
+    # Get all recipe categories, all ingredients categories and all ingredients from Mongo and sort them alphabetically
     ingCatsDB = list(mongo.db.ingredientCategories.find())
+    ingCatsDBSort = (sorted(ingCatsDB, key=lambda x: x["name"]))
     recCatsDB = list(mongo.db.recipeCategories.find())
+    recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
     ingsDB = list(mongo.db.ingredients.find())
+    ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
     return render_template("pages/add_recipe/add_recipe.html",
-                            ingCats=ingCatsDB,
-                            recCats=recCatsDB,
-                            ings=ingsDB)
+                            ingCats=ingCatsDBSort,
+                            recCats=recCatsDBSort,
+                            ings=ingsDBSort)
 
 
 @app.route("/addIng", methods=["POST"])

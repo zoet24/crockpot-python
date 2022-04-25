@@ -60,6 +60,7 @@
                             {% endfor %}
                         </div>
                         <div class="toggle-box__box-right hide">
+                            {% include 'components/accordion.html' %}
                             {% for ings in shoppingList %}
                                 {{ ings[0] }}
                                 {{ ings[1] }}
