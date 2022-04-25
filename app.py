@@ -274,6 +274,7 @@ def menu():
     userMenuRecsImages = []
     userMenuRecsServes = []
     userShoppingIngNames = []
+    userShoppingIngCats = []
     userShoppingIngNums = []
     userShoppingIngUnits = []
 
@@ -302,6 +303,10 @@ def menu():
             ingNameDB = mongo.db.ingredients.find_one({"_id": ingName})["name"]
             userShoppingIngNames.append(ingNameDB)
 
+            ingCatIdDB = mongo.db.ingredients.find_one({"_id": ingName})["category"]
+            ingCatDB = mongo.db.ingredientCategories.find_one({"_id": ingCatIdDB})["name"]
+            userShoppingIngCats.append(ingCatDB)
+
         for ingNum in userMenuRec_ingNums:
             userShoppingIngNums.append((ingNum*userMenuRec_serves))
 
@@ -310,6 +315,7 @@ def menu():
 
     # Add duplicate shopping list values together
     userShoppingIngNamesEdit = []
+    userShoppingIngCatsEdit = []
     userShoppingIngNumsEdit = []
     userShoppingIngUnitsEdit = []
     i = 0
@@ -317,6 +323,7 @@ def menu():
 
     while i < imax:
         userShoppingIngName = userShoppingIngNames[i]
+        userShoppingIngCat = userShoppingIngCats[i]
         userShoppingIngNum = userShoppingIngNums[i]
         userShoppingIngUnit = userShoppingIngUnits[i]
 
@@ -325,7 +332,9 @@ def menu():
             # Find index of matching ingredient name
             index = userShoppingIngNamesEdit.index(userShoppingIngName)
 
-            # Find quantities and units of matching ingredients
+            # Find categories, quantities and units of matching ingredients
+            catOne = userShoppingIngCatsEdit[index]
+            catTwo = userShoppingIngCat
             numOne = int(userShoppingIngNumsEdit[index])
             numTwo = int(userShoppingIngNum)
             unitOne = userShoppingIngUnitsEdit[index]
@@ -337,12 +346,14 @@ def menu():
             # If the units of the two matching ingredients are not the same, do not sum the quantities and add ingredients name to list
             else:
                 userShoppingIngNamesEdit.append(userShoppingIngName)
+                userShoppingIngCatsEdit.append(userShoppingIngCat)
                 userShoppingIngNumsEdit.append(userShoppingIngNum)
                 userShoppingIngUnitsEdit.append(userShoppingIngUnit)
             i += 1
         # If ingredient name is not on list of menu ingredients names add ingredients name to list
         else:
             userShoppingIngNamesEdit.append(userShoppingIngName)
+            userShoppingIngCatsEdit.append(userShoppingIngCat)
             userShoppingIngNumsEdit.append(userShoppingIngNum)
             userShoppingIngUnitsEdit.append(userShoppingIngUnit)
             i += 1
@@ -353,6 +364,7 @@ def menu():
                        userMenuRecsServes)
 
     userShoppingList = zip(userShoppingIngNamesEdit,
+                           userShoppingIngCatsEdit,
                            userShoppingIngNumsEdit,
                            userShoppingIngUnitsEdit)
 

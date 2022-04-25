@@ -60,12 +60,72 @@
                             {% endfor %}
                         </div>
                         <div class="toggle-box__box-right hide">
-                            {% include 'components/accordion.html' %}
-                            {% for ings in shoppingList %}
-                                {{ ings[0] }}
-                                {{ ings[1] }}
-                                {{ ings[2] }}<br>
-                            {% endfor %}
+                            <div class="accordion">
+                                <!-- Accordion item - change id and for -->
+                                <div class="accordion__button">
+                                  <input type="checkbox" id="accordion__button-1">
+                                  <label class="accordion__button-label" for="accordion__button-1">
+                                    <span>
+                                      <i class="fas fa-drumstick-bite icon icon--no-ml"></i>
+                                      Meat
+                                    </span>
+                                  </label>
+                                  <div class="accordion__content">
+                                    <ul>
+                                        {% for ings in shoppingList %}
+                                            {% if ings[1] == "Meat" %}
+                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                  </div>
+                                </div>
+                                <!-- Accordion item - change id and for -->
+                                <div class="accordion__button">
+                                  <input type="checkbox" id="accordion__button-2">
+                                  <label class="accordion__button-label" for="accordion__button-2">
+                                    <span>
+                                      <i class="fas fa-seedling icon icon--no-ml"></i>
+                                      Fruit and Veg
+                                    </span>
+                                  </label>
+                                  <div class="accordion__content">
+                                    <ul>
+                                        {% for ings in shoppingList %}
+                                            {% if ings[1] == "Fruit and Veg" %}
+                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                  </div>
+                                </div>
+                                <!-- Accordion item - change id and for -->
+                                <div class="accordion__button">
+                                  <input type="checkbox" id="accordion__button-3">
+                                  <label class="accordion__button-label" for="accordion__button-3">
+                                    <span>
+                                      <i class="fas fa-pepper-hot icon icon--no-ml"></i>
+                                      Herbs and Spices
+                                    </span>
+                                  </label>
+                                  <div class="accordion__content">
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                                  </div>
+                                </div>
+                                <!-- Accordion item - change id and for -->
+                                <div class="accordion__button">
+                                  <input type="checkbox" id="accordion__button-4">
+                                  <label class="accordion__button-label" for="accordion__button-4">
+                                    <span>
+                                      <i class="fas fa-cheese icon icon--no-ml"></i>
+                                      Dairy
+                                    </span>
+                                  </label>
+                                  <div class="accordion__content">
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                                  </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

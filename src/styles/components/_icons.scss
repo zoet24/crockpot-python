@@ -11,6 +11,10 @@
 
     margin: 0 0.5rem;
 
+    &--no-ml {
+        margin-left: 0;
+    }
+
     &--no-border {
         border: none;
     }
