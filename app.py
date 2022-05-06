@@ -336,7 +336,8 @@ def menu():
     # Count ingredients of specific categories
     userShoppingIngCatsCount = {"Meat": 0,
                                 "Fish": 0, 
-                                "Fruit and Veg": 0, 
+                                "Fruit": 0, 
+                                "Veg": 0, 
                                 "Dairy": 0, 
                                 "Cupboard": 0, 
                                 "Sweets": 0, 
@@ -363,7 +364,19 @@ def menu():
                            )
 
 
-# 624713793b6773d36014fcb8 --> Spag bol
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        # Get query text from user search
+        query = request.form.get("query")
+
+        # Search recipes
+        searchRecipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
+
+    return render_template("pages/browse_recipe/browse_recipe.html",
+                            recs=searchRecipes)
+
+
 @app.route("/viewRecipe/<rec_id>")
 def viewRecipe(rec_id):
     # python > viewRecipe > viewRecipe.py

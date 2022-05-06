@@ -45,12 +45,12 @@
                                                 {% endwith %}
                                             </div>
                                             <form class="recipe-image__link-wrapper" action="/menu/{{menuRec[0]}}">
-                                                <button class="recipe-image__link-submit" type="submit">
+                                                <button class="btn-submit" type="submit">
                                                     <i class="fas fa-utensils icon"></i>
                                                 </button>
                                             </form>
                                             <form class="recipe-image__link-wrapper" action="/fav/{{menuRec[0]}}">
-                                                <button class="recipe-image__link-submit" type="submit">
+                                                <button class="btn-submit" type="submit">
                                                     <i class="fas fa-heart icon"></i>
                                                 </button>
                                             </form>
@@ -104,14 +104,14 @@
                                   <input type="checkbox" id="accordion__button-3">
                                   <label class="accordion__button-label" for="accordion__button-3">
                                     <span>
-                                      <i class="fas fa-seedling icon icon--no-ml"></i>
-                                      Fruit and Veg ({{ ingCatsCount["Fruit and Veg"] }})
+                                      <i class="fas fa-lemon icon icon--no-ml"></i>
+                                      Fruit ({{ ingCatsCount["Fruit"] }})
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul>
                                         {% for ings in shoppingList %}
-                                            {% if ings[1] == "Fruit and Veg" %}
+                                            {% if ings[1] == "Fruit" %}
                                                 <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
@@ -122,6 +122,25 @@
                                 <div class="accordion__button">
                                   <input type="checkbox" id="accordion__button-4">
                                   <label class="accordion__button-label" for="accordion__button-4">
+                                    <span>
+                                      <i class="fas fa-carrot icon icon--no-ml"></i>
+                                      Veg ({{ ingCatsCount["Veg"] }})
+                                    </span>
+                                  </label>
+                                  <div class="accordion__content">
+                                    <ul>
+                                        {% for ings in shoppingList %}
+                                            {% if ings[1] == "Veg" %}
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                  </div>
+                                </div>
+                                <!-- Accordion item - change id and for -->
+                                <div class="accordion__button">
+                                  <input type="checkbox" id="accordion__button-5">
+                                  <label class="accordion__button-label" for="accordion__button-5">
                                     <span>
                                       <i class="fas fa-cheese icon icon--no-ml"></i>
                                       Dairy ({{ ingCatsCount["Dairy"] }})
@@ -139,8 +158,8 @@
                                 </div>
                                 <!-- Accordion item - change id and for -->
                                 <div class="accordion__button">
-                                  <input type="checkbox" id="accordion__button-5">
-                                  <label class="accordion__button-label" for="accordion__button-5">
+                                  <input type="checkbox" id="accordion__button-6">
+                                  <label class="accordion__button-label" for="accordion__button-6">
                                     <span>
                                       <i class="fas fa-bread-slice icon icon--no-ml"></i>
                                       Cupboard ({{ ingCatsCount["Cupboard"] }})
@@ -158,8 +177,8 @@
                                 </div>
                                 <!-- Accordion item - change id and for -->
                                 <div class="accordion__button">
-                                  <input type="checkbox" id="accordion__button-6">
-                                  <label class="accordion__button-label" for="accordion__button-6">
+                                  <input type="checkbox" id="accordion__button-7">
+                                  <label class="accordion__button-label" for="accordion__button-7">
                                     <span>
                                       <i class="fas fa-pepper-hot icon icon--no-ml"></i>
                                       Herbs and Spices ({{ ingCatsCount["Herbs and Spices"] }})
@@ -177,8 +196,8 @@
                                 </div>
                                 <!-- Accordion item - change id and for -->
                                 <div class="accordion__button">
-                                  <input type="checkbox" id="accordion__button-7">
-                                  <label class="accordion__button-label" for="accordion__button-7">
+                                  <input type="checkbox" id="accordion__button-8">
+                                  <label class="accordion__button-label" for="accordion__button-8">
                                     <span>
                                       <i class="fas fa-cookie-bite icon icon--no-ml"></i>
                                       Sweets ({{ ingCatsCount["Sweets"] }})
@@ -196,8 +215,8 @@
                                 </div>
                                 <!-- Accordion item - change id and for -->
                                 <div class="accordion__button">
-                                  <input type="checkbox" id="accordion__button-8">
-                                  <label class="accordion__button-label" for="accordion__button-8">
+                                  <input type="checkbox" id="accordion__button-9">
+                                  <label class="accordion__button-label" for="accordion__button-9">
                                     <span>
                                       <i class="fas fa-toilet-paper icon icon--no-ml"></i>
                                       House ({{ ingCatsCount["House"] }})
