@@ -74,7 +74,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Meat" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -93,7 +93,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Fish" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -112,7 +112,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Fruit and Veg" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -131,7 +131,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Dairy" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -150,7 +150,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Cupboard" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -169,7 +169,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Herbs and Spices" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -188,7 +188,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Sweets" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -207,7 +207,7 @@
                                     <ul>
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "House" %}
-                                                <li>{{ ings[0] }}{{ ings[2] }}{{ ings[3] }}</li>
+                                            <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2] }}</span>{{ ings[3] }}</li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -259,6 +259,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // If on the same page as view recipe, change quantity of food
+        window.addEventListener('load', (e) => {
+            const targetNums = document.querySelectorAll('.targetNum');
+
+            for (var i = 0; i < targetNums.length; i++) {
+                var targetNum = targetNums[i];
+
+                if (targetNum.innerHTML.includes('.')) {
+                    if (targetNum.innerHTML.slice(-1) == "0") {
+                        targetNum.innerHTML -= "0"
+                    }
+                }
+            }
+        });
+    </script>
 
     {% include 'pages/menu/includes/js-updateMenu.html' %}
 {% endblock %}
