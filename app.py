@@ -333,6 +333,19 @@ def menu():
             userShoppingIngUnitsEdit.append(userShoppingIngUnit)
             i += 1
 
+    # Count ingredients of specific categories
+    userShoppingIngCatsCount = {"Meat": 0,
+                                "Fish": 0, 
+                                "Fruit and Veg": 0, 
+                                "Dairy": 0, 
+                                "Cupboard": 0, 
+                                "Sweets": 0, 
+                                "Herbs and Spices": 0, 
+                                "House": 0
+                                }
+    userShoppingIngCatsUpdate = {i:userShoppingIngCatsEdit.count(i) for i in userShoppingIngCatsEdit}
+    userShoppingIngCatsCount.update(userShoppingIngCatsUpdate)
+
     userMenuRecs = zip(userMenuRecsIds,
                        userMenuRecsNames,
                        userMenuRecsImages,
@@ -345,8 +358,9 @@ def menu():
 
     return render_template("pages/menu/menu.html",
                            menuRecs=list(userMenuRecs),
-                           shoppingList=list(userShoppingList)
-                          )
+                           shoppingList=list(userShoppingList),
+                           ingCatsCount=userShoppingIngCatsCount
+                           )
 
 
 # 624713793b6773d36014fcb8 --> Spag bol
