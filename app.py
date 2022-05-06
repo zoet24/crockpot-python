@@ -2,7 +2,7 @@
 NAMING CONVENTION:
 - Item from database should be suffixed by DB (eg. ingsDB)
 - Item to be passed to app should not (eg. ings)
-- If you are referencing a property of an item the syntax is item_property (eg. name of a recipe is rec_name)
+- If you are referencing a property of an item the syntax is item_property (eg. name of a recipe from the app is rec_name)
 - Shortcuts:
     - Ingredient => ing
     - Recipe => rec
@@ -18,6 +18,8 @@ from bson.objectid import ObjectId
 if os.path.exists("env.py"):
     import env
 from python.addRecipe.addRecipe import addRecipePost
+from python.cookbook.getFavRecipes import getFavRecipes
+from python.cookbook.getMyRecipes import getMyRecipes
 from python.editRecipe.editRecipe import editRecipeData, editRecipePost
 from python.viewRecipe.viewRecipe import viewRecipeData
 
@@ -103,46 +105,10 @@ def browse():
 
 @app.route("/cookbook")
 def cookbook():
-    recsDB = list(mongo.db.recipes.find())
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
-    userFavRecs = user["isFav"]
-
-    # Get favourite recipes
-    userFavRecsIds = []
-    userFavRecsNames = []
-    userFavRecsImages = []
-
-    for rec in userFavRecs:
-        userFavRec_id = rec
-        userFavRec_name = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["name"]
-        userFavRec_image = mongo.db.recipes.find_one({"_id": ObjectId(rec)})["image"]
-
-        userFavRecsIds.append(userFavRec_id)
-        userFavRecsNames.append(userFavRec_name)
-        userFavRecsImages.append(userFavRec_image)
-
-    userFavRecs = zip(userFavRecsIds,
-                      userFavRecsNames,
-                      userFavRecsImages)
-
-    # Get my recipes
-    userMyRecsIds = []
-    userMyRecsNames = []
-    userMyRecsImages = []
-
-    for rec in recsDB:
-        if str(rec["user"]) == "624715013b6773d36014fcbc":
-            userMyRec_id = rec["_id"]
-            userMyRec_name = rec["name"]
-            userMyRec_image = rec["image"]
-
-            userMyRecsIds.append(userMyRec_id)
-            userMyRecsNames.append(userMyRec_name)
-            userMyRecsImages.append(userMyRec_image)
-
-    userMyRecs = zip(userMyRecsIds,
-                      userMyRecsNames,
-                      userMyRecsImages)
+    # python > cookbook > getFavRecipes.py
+    userFavRecs = getFavRecipes()
+    # python > cookbook > getMyRecipes.py
+    userMyRecs = getMyRecipes()
 
     return render_template("pages/cookbook/cookbook.html",
                            favRecs=list(userFavRecs),
@@ -203,15 +169,24 @@ def isFav(rec_id):
 
 @app.route("/menu/<rec_id>")
 def isMenu(rec_id):
+    # Find Zoe the user
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    # Find Zoe's menu recipes
     userMenuRecs = user["isMenu"]
 
+    # Create blank array to be populated with IDs of recipes of user menu
     userMenuRecsIds = []
     for rec in userMenuRecs:
         userMenuRec_id = rec["id"]
         userMenuRecsIds.append(userMenuRec_id)
 
-    userMenuRecDB = {
+    # Define object to be removed from menu
+    userMenuRecDBPull = {
+        "id": ObjectId(rec_id)
+    }
+
+    # Define object to be added to menu
+    userMenuRecDBPush = {
         "id": ObjectId(rec_id),
         "serves": 4
     }
@@ -219,11 +194,11 @@ def isMenu(rec_id):
     # If recipe is already on menu, remove it
     if ObjectId(rec_id) in userMenuRecsIds:
         mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
-                                  {'$pull': {"isMenu": userMenuRecDB}})
+                                  {'$pull': {"isMenu": userMenuRecDBPull}})
     # Otherwise add it to menu
     else:
         mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
-                                  {'$push': {"isMenu": userMenuRecDB}})
+                                  {'$push': {"isMenu": userMenuRecDBPush}})
 
     return redirect(url_for("menu"))
 
@@ -253,8 +228,8 @@ def updateMenu():
             userMenuRecId = request.form.get(f'id-{index+1}')
             userMenuRecServes = request.form.get(f'serves-{index+1}')
             userMenuRec = {
-                "id": userMenuRecId,
-                "serves": userMenuRecServes
+                "id": ObjectId(userMenuRecId),
+                "serves": int(userMenuRecServes)
             }
             mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
                                       {'$push': {"isMenu": userMenuRec}})

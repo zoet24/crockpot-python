@@ -43,5 +43,5 @@ def viewRecipeData(rec_id):
     # Get the user who created the recipe from Mongo users db
     recDB_user = recDB["user"]
     user = mongo.db.users.find_one({"_id": ObjectId(recDB_user)})
-    
+
     return recDB, ings, recCat_names, user
