@@ -292,7 +292,7 @@
                 {% endfor %}
             </div>
             <button type="submit" style="background: none;border: none;padding: 0">
-              <i class="fa fa-rotate-right icon" style="margin: 0"></i>
+              <i class="fa fa-rotate-right icon" id="update-menu" style="margin: 0"></i>
             </button>
         </form>
         <div class="modal__buttons modal__buttons--clear-menu modal__button--open--clear-menu">
@@ -300,12 +300,47 @@
         </div>
     </div>
 
-    <!-- Edit menu? modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <!-- Edit menu modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
     <div class="modal modal--edit-menu hide">
         <div class="modal__container">
             <div class="modal__content">
                 <div class="modal__text">
-                      <h4>Are you sure you want to edit your menu?</h4>
+                  <form class="form" method="POST" action="{{ url_for('addShopping') }}">
+                      <div class="form__row form__inputs--subrow">
+                        <!-- Ingredients - name (select dropdown, multiple values) -->
+                        <div class="form__subrow form__subrow--50">
+                            <select name="ingredientName">
+                                {% for ing in ings %}
+                                    <option label="{{ing.name}}" value="{{ing._id}}"></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Ingredients - quantity -->
+                        <div class="form__subrow form__subrow--20">
+                            <input 
+                                type="number" 
+                                value="1" 
+                                step="0.01" 
+                                min="0.01" 
+                                max="10000" 
+                                name="ingredientNum"
+                            />
+                        </div>
+
+                        <!-- Ingredients - unit -->
+                        <div class="form__subrow form__subrow--20">
+                            <select name="ingredientUnit">
+                                <option label="-" value=""></option>
+                                <option label="g" value="g"></option>
+                                <option label="ml" value="ml"></option>
+                                <option label="tsp" value=" tsp"></option>
+                                <option label="tbsp" value=" tbsp"></option>
+                                <option label="cans" value=" cans"></option>
+                            </select>
+                        </div>
+
+                      </div>
                       <div class="modal__buttons modal__buttons--edit-menu">
                           <div class="modal__button modal__button--yes btn btn--sm">
                               <input class="" type="submit" value="Yes">
@@ -314,6 +349,7 @@
                               No
                           </div>
                       </div>
+                  </form>
                 </div>
             </div>
         </div>
@@ -355,6 +391,13 @@
                 }
             }
         });
+
+        // Add prompt to update menu when items change
+        document.querySelectorAll('.btn-plus-minus__input').forEach(item => {
+          item.addEventListener('click', event => {
+            document.getElementById('update-menu').style.border = "black 4px solid";
+          })
+        })
     </script>
 
     {% include 'pages/menu/includes/js-updateMenu.html' %}

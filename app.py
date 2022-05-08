@@ -167,6 +167,7 @@ def isFav(rec_id):
     return redirect(url_for("cookbook"))
 
 
+# Menu functions
 @app.route("/menu/<rec_id>")
 def isMenu(rec_id):
     # Find Zoe the user
@@ -242,6 +243,10 @@ def menu():
     # Find user and all recipe ObjectIds on their menu
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
     userMenuRecs = user["isMenu"]
+    userShopping = user["isShopping"]
+
+    ingsDB = list(mongo.db.ingredients.find())
+    ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
     # Set empty arrays for menu recipe ids, names, images and serving numbers; shopping list ingredient names, numbers and units
     userMenuRecsIds = []
@@ -273,7 +278,7 @@ def menu():
         userMenuRec_ingNums = userMenuRec["ingredientNum"]
         userMenuRec_ingUnits = userMenuRec["ingredientUnit"]
 
-        # Get array of all ingredients in shopping list (duplicates)
+        # Get array of all ingredients from menu in shopping list (duplicates)
         for ingName in userMenuRec_ingNames:
             ingNameDB = mongo.db.ingredients.find_one({"_id": ingName})["name"]
             userShoppingIngNames.append(ingNameDB)
@@ -287,6 +292,27 @@ def menu():
 
         for ingUnit in userMenuRec_ingUnits:
             userShoppingIngUnits.append(ingUnit)
+
+    # Get array of all ingredients from shopping list in shopping list (duplicates)
+    for shopping in userShopping:
+        userShopping_ingName = shopping["ingredientName"]
+        userShopping_ingNum = shopping["ingredientNum"]
+        userShopping_ingUnit = shopping["ingredientUnit"]
+        
+        # Add name of ingredients
+        ingNameDB = mongo.db.ingredients.find_one({"_id": userShopping_ingName})["name"]
+        userShoppingIngNames.append(ingNameDB)
+
+        # Add category
+        ingCatIdDB = mongo.db.ingredients.find_one({"_id": userShopping_ingName})["category"]
+        ingCatDB = mongo.db.ingredientCategories.find_one({"_id": ingCatIdDB})["name"]
+        userShoppingIngCats.append(ingCatDB)
+
+        # Add quantity
+        userShoppingIngNums.append(userShopping_ingNum)
+
+        # Add unit
+        userShoppingIngUnits.append(userShopping_ingUnit)
 
     # Add duplicate shopping list values together
     userShoppingIngNamesEdit = []
@@ -361,8 +387,27 @@ def menu():
     return render_template("pages/menu/menu.html",
                            menuRecs=list(userMenuRecs),
                            shoppingList=list(userShoppingList),
-                           ingCatsCount=userShoppingIngCatsCount
+                           ingCatsCount=userShoppingIngCatsCount,
+                           ings=ingsDBSort
                            )
+
+
+# Shopping list functions
+@app.route("/addShopping", methods=["GET", "POST"])
+def addShopping():
+    if request.method == "POST":
+        user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+
+        shoppingListIng= {
+            "ingredientName": ObjectId(request.form.get("ingredientName")),
+            "ingredientNum": float(request.form.get("ingredientNum")),
+            "ingredientUnit": request.form.get("ingredientUnit")
+        }
+        
+        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+                                  {'$push': {"isShopping": shoppingListIng}})
+
+    return redirect(url_for("menu"))
 
 
 @app.route("/search", methods=["GET", "POST"])
