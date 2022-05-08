@@ -342,6 +342,7 @@ def menu():
                                 "Cupboard": 0, 
                                 "Sweets": 0, 
                                 "Herbs and Spices": 0, 
+                                "Booze": 0,
                                 "House": 0
                                 }
     userShoppingIngCatsUpdate = {i:userShoppingIngCatsEdit.count(i) for i in userShoppingIngCatsEdit}

@@ -60,9 +60,12 @@
 
     &__fixed-btns {
         position: fixed;
-        bottom: 100px;
-        width: 100%;
         display: flex;
-        justify-content: space-evenly;
+        align-items: center;
+        height: 12.5vh;
+        width: 60%;
+        top: 0;
+        z-index: 11;
+        padding-left: 90px;
     }
 }

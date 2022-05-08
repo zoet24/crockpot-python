@@ -11,14 +11,28 @@
 
     <section class="browse-recipe">
         <div class="browse-recipe__container">
-            <form class="form" action="{{ url_for('search') }}" method="POST">
+            <form class="form browse-recipe__form" action="{{ url_for('search') }}" method="POST">
                 <div class="form__row">
                     <input type="text" name="query" id="query" placeholder="Search for a recipe!">
                 </div>
-                <button class="btn-submit" type="submit"><i class="fas fa-search icon"></i></button>
-                <a class="btn-submit" href="/browse">
-                    <i class="fas fa-redo-alt icon"></i>
-                </a>
+                <div class="form__row form--row form--center">
+                    <div class="modal__buttons modal__buttons--search-categories">
+                        <div class="btn btn--sm modal__button--open modal__button--open--search-categories">
+                            Categories
+                        </div>
+                    </div>
+                    <div class="modal__buttons modal__buttons--search-ingredients">
+                        <div class="btn btn--sm modal__button--open modal__button--open--search-ingredients">
+                            Ingredients
+                        </div>
+                    </div>
+                </div>
+                <div class="form__row form--row form--center">
+                    <button class="btn-submit" type="submit"><i class="fas fa-search icon"></i></button>
+                    <a class="btn-submit" href="/browse">
+                        <i class="fas fa-redo-alt icon"></i>
+                    </a>
+                </div>
             </form>
             {% for rec in recs %}
                 {% with recipe_id=rec._id, recipe_name=rec.name, recipe_image=rec.image %}
@@ -27,4 +41,48 @@
             {% endfor %}
         </div>
     </section>
+    
+    <!-- Add recipe category modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--search-ingredients hide">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <!-- List of ingredients -->
+                    <div>
+                        Ingredients
+                    </div>
+                </div>
+                <div class="modal__buttons modal__buttons--search-ingredients">
+                    <div class="modal__button modal__button--yes btn btn--sm">
+                        Add
+                    </div>
+                    <div class="btn btn--sm modal__button modal__button--close modal__button--close--search-ingredients">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add recipe category modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
+    <div class="modal modal--search-categories hide">
+        <div class="modal__container">
+            <div class="modal__content">
+                <div class="modal__text">
+                    <!-- List of categories -->
+                    <div>
+                        Categories
+                    </div>
+                </div>
+                <div class="modal__buttons modal__buttons--search-categories">
+                    <div class="modal__button modal__button--yes btn btn--sm">
+                        Add
+                    </div>
+                    <div class="btn btn--sm modal__button modal__button--close modal__button--close--search-categories">
+                        Close
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

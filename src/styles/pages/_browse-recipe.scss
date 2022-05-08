@@ -6,4 +6,8 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
+
+    &__form {
+        @include containerFull();
+    }
 }
