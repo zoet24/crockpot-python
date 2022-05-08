@@ -51,6 +51,10 @@ body {
         @include t_a();
     }
 
+    a:hover {
+        text-decoration: none;
+    }
+
     ol {
         margin: 0;
         padding-left: 1.25rem;

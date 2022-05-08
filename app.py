@@ -208,10 +208,13 @@ def isMenu(rec_id):
 def clearMenu():
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
     userMenuRecs = user["isMenu"]
+    userShopping = user["isShopping"]
 
     if request.method == "POST":
         mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
                               {'$set': {'isMenu': [] }})
+        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+                              {'$set': {'isShopping': [] }})
 
         return redirect(url_for("menu"))
 
@@ -314,7 +317,7 @@ def menu():
         # Add unit
         userShoppingIngUnits.append(userShopping_ingUnit)
 
-    # Add duplicate shopping list values together
+    # Add duplicate shopping list values together and remove < 0 values
     userShoppingIngNamesEdit = []
     userShoppingIngCatsEdit = []
     userShoppingIngNumsEdit = []

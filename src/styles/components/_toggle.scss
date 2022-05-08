@@ -120,12 +120,12 @@ ul.toggle-checkboxes li label::before {
     font-weight: 900;
     font-size: 12px;
     padding: 0px 6px 0px 2px;
-    content: "\f067";
+    content: "\f00c";
     transition: transform .3s ease-in-out;
 }
 
 ul.toggle-checkboxes li input[type="checkbox"]:checked + label::before {
-    content: "\f00c";
+    content: "\f067";
     transform: rotate(-360deg);
     transition: transform .3s ease-in-out;
 }

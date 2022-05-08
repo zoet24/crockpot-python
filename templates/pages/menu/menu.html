@@ -75,7 +75,7 @@
                                     <ul class="toggle-checkboxes">
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "Meat" %}
-                                                <li><input type="checkbox" id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -93,13 +93,13 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Fish" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Fish" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
+                                  </ul>
                                   </div>
                                 </div>
                                 {% endif %}
@@ -114,13 +114,13 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Fruit" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Fruit" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
+                                  </ul>
                                   </div>
                                 </div>
                                 {% endif %}
@@ -135,12 +135,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Veg" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Veg" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -156,12 +156,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Dairy" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Dairy" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -177,12 +177,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Cupboard" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Cupboard" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -198,12 +198,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Herbs and Spices" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Herbs and Spices" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -219,12 +219,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Sweets" %}
-                                                <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Sweets" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -240,12 +240,12 @@
                                     </span>
                                   </label>
                                   <div class="accordion__content">
-                                    <ul>
-                                        {% for ings in shoppingList %}
-                                            {% if ings[1] == "Booze" %}
-                                            <li>{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</li>
-                                            {% endif %}
-                                        {% endfor %}
+                                    <ul class="toggle-checkboxes">
+                                      {% for ings in shoppingList %}
+                                          {% if ings[1] == "Booze" %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% endif %}
+                                      {% endfor %}
                                     </ul>
                                   </div>
                                 </div>
@@ -305,7 +305,14 @@
         <div class="modal__container">
             <div class="modal__content">
                 <div class="modal__text">
-                  <form class="form" method="POST" action="{{ url_for('addShopping') }}">
+                  <div class="toggle toggle--rounded toggle--border toggle-box__toggle">
+                    <input class="toggle__input toggle__input--1" type="radio" name="toggle__AddRemove" id="toggle__AddRemove__Add" checked="checked">
+                    <label class="toggle__option toggle__option--1" for="toggle__AddRemove__Add">Add</label>
+                    <input class="toggle__input toggle__input--2" type="radio" name="toggle__AddRemove" id="toggle__AddRemove__Remove">
+                    <label class="toggle__option toggle__option--2" for="toggle__AddRemove__Remove">Remove</label>
+                    <span class="toggle__slider"></span>
+                </div>
+                  <form class="form" id="shoppingListForm" method="POST" action="{{ url_for('addShopping') }}">
                       <div class="form__row form__inputs--subrow">
                         <!-- Ingredients - name (select dropdown, multiple values) -->
                         <div class="form__subrow form__subrow--50">
@@ -315,7 +322,6 @@
                                 {% endfor %}
                             </select>
                         </div>
-
                         <!-- Ingredients - quantity -->
                         <div class="form__subrow form__subrow--20">
                             <input 
@@ -325,9 +331,9 @@
                                 min="0.01" 
                                 max="10000" 
                                 name="ingredientNum"
+                                id="shoppingListNum"
                             />
                         </div>
-
                         <!-- Ingredients - unit -->
                         <div class="form__subrow form__subrow--20">
                             <select name="ingredientUnit">
@@ -339,11 +345,10 @@
                                 <option label="cans" value=" cans"></option>
                             </select>
                         </div>
-
                       </div>
                       <div class="modal__buttons modal__buttons--edit-menu">
-                          <div class="modal__button modal__button--yes btn btn--sm">
-                              <input class="" type="submit" value="Yes">
+                          <div class="modal__button modal__button--yes btn btn--sm" onClick="submitIngredient()">
+                              Yes
                           </div>
                           <div class="btn btn--sm modal__button modal__button--close modal__button--close--edit-menu">
                               No
@@ -398,6 +403,17 @@
             document.getElementById('update-menu').style.border = "black 4px solid";
           })
         })
+
+        function submitIngredient() {
+          val = document.getElementById('shoppingListNum').value
+          isRemove = document.getElementById('toggle__AddRemove__Remove').checked
+
+          if (isRemove == true) {
+            document.getElementById('shoppingListNum').value = val * -1
+          }
+          
+          document.getElementById("shoppingListForm").submit();
+        }
     </script>
 
     {% include 'pages/menu/includes/js-updateMenu.html' %}
