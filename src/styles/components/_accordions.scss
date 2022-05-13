@@ -1,7 +1,6 @@
 .accordion {
     border: solid 2px black;
     width: 100%;
-    margin-bottom: 100px;
 
     &__button {
         width: 100%;
@@ -43,6 +42,12 @@
         z-index: -1;
     }
 
+    input:not(:checked) {
+        ~ .accordion__content ul.toggle-checkboxes {
+            display: none;
+        }
+    }
+
     input:checked {
         + .accordion__button-label {
             // background: darken(blue, 10%);
@@ -55,6 +60,10 @@
 
         ~ .accordion__content {
             max-height: 100vh;
+
+            ul.toggle-checkboxes {
+                display: block;
+            }
         }
     }
 }
