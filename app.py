@@ -17,10 +17,12 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 if os.path.exists("env.py"):
     import env
+import random
 from python.addRecipe.addRecipe import addRecipePost
 from python.cookbook.getFavRecipes import getFavRecipes
 from python.cookbook.getMyRecipes import getMyRecipes
 from python.editRecipe.editRecipe import editRecipeData, editRecipePost
+from python.utility.findFavMenu import findFavMenu
 from python.viewRecipe.viewRecipe import viewRecipeData
 
 
@@ -54,6 +56,8 @@ def addRecipe():
     ingCatsDBSort = (sorted(ingCatsDB, key=lambda x: x["name"]))
     recCatsDB = list(mongo.db.recipeCategories.find())
     recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
+
+    # ingsDB = list(mongo.db.ingredients.find( { "category": { '$not': "627b77eab0cda8e4664c18bf" } } ))
     ingsDB = list(mongo.db.ingredients.find())
     ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
@@ -98,21 +102,34 @@ def addCat():
 def browse():
     # Get all recipes from Mongo db
     recsDB = list(mongo.db.recipes.find())
+    random.shuffle(recsDB)
+
+    isFav = findFavMenu()[0]
+    isMenu = findFavMenu()[1]
 
     return render_template("pages/browse_recipe/browse_recipe.html",
-                            recs=recsDB)
+                            recs=recsDB,
+                            isFav=isFav,
+                            isMenu=isMenu)
 
 
 @app.route("/cookbook")
 def cookbook():
     # python > cookbook > getFavRecipes.py
-    userFavRecs = getFavRecipes()
+    userFavRecs = list(getFavRecipes())
+    random.shuffle(userFavRecs)
     # python > cookbook > getMyRecipes.py
-    userMyRecs = getMyRecipes()
+    userMyRecs = list(getMyRecipes())
+    random.shuffle(userMyRecs)
+
+    isFav = findFavMenu()[0]
+    isMenu = findFavMenu()[1]
 
     return render_template("pages/cookbook/cookbook.html",
-                           favRecs=list(userFavRecs),
-                           myRecs=list(userMyRecs))
+                           isFav=isFav,
+                           isMenu=isMenu,
+                           favRecs=userFavRecs,
+                           myRecs=userMyRecs)
 
 
 @app.route("/deleteRecipe/<rec_id>")
@@ -137,15 +154,18 @@ def editRecipe(rec_id):
     ings = data[1]
     recCats = data[2]
 
-    # Get all recipe categories, all ingredients categories and all ingredients from Mongo
+    # Get all recipe categories, all ingredients categories and all ingredients from Mongo and sort them alphabetically
     ingCatsDB = list(mongo.db.ingredientCategories.find())
+    ingCatsDBSort = (sorted(ingCatsDB, key=lambda x: x["name"]))
     recCatsDB = list(mongo.db.recipeCategories.find())
+    recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
     ingsDB = list(mongo.db.ingredients.find())
+    ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
     return render_template("pages/edit_recipe/edit_recipe.html",
-                            ingCats=ingCatsDB,
-                            recCatsAll=recCatsDB,
-                            ingsAll=ingsDB,
+                            ingCats=ingCatsDBSort,
+                            recCatsAll=recCatsDBSort,
+                            ingsAll=ingsDBSort,
                             rec=recDB,
                             ingsRec=ings,
                             recCatsRec=recCats)
@@ -248,6 +268,9 @@ def menu():
     userMenuRecs = user["isMenu"]
     userShopping = user["isShopping"]
 
+    isFav = findFavMenu()[0]
+    isMenu = findFavMenu()[1]
+
     ingsDB = list(mongo.db.ingredients.find())
     ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
@@ -256,10 +279,12 @@ def menu():
     userMenuRecsNames = []
     userMenuRecsImages = []
     userMenuRecsServes = []
+    userShoppingList = []
     userShoppingIngNames = []
     userShoppingIngCats = []
     userShoppingIngNums = []
     userShoppingIngUnits = []
+    userShoppingIngNamesExtra = []
 
     # Add menu and shopping list information into empty arrays
     for rec in userMenuRecs:
@@ -301,10 +326,13 @@ def menu():
         userShopping_ingName = shopping["ingredientName"]
         userShopping_ingNum = shopping["ingredientNum"]
         userShopping_ingUnit = shopping["ingredientUnit"]
-        
+
         # Add name of ingredients
         ingNameDB = mongo.db.ingredients.find_one({"_id": userShopping_ingName})["name"]
         userShoppingIngNames.append(ingNameDB)
+
+        if shopping["ingredientNum"] > 0:
+            userShoppingIngNamesExtra.append(ingNameDB)
 
         # Add category
         ingCatIdDB = mongo.db.ingredients.find_one({"_id": userShopping_ingName})["category"]
@@ -322,6 +350,7 @@ def menu():
     userShoppingIngCatsEdit = []
     userShoppingIngNumsEdit = []
     userShoppingIngUnitsEdit = []
+
     i = 0
     imax = len(userShoppingIngNames)
 
@@ -362,6 +391,20 @@ def menu():
             userShoppingIngUnitsEdit.append(userShoppingIngUnit)
             i += 1
 
+    # # Alphabetise shopping list
+    # j = 0
+    # jmax = len(userShoppingIngNamesEdit) - 1
+
+    # while j <= jmax:
+    #     userShoppingList.append([userShoppingIngNamesEdit[j],
+    #                              userShoppingIngCatsEdit[j],
+    #                              userShoppingIngNumsEdit[j],
+    #                              userShoppingIngUnitsEdit[j]
+    #                             ])
+    #     j += 1
+
+    # userShoppingList = (sorted(userShoppingIngNamesEdit, key=lambda x: x[0]))
+
     # Count ingredients of specific categories
     userShoppingIngCatsCount = {"Meat": 0,
                                 "Fish": 0, 
@@ -371,7 +414,7 @@ def menu():
                                 "Cupboard": 0, 
                                 "Sweets": 0, 
                                 "Herbs and Spices": 0, 
-                                "Booze": 0,
+                                "Drinks": 0,
                                 "House": 0
                                 }
     userShoppingIngCatsUpdate = {i:userShoppingIngCatsEdit.count(i) for i in userShoppingIngCatsEdit}
@@ -388,8 +431,11 @@ def menu():
                            userShoppingIngUnitsEdit)
 
     return render_template("pages/menu/menu.html",
+                           isFav=isFav,
+                           isMenu=isMenu,
                            menuRecs=list(userMenuRecs),
                            shoppingList=list(userShoppingList),
+                           shoppingExtra=userShoppingIngNamesExtra,
                            ingCatsCount=userShoppingIngCatsCount,
                            ings=ingsDBSort
                            )
@@ -406,7 +452,7 @@ def addShopping():
             "ingredientNum": float(request.form.get("ingredientNum")),
             "ingredientUnit": request.form.get("ingredientUnit")
         }
-        
+
         mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
                                   {'$push': {"isShopping": shoppingListIng}})
 
@@ -422,8 +468,13 @@ def search():
         # Search recipes
         searchRecipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
 
+        isFav = findFavMenu()[0]
+        isMenu = findFavMenu()[1]
+
     return render_template("pages/browse_recipe/browse_recipe.html",
-                            recs=searchRecipes)
+                            recs=searchRecipes,
+                            isFav=isFav,
+                            isMenu=isMenu)
 
 
 @app.route("/viewRecipe/<rec_id>")
