@@ -72,16 +72,21 @@
                                   <input type="checkbox" id="accordion__button-1">
                                   <label class="accordion__button-label" for="accordion__button-1">
                                     <span>
-                                      <i class="fas fa-drumstick-bite icon icon--no-ml"></i>
-                                      Meat ({{ ingCatsCount["Meat"] }})
+                                      <span>
+                                        <i class="fas fa-drumstick-bite icon icon--no-ml"></i>
+                                        Meat
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                         {% for ings in shoppingList %}
-                                            {% if ings[1] == "Meat" %}
-                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                          {% if ings[1] == "Meat" %}
+                                            {% if ings[2] > 0 %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
                                             {% endif %}
+                                          {% endif %}
                                         {% endfor %}
                                     </ul>
                                   </div>
@@ -93,18 +98,23 @@
                                   <input type="checkbox" id="accordion__button-2">
                                   <label class="accordion__button-label" for="accordion__button-2">
                                     <span>
-                                      <i class="fas fa-fish icon icon--no-ml"></i>
-                                      Fish ({{ ingCatsCount["Fish"] }})
+                                      <span>
+                                        <i class="fas fa-fish icon icon--no-ml"></i>
+                                        Fish
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
-                                      {% for ings in shoppingList %}
+                                        {% for ings in shoppingList %}
                                           {% if ings[1] == "Fish" %}
+                                            {% if ings[2] > 0 %}
                                               <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
-                                      {% endfor %}
-                                  </ul>
+                                        {% endfor %}
+                                    </ul>
                                   </div>
                                 </div>
                                 {% endif %}
@@ -114,15 +124,20 @@
                                   <input type="checkbox" id="accordion__button-3">
                                   <label class="accordion__button-label" for="accordion__button-3">
                                     <span>
-                                      <i class="fas fa-lemon icon icon--no-ml"></i>
-                                      Fruit ({{ ingCatsCount["Fruit"] }})
+                                      <span>
+                                        <i class="fas fa-lemon icon icon--no-ml"></i>
+                                        Fruit
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Fruit" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                   </ul>
@@ -135,15 +150,20 @@
                                   <input type="checkbox" id="accordion__button-4">
                                   <label class="accordion__button-label" for="accordion__button-4">
                                     <span>
-                                      <i class="fas fa-carrot icon icon--no-ml"></i>
-                                      Veg ({{ ingCatsCount["Veg"] }})
+                                      <span>
+                                        <i class="fas fa-carrot icon icon--no-ml"></i>
+                                        Veg
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Veg" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -156,15 +176,20 @@
                                   <input type="checkbox" id="accordion__button-5">
                                   <label class="accordion__button-label" for="accordion__button-5">
                                     <span>
-                                      <i class="fas fa-cheese icon icon--no-ml"></i>
-                                      Dairy ({{ ingCatsCount["Dairy"] }})
+                                      <span>
+                                        <i class="fas fa-cheese icon icon--no-ml"></i>
+                                        Dairy
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Dairy" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -177,15 +202,20 @@
                                   <input type="checkbox" id="accordion__button-6">
                                   <label class="accordion__button-label" for="accordion__button-6">
                                     <span>
-                                      <i class="fas fa-bread-slice icon icon--no-ml"></i>
-                                      Cupboard ({{ ingCatsCount["Cupboard"] }})
+                                      <span>
+                                        <i class="fas fa-bread-slice icon icon--no-ml"></i>
+                                        Cupboard
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Cupboard" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -198,15 +228,20 @@
                                   <input type="checkbox" id="accordion__button-7">
                                   <label class="accordion__button-label" for="accordion__button-7">
                                     <span>
-                                      <i class="fas fa-pepper-hot icon icon--no-ml"></i>
-                                      Herbs and Spices ({{ ingCatsCount["Herbs and Spices"] }})
+                                      <span>
+                                        <i class="fas fa-pepper-hot icon icon--no-ml"></i>
+                                        Herbs and Spices
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Herbs and Spices" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -219,15 +254,20 @@
                                   <input type="checkbox" id="accordion__button-8">
                                   <label class="accordion__button-label" for="accordion__button-8">
                                     <span>
-                                      <i class="fas fa-cookie-bite icon icon--no-ml"></i>
-                                      Sweets ({{ ingCatsCount["Sweets"] }})
+                                      <span>
+                                        <i class="fas fa-cookie-bite icon icon--no-ml"></i>
+                                        Sweets
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Sweets" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -240,15 +280,20 @@
                                   <input type="checkbox" id="accordion__button-9">
                                   <label class="accordion__button-label" for="accordion__button-9">
                                     <span>
-                                      <i class="fas fa-wine-glass icon icon--no-ml"></i>
-                                      Drinks ({{ ingCatsCount["Drinks"] }})
+                                      <span>
+                                        <i class="fas fa-wine-glass icon icon--no-ml"></i>
+                                        Drinks
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                       {% for ings in shoppingList %}
                                           {% if ings[1] == "Drinks" %}
-                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% if ings[2] > 0 %}
+                                                <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                            {% endif %}
                                           {% endif %}
                                       {% endfor %}
                                     </ul>
@@ -261,15 +306,20 @@
                                   <input type="checkbox" id="accordion__button-10">
                                   <label class="accordion__button-label" for="accordion__button-10">
                                     <span>
-                                      <i class="fas fa-toilet-paper icon icon--no-ml"></i>
-                                      House ({{ ingCatsCount["House"] }})
+                                      <span>
+                                        <i class="fas fa-toilet-paper icon icon--no-ml"></i>
+                                        House
+                                      </span>
+                                      <span class="accordion__count"></span>
                                     </span>
                                   </label>
                                   <div class="accordion__content">
                                     <ul class="toggle-checkboxes">
                                         {% for ings in shoppingList %}
                                             {% if ings[1] == "House" %}
-                                            <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                              {% if ings[2] > 0 %}
+                                              <li><input type="checkbox" checked id="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}" value=""><label for="{{ings[0]}}{{ings[2]|round(2)}}{{ings[3]}}">{{ ings[0] }} x <span class="targetNum">{{ ings[2]|round(2) }}</span>{{ ings[3] }}</label></li>
+                                              {% endif %}
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -387,8 +437,8 @@
     </div>
 
     <script>
-        // If on the same page as view recipe, change quantity of food
         window.addEventListener('load', (e) => {
+          // Format quantity numbers when window loads
             const targetNums = document.querySelectorAll('.targetNum');
 
             for (var i = 0; i < targetNums.length; i++) {
@@ -400,6 +450,15 @@
                     }
                 }
             }
+
+          // Count number of lis in each accordion and populate number in ()s
+            const targetAccordions = document.querySelectorAll('.accordion__button')
+
+            for (var i = 0; i < targetAccordions.length; i++) {
+              var numLis = targetAccordions[i].querySelectorAll('li').length
+              var targetBrackets = targetAccordions[i].querySelector('.accordion__count')
+              targetBrackets.innerHTML = `(${numLis})`;
+            }
         });
 
         // Add prompt to update menu when items change
@@ -409,6 +468,7 @@
           })
         })
 
+        // Add +/- to submit ingredients form if toggle is on add/remove
         function submitIngredient() {
           val = document.getElementById('shoppingListNum').value
           isRemove = document.getElementById('toggle__AddRemove__Remove').checked
@@ -416,7 +476,7 @@
           if (isRemove == true) {
             document.getElementById('shoppingListNum').value = val * -1
           }
-          
+
           document.getElementById("shoppingListForm").submit();
         }
     </script>
