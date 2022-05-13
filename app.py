@@ -57,8 +57,8 @@ def addRecipe():
     recCatsDB = list(mongo.db.recipeCategories.find())
     recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
 
-    # ingsDB = list(mongo.db.ingredients.find( { "category": { '$not': "627b77eab0cda8e4664c18bf" } } ))
-    ingsDB = list(mongo.db.ingredients.find())
+    # Find all ingredients excluding house category
+    ingsDB = list(mongo.db.ingredients.find({ "category": { '$ne': ObjectId('627b77eab0cda8e4664c18bf') } }))
     ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
     return render_template("pages/add_recipe/add_recipe.html",
@@ -159,7 +159,7 @@ def editRecipe(rec_id):
     ingCatsDBSort = (sorted(ingCatsDB, key=lambda x: x["name"]))
     recCatsDB = list(mongo.db.recipeCategories.find())
     recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
-    ingsDB = list(mongo.db.ingredients.find())
+    ingsDB = list(mongo.db.ingredients.find({ "category": { '$ne': ObjectId('627b77eab0cda8e4664c18bf') } }))
     ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
     return render_template("pages/edit_recipe/edit_recipe.html",
@@ -392,18 +392,20 @@ def menu():
             i += 1
 
     # # Alphabetise shopping list
-    # j = 0
-    # jmax = len(userShoppingIngNamesEdit) - 1
+    j = 0
+    jmax = len(userShoppingIngNamesEdit) - 1
+    userShoppingList = []
 
-    # while j <= jmax:
-    #     userShoppingList.append([userShoppingIngNamesEdit[j],
-    #                              userShoppingIngCatsEdit[j],
-    #                              userShoppingIngNumsEdit[j],
-    #                              userShoppingIngUnitsEdit[j]
-    #                             ])
-    #     j += 1
+    while j <= jmax:
+        userShoppingList.append([userShoppingIngNamesEdit[j],
+                                 userShoppingIngCatsEdit[j],
+                                 userShoppingIngNumsEdit[j],
+                                 userShoppingIngUnitsEdit[j]
+                                ])
+        j += 1
 
-    # userShoppingList = (sorted(userShoppingIngNamesEdit, key=lambda x: x[0]))
+    userShoppingList = (sorted(userShoppingList, key=lambda x: x[0]))
+    userShoppingIngNamesExtra = (sorted(userShoppingIngNamesExtra, key=lambda x: x[0]))
 
     # Count ingredients of specific categories
     userShoppingIngCatsCount = {"Meat": 0,
@@ -425,16 +427,11 @@ def menu():
                        userMenuRecsImages,
                        userMenuRecsServes)
 
-    userShoppingList = zip(userShoppingIngNamesEdit,
-                           userShoppingIngCatsEdit,
-                           userShoppingIngNumsEdit,
-                           userShoppingIngUnitsEdit)
-
     return render_template("pages/menu/menu.html",
                            isFav=isFav,
                            isMenu=isMenu,
                            menuRecs=list(userMenuRecs),
-                           shoppingList=list(userShoppingList),
+                           shoppingList=userShoppingList,
                            shoppingExtra=userShoppingIngNamesExtra,
                            ingCatsCount=userShoppingIngCatsCount,
                            ings=ingsDBSort
