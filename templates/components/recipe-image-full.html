@@ -1,11 +1,11 @@
 <div class="recipe-image recipe-image--full">
     <div class="recipe-image__container">
         <div class="recipe-image__icons">
-            <a class="recipe-image__link-wrapper" href="/menu/{{rec._id}}">
-                <i class="fas fa-utensils icon"></i>
+            <a class="recipe-image__link-wrapper recipe-image__link-wrapper--menu" href="/menu/{{rec._id}}/1">
+                <i class="fas fa-utensils icon{% if recipe_id in isMenu %} icon--active{% endif %}"></i>
             </a>
             <a class="recipe-image__link-wrapper" href="/fav/{{rec._id}}">
-                <i class="fas fa-heart icon"></i>
+                <i class="fas fa-heart icon{% if recipe_id in isFav %} icon--active{% endif %}"></i>
             </a>
             <a class="recipe-image__link-wrapper" href="/editRecipe/{{rec._id}}">
                 <i class="fas fa-edit icon"></i>

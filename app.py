@@ -188,8 +188,8 @@ def isFav(rec_id):
 
 
 # Menu functions
-@app.route("/menu/<rec_id>")
-def isMenu(rec_id):
+@app.route("/menu/<rec_id>/<serves>")
+def isMenu(rec_id, serves):
     # Find Zoe the user
     user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
     # Find Zoe's menu recipes
@@ -209,7 +209,7 @@ def isMenu(rec_id):
     # Define object to be added to menu
     userMenuRecDBPush = {
         "id": ObjectId(rec_id),
-        "serves": 4
+        "serves": serves
     }
 
     # If recipe is already on menu, remove it
@@ -483,11 +483,16 @@ def viewRecipe(rec_id):
     recCat_names = data[2]
     user = data[3]
 
+    isFav = findFavMenu()[0]
+    isMenu = findFavMenu()[1]
+
     return render_template("pages/view_recipe/view_recipe.html",
                            rec=recDB,
                            ings=ings,
                            recCats=recCat_names,
-                           user=user)
+                           user=user,
+                           isFav=isFav,
+                           isMenu=isMenu)
 
 
 if __name__ == "__main__":

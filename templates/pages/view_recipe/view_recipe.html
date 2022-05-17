@@ -78,7 +78,7 @@
 
         </div>
     </section>
-    
+
     <!-- Delete recipe modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
     <div class="modal modal--delete-recipe hide">
         <div class="modal__container">
@@ -99,4 +99,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Update serving number from view recipe page
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.btn-plus-minus__input')) return;
+                const num = e.target.closest('.btn-plus-minus__btn').querySelector('.btn-plus-minus__num').value;
+                var menuHref = document.querySelector('.recipe-image__link-wrapper--menu').href;
+                const menuHrefRemove = menuHref.split("/")[5];
+
+                menuHref = menuHref.substring(0, menuHref.length - menuHrefRemove.length );
+                document.querySelector('.recipe-image__link-wrapper--menu').href = (menuHref + num);
+            })
+    </script>
 {% endblock %}
