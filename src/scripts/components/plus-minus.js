@@ -8,27 +8,53 @@ document.addEventListener('click', (e) => {
     const minVal = num.getAttribute("min");
     const maxVal = num.getAttribute("max");
     const step = parseInt(num.getAttribute("step"));
+    var stepUp = true;
 
     const isPlus = e.target.closest('.btn-plus-minus__input--plus');
     const isMinus = e.target.closest('.btn-plus-minus__input--minus');
     const isViewRecipe = e.target.closest('.view-recipe');
+    const isEditRecipe = e.target.closest('.edit-recipe');
 
     if ((isPlus !== null) && (numVal < maxVal)) {
         numVal += step;
+        stepUp = true;
     }
 
     if ((isMinus !== null) && (numVal > minVal)) {
         numVal -= step;
+        stepUp = false;
     }
 
     num.value = numVal;
+
+    if (isEditRecipe !== null) {
+        multiplyInputs(numVal, stepUp);
+    }
 
     if (isViewRecipe !== null) {
         multiplyIngs(numVal);
     }
 });
 
-// If on the same page as view recipe, change quantity of food
+// If on the same page as edit recipe, change quantity of ingredient inputs
+function multiplyInputs(numVal, stepUp) {
+    const targetInputs = document.querySelectorAll('.btn-plus-minus__targetInput');
+
+    for (var i = 0; i < targetInputs.length; i++) {
+        var targetInput = parseFloat(targetInputs[i].value);
+        console.log(stepUp)
+        if ((numVal > 1) && (stepUp == true)) {
+            var targetInputSingle = targetInput / (numVal - 1);
+        } else if ((numVal >= 1) && (stepUp == false)) {
+            var targetInputSingle = targetInput / (numVal + 1);
+        } else {
+            var targetInputSingle = targetInput / (numVal);
+        }
+        targetInputs[i].value = targetInputSingle * numVal;
+    }
+}
+
+// If on the same page as view recipe, change quantity of ingredients
 function multiplyIngs(numVal) {
     const targetNums = document.querySelectorAll('.btn-plus-minus__targetNum');
     const targetNumsHidden = document.querySelectorAll('.btn-plus-minus__targetNum--hidden');

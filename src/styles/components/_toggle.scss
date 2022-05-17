@@ -137,10 +137,6 @@ ul.toggle-checkboxes li input[type="checkbox"]:checked + label, ul.toggle-checkb
 }
 
 ul.toggle-checkboxes li input[type="checkbox"] {
-  display: absolute;
-}
-
-ul.toggle-checkboxes li input[type="checkbox"] {
   position: absolute;
   opacity: 0;
 }
