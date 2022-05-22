@@ -104,11 +104,19 @@ def browse():
     recsDB = list(mongo.db.recipes.find())
     random.shuffle(recsDB)
 
+    # Get all recipe categories and all ingredients from Mongo and sort them alphabetically
+    recCatsDB = list(mongo.db.recipeCategories.find())
+    recCatsDBSort = (sorted(recCatsDB, key=lambda x: x["name"]))
+    ingsDB = list(mongo.db.ingredients.find({ "category": { '$ne': ObjectId('627b77eab0cda8e4664c18bf') } }))
+    ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
+
     isFav = findFavMenu()[0]
     isMenu = findFavMenu()[1]
 
     return render_template("pages/browse_recipe/browse_recipe.html",
                             recs=recsDB,
+                            recCats=recCatsDBSort,
+                            ings=ingsDBSort,
                             isFav=isFav,
                             isMenu=isMenu)
 
@@ -459,17 +467,62 @@ def addShopping():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == "POST":
-        # Get query text from user search
-        query = request.form.get("query")
+        # Get all recipes from db
+        recsDB = list(mongo.db.recipes.find())
 
-        # Search recipes
-        searchRecipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
+        # Get query text from user search
+        query = request.form.get("query").split('&')
+
+        # Search for name
+        queryRec = query[0]
+        searchRecsNames = list(mongo.db.recipes.find({"$text": {"$search": f"\"{queryRec}\""}}))
+        searchRecsNamesIds = []
+        for rec in searchRecsNames:
+            searchRecsNamesIds.append(rec['_id'])
+
+        # Search for ingredients
+        queryIngs = query[1].rstrip().split(' ')
+        searchRecsIngsIds = []
+        for rec in recsDB:
+            isMatch = all(item in rec['ingredientTags'].rstrip().split(' ') for item in queryIngs)
+            if isMatch:
+                searchRecsIngsIds.append(rec['_id'])
+
+        # Search for categories
+        queryCats = query[2].rstrip().split(' ')
+        searchRecsCatsIds = []
+        for rec in recsDB:
+            isMatch = all(item in rec['categoryTags'].rstrip().split(' ') for item in queryCats)
+            if isMatch:
+                searchRecsCatsIds.append(rec['_id'])
+
+        searchRecsIds = []
+
+        if (len(searchRecsNamesIds) > 0):
+            searchRecsIds = searchRecsNamesIds
+        if (len(searchRecsIngsIds) > 0):
+            searchRecsIds = searchRecsIngsIds
+        if (len(searchRecsCatsIds) > 0):
+            searchRecsIds = searchRecsCatsIds
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds))
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsCatsIds))
+        if (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsIngsIds) & set(searchRecsCatsIds))
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds) & set(searchRecsCatsIds))
+
+        searchRecs = []
+        for recId in searchRecsIds:
+            rec = mongo.db.recipes.find_one({"_id": ObjectId(recId)})
+            searchRecs.append(rec)
 
         isFav = findFavMenu()[0]
         isMenu = findFavMenu()[1]
 
     return render_template("pages/browse_recipe/browse_recipe.html",
-                            recs=searchRecipes,
+                            recs=searchRecs,
                             isFav=isFav,
                             isMenu=isMenu)
 

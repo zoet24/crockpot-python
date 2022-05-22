@@ -23,11 +23,14 @@ def editRecipePost(rec_id):
 
     # Format recipe ingredient names
     recDB_ingNames = []
+    recDB_ingUrls = ""
     recIngIds = request.form.getlist("ingredientName")
     recIngIds.pop(0)
     for recIngId in recIngIds:
         recDB_ingName = ObjectId(recIngId)
         recDB_ingNames.append(recDB_ingName)
+        recDB_ingUrls += (mongo.db.ingredients.find_one({ "_id": ObjectId(recIngId) })['url'])
+        recDB_ingUrls += " "
 
     # Format recipe ingredient quantities to get quantities for 1 portion
     recServes = request.form.get("serves")
@@ -42,12 +45,15 @@ def editRecipePost(rec_id):
 
     # Format recipe ingredient names
     recDB_recCats = []
+    recDB_recCatsUrls = ""
     recCatIds = request.form.getlist("recipeCategories")
     recCatIds.pop(0)
 
     for recCatId in recCatIds:
         recDB_recCat = ObjectId(recCatId)
         recDB_recCats.append(recDB_recCat)
+        recDB_recCatsUrls += mongo.db.recipeCategories.find_one({ "_id": ObjectId(recCatId) })['url']
+        recDB_recCatsUrls += " "
 
     # Remove hidden add/remove value from form entries
     recDB_ingUnits = request.form.getlist("ingredientUnit")
@@ -72,6 +78,8 @@ def editRecipePost(rec_id):
         "notes": recDB_notes,
         "recipeCategories": recDB_recCats,
         "user": ObjectId("624715013b6773d36014fcbc"),
+        "ingredientTags": recDB_ingUrls,
+        "categoryTags": recDB_recCatsUrls,
     }
 
     mongo.db.recipes.update({"_id": ObjectId(rec_id)}, recDBedit)
@@ -88,7 +96,7 @@ def editRecipeData(rec_id):
     for recCat in recDB["recipeCategories"]:
         recCat_name = recCatsDB.find_one({"_id": ObjectId(recCat)})["name"]
         recCat_names.append(recCat_name)
-    
+
     # Zip recipe categories and IDs into matrix
     recCats = zip(recCat_names,
                   recDB["recipeCategories"])

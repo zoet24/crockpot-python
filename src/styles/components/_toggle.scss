@@ -94,6 +94,7 @@ ul.toggle-checkboxes {
     list-style: none;
     padding-left: 0;
     text-align: center;
+    width: 100%;
 }
 
 ul.toggle-checkboxes li{
@@ -128,6 +129,14 @@ ul.toggle-checkboxes li input[type="checkbox"]:checked + label::before {
     content: "\f067";
     transform: rotate(-360deg);
     transition: transform .3s ease-in-out;
+}
+
+ul.toggle-checkboxes--inverse li label::before {
+    content: "\f067";
+}
+
+ul.toggle-checkboxes--inverse li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
 }
 
 ul.toggle-checkboxes li input[type="checkbox"]:checked + label, ul.toggle-checkboxes li.toggle-checkboxes__label {

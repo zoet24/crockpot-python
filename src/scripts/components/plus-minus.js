@@ -42,7 +42,6 @@ function multiplyInputs(numVal, stepUp) {
 
     for (var i = 0; i < targetInputs.length; i++) {
         var targetInput = parseFloat(targetInputs[i].value);
-        console.log(stepUp)
         if ((numVal > 1) && (stepUp == true)) {
             var targetInputSingle = targetInput / (numVal - 1);
         } else if ((numVal >= 1) && (stepUp == false)) {

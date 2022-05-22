@@ -15,6 +15,8 @@
         border: 2px black solid;
         width: calc(100% - 70px);
         height: fit-content;
+        max-height: 70vh;
+        overflow: scroll;
     }
 
     &__content {

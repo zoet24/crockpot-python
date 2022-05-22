@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="form__row form--row form--center">
-                    <button class="btn-submit" type="submit"><i class="fas fa-search icon"></i></button>
+                    <button class="btn-submit" onclick="search()"><i class="fas fa-search icon"></i></button>
                     <a class="btn-submit" href="/browse">
                         <i class="fas fa-redo-alt icon"></i>
                     </a>
@@ -48,9 +48,12 @@
             <div class="modal__content">
                 <div class="modal__text">
                     <!-- List of ingredients -->
-                    <div>
-                        Ingredients
-                    </div>
+                    <h3>Ingredients</h3>
+                    <ul class="toggle-checkboxes toggle-checkboxes--inverse" id="query-ings">
+                        {% for ing in ings %}
+                            <li><input type="checkbox" id="{{ ing.url }}" value="{{ ing.url }}"><label for="{{ ing.url }}">{{ ing.name }}</label></li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="modal__buttons modal__buttons--search-ingredients">
                     <div class="modal__button modal__button--yes btn btn--sm">
@@ -63,16 +66,19 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Add recipe category modal (put identifier on modal, modal__buttons, modal__button--open and modal__button--close )-->
     <div class="modal modal--search-categories hide">
         <div class="modal__container">
             <div class="modal__content">
                 <div class="modal__text">
                     <!-- List of categories -->
-                    <div>
-                        Categories
-                    </div>
+                    <h3>Categories</h3>
+                    <ul class="toggle-checkboxes toggle-checkboxes--inverse" id="query-recCats">
+                        {% for recCat in recCats %}
+                            <li><input type="checkbox" id="{{ recCat.url }}" value="{{ recCat.url }}"><label for="{{ recCat.url }}">{{ recCat.name }}</label></li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="modal__buttons modal__buttons--search-categories">
                     <div class="modal__button modal__button--yes btn btn--sm">
@@ -85,4 +91,47 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function search() {
+            // Get initial query text
+            var query = document.getElementById('query');
+
+            // Get list of checked ingredients
+            var ings = document.getElementById("query-ings");
+            var ingsInputs = ings.getElementsByTagName("input");
+            var ingsStringChecked = "";
+            var ingsString = "";
+
+            for (var i = 0; i < ingsInputs.length; ++i) {
+                ingsString = ingsInputs[i].value;
+
+                if (ingsInputs[i].checked) {
+                    ingsStringChecked = ingsStringChecked.concat(ingsString + " ");
+                }
+            }
+
+            // Update query value
+            query.value += "&";
+            query.value += ingsStringChecked;
+
+            // Get list of checked recipe categories
+            var recCats = document.getElementById("query-recCats");
+            var recCatsInputs = recCats.getElementsByTagName("input");
+            var recCatsStringChecked = "";
+            var recCatsString = "";
+
+            for (var i = 0; i < recCatsInputs.length; ++i) {
+                recCatsString = recCatsInputs[i].value;
+
+                if (recCatsInputs[i].checked) {
+                    recCatsStringChecked = recCatsStringChecked.concat(recCatsString + " ");
+                }
+            }
+
+            // Update query value
+            query.value += "&";
+            query.value += recCatsStringChecked;
+        }
+    </script>
 {% endblock %}
