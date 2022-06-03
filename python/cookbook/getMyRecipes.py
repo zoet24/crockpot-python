@@ -19,15 +19,16 @@ mongo = PyMongo(app)
 
 def getMyRecipes():
     recsDB = list(mongo.db.recipes.find())
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
-    
+    user = mongo.db.users.find_one({"username": session["user"]})
+    userID = user["_id"]
+
     # Get my recipes
     userMyRecsIds = []
     userMyRecsNames = []
     userMyRecsImages = []
 
     for rec in recsDB:
-        if str(rec["user"]) == "624715013b6773d36014fcbc":
+        if str(rec["user"]) == str(userID):
             userMyRec_id = rec["_id"]
             userMyRec_name = rec["name"]
             userMyRec_image = rec["image"]

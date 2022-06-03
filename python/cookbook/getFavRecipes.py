@@ -19,7 +19,7 @@ mongo = PyMongo(app)
 
 def getFavRecipes():
     recsDB = list(mongo.db.recipes.find())
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
     userFavRecs = user["isFav"]
 
     # Get favourite recipes

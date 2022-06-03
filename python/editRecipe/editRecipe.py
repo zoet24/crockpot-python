@@ -65,6 +65,8 @@ def editRecipePost(rec_id):
     recDB_notes = request.form.getlist("notes")
     recDB_notes.pop(0)
 
+    user = mongo.db.users.find_one({"username": session["user"]})
+
     # Define new recipe for Mongo db
     recDBedit = {
         "name": request.form.get("name").title(),
@@ -77,7 +79,7 @@ def editRecipePost(rec_id):
         "instructions": recDB_instructions,
         "notes": recDB_notes,
         "recipeCategories": recDB_recCats,
-        "user": ObjectId("624715013b6773d36014fcbc"),
+        "user": ObjectId(user["_id"]),
         "ingredientTags": recDB_ingUrls,
         "categoryTags": recDB_recCatsUrls,
     }

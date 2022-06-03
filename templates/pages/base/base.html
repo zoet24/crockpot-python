@@ -19,6 +19,8 @@
     {% endblock %}
 
     <!-- Bottom navbar -->
-    {% include 'components/navbar.html' %}
+    {% if (active_page != 'login') and (active_page != 'signup') %}
+        {% include 'components/navbar.html' %}
+    {% endif %}
 </body>
 </html>

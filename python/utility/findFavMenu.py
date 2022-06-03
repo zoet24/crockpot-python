@@ -19,7 +19,7 @@ mongo = PyMongo(app)
 
 def findFavMenu():
     # Find user and all fav/menu recipes
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
     isFav = user["isFav"]
 
     isMenu = []

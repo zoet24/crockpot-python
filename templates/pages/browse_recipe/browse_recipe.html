@@ -34,11 +34,17 @@
                     </a>
                 </div>
             </form>
-            {% for rec in recs %}
-                {% with recipe_id=rec._id, recipe_name=rec.name, recipe_image=rec.image %}
-                    {% include 'components/recipe-image-tile.html' %}
-                {% endwith %}
-            {% endfor %}
+            {% if recs|length > 0 %}
+                {% for rec in recs %}
+                    {% with recipe_id=rec._id, recipe_name=rec.name, recipe_image=rec.image %}
+                        {% include 'components/recipe-image-tile.html' %}
+                    {% endwith %}
+                {% endfor %}
+            {% else %}
+                <div class="browse-recipe__no-results">
+                    <p>There were no matches to your search criteria. Please reset your search and try again!</p>
+                </div>
+            {% endif %}
         </div>
     </section>
 
@@ -55,13 +61,8 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="modal__buttons modal__buttons--search-ingredients">
-                    <div class="modal__button modal__button--yes btn btn--sm">
-                        Add
-                    </div>
-                    <div class="btn btn--sm modal__button modal__button--close modal__button--close--search-ingredients">
-                        Close
-                    </div>
+                <div class="modal__buttons modal__buttons--search-ingredients browse-recipe__modal-buttons">
+                    <i class="icon fas fa-check modal__button modal__button--close modal__button--close--search-ingredients"></i>
                 </div>
             </div>
         </div>
@@ -80,13 +81,8 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="modal__buttons modal__buttons--search-categories">
-                    <div class="modal__button modal__button--yes btn btn--sm">
-                        Add
-                    </div>
-                    <div class="btn btn--sm modal__button modal__button--close modal__button--close--search-categories">
-                        Close
-                    </div>
+                <div class="modal__buttons modal__buttons--search-categories browse-recipe__modal-buttons">
+                    <i class="icon fas fa-check modal__button modal__button--close modal__button--close--search-categories"></i>
                 </div>
             </div>
         </div>

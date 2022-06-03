@@ -10,4 +10,15 @@
     &__form {
         @include containerFull();
     }
+
+    &__no-results {
+        padding: 35px;
+        text-align: center;
+    }
+
+    &__modal-buttons {
+        position: fixed;
+        top: 16vh;
+        right: 35px;
+    }
 }

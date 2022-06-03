@@ -15,6 +15,7 @@ from flask import (
     request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 import random
@@ -38,6 +39,51 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
     return render_template("pages/index/index.html")
+
+
+# USER FUNCTIONS
+@app.route("/login")
+def login():
+    return render_template("pages/login/login.html")
+
+
+@app.route("/logout")
+def logout():
+    # Remove user from session cookie
+    # flash("You have been logged out")
+    session.pop("user")
+
+    return redirect(url_for("login"))
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        # Check if username already exists in db
+        # existing_user = mongo.db.users.find_one(
+        #     {"username": request.form.get("input-username-signup").lower()})
+
+        # if existing_user:
+        #     flash("Username already exists")
+        #     return redirect(url_for("signup"))
+
+        signup = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(
+                request.form.get("password")),
+            "isFav": [],
+            "isMenu": [],
+            "isShopping": [],
+        }
+
+        mongo.db.users.insert_one(signup)
+
+        # Put the new user into 'session' cookie
+        session["user"] = request.form.get("username").lower()
+        # flash("Registration Successful!")
+        return redirect(url_for("cookbook"))
+
+    return render_template("pages/signup/signup.html")
 
 
 @app.route("/addRecipe", methods=["GET", "POST"])
@@ -181,15 +227,15 @@ def editRecipe(rec_id):
 
 @app.route("/fav/<rec_id>")
 def isFav(rec_id):
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
 
     # If recipe is already on favs, remove it
     if ObjectId(rec_id) in user["isFav"]:
-        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isFav": ObjectId(rec_id)}})
     # Otherwise add it to favs
     else:
-        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isFav": ObjectId(rec_id)}})
 
     return redirect(url_for("cookbook"))
@@ -198,9 +244,9 @@ def isFav(rec_id):
 # Menu functions
 @app.route("/menu/<rec_id>/<serves>")
 def isMenu(rec_id, serves):
-    # Find Zoe the user
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
-    # Find Zoe's menu recipes
+    # Find the user
+    user = mongo.db.users.find_one({"username": session["user"]})
+    # Find the user's menu recipes
     userMenuRecs = user["isMenu"]
 
     # Create blank array to be populated with IDs of recipes of user menu
@@ -222,11 +268,11 @@ def isMenu(rec_id, serves):
 
     # If recipe is already on menu, remove it
     if ObjectId(rec_id) in userMenuRecsIds:
-        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isMenu": userMenuRecDBPull}})
     # Otherwise add it to menu
     else:
-        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isMenu": userMenuRecDBPush}})
 
     return redirect(url_for("menu"))
@@ -234,14 +280,14 @@ def isMenu(rec_id, serves):
 
 @app.route("/clearMenu", methods=["GET", "POST"])
 def clearMenu():
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
     userMenuRecs = user["isMenu"]
     userShopping = user["isShopping"]
 
     if request.method == "POST":
-        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isMenu': [] }})
-        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isShopping': [] }})
 
         return redirect(url_for("menu"))
@@ -249,11 +295,11 @@ def clearMenu():
 
 @app.route("/updateMenu", methods=["GET", "POST"])
 def updateMenu():
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
     userMenuRecs = user["isMenu"]
 
     if request.method == "POST":
-        mongo.db.users.update({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isMenu': [] }})
 
         for index, rec in enumerate(userMenuRecs):
@@ -263,7 +309,7 @@ def updateMenu():
                 "id": ObjectId(userMenuRecId),
                 "serves": int(userMenuRecServes)
             }
-            mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+            mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                       {'$push': {"isMenu": userMenuRec}})
 
         return redirect(url_for("menu"))
@@ -272,7 +318,7 @@ def updateMenu():
 @app.route("/menu")
 def menu():
     # Find user and all recipe ObjectIds on their menu
-    user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+    user = mongo.db.users.find_one({"username": session["user"]})
     userMenuRecs = user["isMenu"]
     userShopping = user["isShopping"]
 
@@ -450,7 +496,7 @@ def menu():
 @app.route("/addShopping", methods=["GET", "POST"])
 def addShopping():
     if request.method == "POST":
-        user = mongo.db.users.find_one({"_id": ObjectId("624715013b6773d36014fcbc")})
+        user = mongo.db.users.find_one({"username": session["user"]})
 
         shoppingListIng= {
             "ingredientName": ObjectId(request.form.get("ingredientName")),
@@ -458,7 +504,7 @@ def addShopping():
             "ingredientUnit": request.form.get("ingredientUnit")
         }
 
-        mongo.db.users.update_one({"_id": ObjectId("624715013b6773d36014fcbc")},
+        mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isShopping": shoppingListIng}})
 
     return redirect(url_for("menu"))

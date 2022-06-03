@@ -1,0 +1,21 @@
+// Styles pertaining to user (login, logout, signup)
+
+.login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    
+    &__container {
+        @include container300();
+    }
+}
+
+.signup {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    
+    &__container {
+        @include container300();
+    }
+}
