@@ -42,8 +42,29 @@ def index():
 
 
 # USER FUNCTIONS
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        # Check if username exists in db
+        existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
+
+        if existing_user:
+            # Ensure hashed password matches user input
+            if check_password_hash(existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
+                return redirect(url_for("cookbook"))
+            else:
+                # Invalid password match
+                # flash("Incorrect Username and/or Password")
+                print("Nope!")
+                return redirect(url_for("login"))
+
+        else:
+            # Username doesn't exist
+            # flash("Incorrect Username and/or Password")
+            print("Nope!")
+            return redirect(url_for("login"))
+
     return render_template("pages/login/login.html")
 
 
