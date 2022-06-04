@@ -85,6 +85,7 @@ def editRecipePost(rec_id):
     }
 
     mongo.db.recipes.update({"_id": ObjectId(rec_id)}, recDBedit)
+    flash("Your recipe for " + recDBedit["name"] + " has been edited.")
 
 
 def editRecipeData(rec_id):

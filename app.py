@@ -41,7 +41,7 @@ def index():
     return render_template("pages/index/index.html")
 
 
-# USER FUNCTIONS
+# ACCOUNT FUNCTIONS
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -49,20 +49,19 @@ def login():
         existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
 
         if existing_user:
-            # Ensure hashed password matches user input
+            # Check hashed password matches user input
             if check_password_hash(existing_user["password"], request.form.get("password")):
+                # Add user to session cookie
                 session["user"] = request.form.get("username").lower()
+                flash("Welcome back " + session["user"] + "!")
                 return redirect(url_for("cookbook"))
             else:
                 # Invalid password match
-                # flash("Incorrect Username and/or Password")
-                print("Nope!")
+                flash("Sorry, we can't find an account with those details.")
                 return redirect(url_for("login"))
-
         else:
             # Username doesn't exist
-            # flash("Incorrect Username and/or Password")
-            print("Nope!")
+            flash("Sorry, we can't find an account with those details.")
             return redirect(url_for("login"))
 
     return render_template("pages/login/login.html")
@@ -71,7 +70,7 @@ def login():
 @app.route("/logout")
 def logout():
     # Remove user from session cookie
-    flash("You have been logged out")
+    flash("See you later " + session["user"] + "!")
     session.pop("user")
 
     return redirect(url_for("login"))
@@ -80,18 +79,16 @@ def logout():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        # Check if username already exists in db
-        # existing_user = mongo.db.users.find_one(
-        #     {"username": request.form.get("input-username-signup").lower()})
+        # Check if username exists in db
+        existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
 
-        # if existing_user:
-        #     flash("Username already exists")
-        #     return redirect(url_for("signup"))
+        if existing_user:
+            flash("This username already exists!")
+            return redirect(url_for("signup"))
 
         signup = {
             "username": request.form.get("username").lower(),
-            "password": generate_password_hash(
-                request.form.get("password")),
+            "password": generate_password_hash(request.form.get("password")),
             "isFav": [],
             "isMenu": [],
             "isShopping": [],
@@ -101,12 +98,13 @@ def signup():
 
         # Put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
-        # flash("Registration Successful!")
+        flash("Welcome " + session["user"] + "!")
         return redirect(url_for("cookbook"))
 
     return render_template("pages/signup/signup.html")
 
 
+# DATABASE FUNCTIONS
 @app.route("/addRecipe", methods=["GET", "POST"])
 def addRecipe():
     if request.method == "POST":
@@ -146,6 +144,7 @@ def addIng():
     }
 
     mongo.db.ingredients.insert_one(ingDB)
+    flash(ingDB["name"] + " (" + request.form.get("category").title() + ") has been added to your ingredients.")
 
     return redirect(url_for("addRecipe"))
 
@@ -161,6 +160,7 @@ def addCat():
     }
 
     mongo.db.recipeCategories.insert_one(catDB)
+    flash(catDB["name"] + " has been added to your categories.")
 
     return redirect(url_for("addRecipe"))
 

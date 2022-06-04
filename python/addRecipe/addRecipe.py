@@ -85,3 +85,4 @@ def addRecipePost():
     }
 
     mongo.db.recipes.insert_one(recDB)
+    flash(recDB["name"] + " has been added to your recipes.")

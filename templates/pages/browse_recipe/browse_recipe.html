@@ -5,7 +5,7 @@
 
 {% block content %}
     <!-- Header -->
-    {% with header_text="Browse Recipes" %}
+    {% with header_text=("Browse Recipes (" + (recs|length)|string + ")") %}
         {% include 'components/header.html' %}
     {% endwith %}
 
