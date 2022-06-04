@@ -15,6 +15,18 @@
     <title>Crockpot{% block extra_title %}{% endblock %}</title>
 </head>
 <body>
+    <header class="toasts">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="toast">
+                        <h4>{{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </header>
+
     {% block content %}
     {% endblock %}
 

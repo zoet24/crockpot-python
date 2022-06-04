@@ -71,7 +71,7 @@ def login():
 @app.route("/logout")
 def logout():
     # Remove user from session cookie
-    # flash("You have been logged out")
+    flash("You have been logged out")
     session.pop("user")
 
     return redirect(url_for("login"))
@@ -199,7 +199,7 @@ def cookbook():
 
     isFav = findFavMenu()[0]
     isMenu = findFavMenu()[1]
-
+    
     return render_template("pages/cookbook/cookbook.html",
                            isFav=isFav,
                            isMenu=isMenu,

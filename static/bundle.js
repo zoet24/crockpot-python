@@ -39,6 +39,16 @@ eval("// Plus minus button\ndocument.addEventListener('click', function (e) {\n 
 
 /***/ }),
 
+/***/ "./src/scripts/components/toasts.js":
+/*!******************************************!*\
+  !*** ./src/scripts/components/toasts.js ***!
+  \******************************************/
+/***/ (() => {
+
+eval("// Find toasts and fade them out one by one\nwindow.addEventListener('load', function (event) {\n  var i = 0;\n  var toasts = document.querySelectorAll(\".toast\");\n  var time = 1000;\n\n  for (j = 1; j <= toasts.length; j++) {\n    setTimeout(function () {\n      hideToast();\n    }, time * j);\n  }\n\n  function hideToast() {\n    toasts[i].classList.add(\"fade-out\");\n\n    if (i == toasts.length - 1) {\n      setTimeout(function () {\n        for (k = 0; k < toasts.length; k++) {\n          toasts[k].classList.add(\"hide\");\n        }\n      }, time);\n    }\n\n    i += 1;\n  }\n});\n\n//# sourceURL=webpack://crockpot/./src/scripts/components/toasts.js?");
+
+/***/ }),
+
 /***/ "./src/scripts/components/toggle.js":
 /*!******************************************!*\
   !*** ./src/scripts/components/toggle.js ***!
@@ -56,7 +66,7 @@ eval("// Toggle switch\ndocument.addEventListener('click', function (e) {\n  if 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/add-remove */ \"./src/scripts/components/add-remove.js\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_add_remove__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modal */ \"./src/scripts/components/modal.js\");\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_modal__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_4__);\n\n\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/style.scss */ \"./src/styles/style.scss\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/add-remove */ \"./src/scripts/components/add-remove.js\");\n/* harmony import */ var _components_add_remove__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_add_remove__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modal */ \"./src/scripts/components/modal.js\");\n/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components_modal__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/plus-minus */ \"./src/scripts/components/plus-minus.js\");\n/* harmony import */ var _components_plus_minus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_components_plus_minus__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _components_toasts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/toasts */ \"./src/scripts/components/toasts.js\");\n/* harmony import */ var _components_toasts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_components_toasts__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/toggle */ \"./src/scripts/components/toggle.js\");\n/* harmony import */ var _components_toggle__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_components_toggle__WEBPACK_IMPORTED_MODULE_5__);\n\n\n\n\n\n\n\n//# sourceURL=webpack://crockpot/./src/scripts/index.js?");
 
 /***/ }),
 

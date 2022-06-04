@@ -1,0 +1,13 @@
+.toasts {
+    z-index: 11;
+    position: fixed;
+    width: 100%;
+}
+
+.toast {
+    border: 2px solid black;
+    margin: calc($g-mobile / 2) calc($g-mobile / 2) 0;
+    padding: calc($g-mobile / 2);
+    background: white;
+    transition: all ease-in-out $a-long;
+}
