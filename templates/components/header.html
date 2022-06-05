@@ -16,9 +16,15 @@
             </div>
             {% endif %}
         </div>
-        <a class="header__icon" href="{{ url_for('logout') }}">
-            Log out
-        </a>
+        {% if session.user %}
+            <a class="header__icon" href="{{ url_for('logout') }}">
+                Log out
+            </a>
+        {% else %}
+            <a class="header__icon" href="{{ url_for('login') }}">
+                Log in
+            </a>
+        {% endif %}
     </div>
 </header>
 <div class="header__spacer"></div>

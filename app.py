@@ -107,6 +107,11 @@ def signup():
 # DATABASE FUNCTIONS
 @app.route("/addRecipe", methods=["GET", "POST"])
 def addRecipe():
+    isSession = session.get("user")
+
+    if not isSession:
+        return redirect(url_for("browse"))
+
     if request.method == "POST":
         # python > addRecipe > addRecipe.py
         addRecipePost()
@@ -167,6 +172,8 @@ def addCat():
 
 @app.route("/browse")
 def browse():
+    isSession = session.get("user")
+
     # Get all recipes from Mongo db
     recsDB = list(mongo.db.recipes.find())
     random.shuffle(recsDB)
@@ -177,8 +184,12 @@ def browse():
     ingsDB = list(mongo.db.ingredients.find({ "category": { '$ne': ObjectId('627b77eab0cda8e4664c18bf') } }))
     ingsDBSort = (sorted(ingsDB, key=lambda x: x["name"]))
 
-    isFav = findFavMenu()[0]
-    isMenu = findFavMenu()[1]
+    if isSession:
+        isFav = findFavMenu()[0]
+        isMenu = findFavMenu()[1]
+    else:
+        isFav = []
+        isMenu = []
 
     return render_template("pages/browse_recipe/browse_recipe.html",
                             recs=recsDB,
@@ -190,6 +201,11 @@ def browse():
 
 @app.route("/cookbook")
 def cookbook():
+    isSession = session.get("user")
+
+    if not isSession:
+        return redirect(url_for("browse"))
+
     # python > cookbook > getFavRecipes.py
     userFavRecs = list(getFavRecipes())
     random.shuffle(userFavRecs)
@@ -199,7 +215,7 @@ def cookbook():
 
     isFav = findFavMenu()[0]
     isMenu = findFavMenu()[1]
-    
+
     return render_template("pages/cookbook/cookbook.html",
                            isFav=isFav,
                            isMenu=isMenu,
@@ -264,21 +280,115 @@ def editRecipe(rec_id):
 
 @app.route("/fav/<rec_id>")
 def isFav(rec_id):
+    rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
     user = mongo.db.users.find_one({"username": session["user"]})
 
     # If recipe is already on favs, remove it
     if ObjectId(rec_id) in user["isFav"]:
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isFav": ObjectId(rec_id)}})
+        flash(rec["name"] + " has been removed from your favourites.")
+
     # Otherwise add it to favs
     else:
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isFav": ObjectId(rec_id)}})
+        flash(rec["name"] + " has been added to your favourites.")
 
     return redirect(url_for("cookbook"))
 
 
-# Menu functions
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        # Get all recipes from db
+        recsDB = list(mongo.db.recipes.find())
+
+        # Get query text from user search
+        query = request.form.get("query").split('&')
+
+        # Search for name
+        queryRec = query[0]
+        searchRecsNames = list(mongo.db.recipes.find({"$text": {"$search": f"\"{queryRec}\""}}))
+        searchRecsNamesIds = []
+        for rec in searchRecsNames:
+            searchRecsNamesIds.append(rec['_id'])
+
+        # Search for ingredients
+        queryIngs = query[1].rstrip().split(' ')
+        searchRecsIngsIds = []
+        for rec in recsDB:
+            isMatch = all(item in rec['ingredientTags'].rstrip().split(' ') for item in queryIngs)
+            if isMatch:
+                searchRecsIngsIds.append(rec['_id'])
+
+        # Search for categories
+        queryCats = query[2].rstrip().split(' ')
+        searchRecsCatsIds = []
+        for rec in recsDB:
+            isMatch = all(item in rec['categoryTags'].rstrip().split(' ') for item in queryCats)
+            if isMatch:
+                searchRecsCatsIds.append(rec['_id'])
+
+        searchRecsIds = []
+
+        if (len(searchRecsNamesIds) > 0):
+            searchRecsIds = searchRecsNamesIds
+        if (len(searchRecsIngsIds) > 0):
+            searchRecsIds = searchRecsIngsIds
+        if (len(searchRecsCatsIds) > 0):
+            searchRecsIds = searchRecsCatsIds
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds))
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsCatsIds))
+        if (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsIngsIds) & set(searchRecsCatsIds))
+        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
+            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds) & set(searchRecsCatsIds))
+
+        searchRecs = []
+        for recId in searchRecsIds:
+            rec = mongo.db.recipes.find_one({"_id": ObjectId(recId)})
+            searchRecs.append(rec)
+
+        isFav = findFavMenu()[0]
+        isMenu = findFavMenu()[1]
+
+    return render_template("pages/browse_recipe/browse_recipe.html",
+                            recs=searchRecs,
+                            isFav=isFav,
+                            isMenu=isMenu)
+
+
+@app.route("/viewRecipe/<rec_id>")
+def viewRecipe(rec_id):
+    isSession = session.get("user")
+
+    # python > viewRecipe > viewRecipe.py
+    data = viewRecipeData(rec_id)
+    recDB = data[0]
+    ings = data[1]
+    recCat_names = data[2]
+    user = data[3]
+
+    if isSession:
+        isFav = findFavMenu()[0]
+        isMenu = findFavMenu()[1]
+    else:
+        isFav = []
+        isMenu = []
+
+    return render_template("pages/view_recipe/view_recipe.html",
+                           rec=recDB,
+                           ings=ings,
+                           recCats=recCat_names,
+                           user=user,
+                           isFav=isFav,
+                           isMenu=isMenu)
+
+
+# MENU FUNCTIONS
 @app.route("/menu/<rec_id>/<serves>")
 def isMenu(rec_id, serves):
     # Find the user
@@ -305,12 +415,16 @@ def isMenu(rec_id, serves):
 
     # If recipe is already on menu, remove it
     if ObjectId(rec_id) in userMenuRecsIds:
+        rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isMenu": userMenuRecDBPull}})
+        flash(rec["name"] + " has been removed from your menu.")
     # Otherwise add it to menu
     else:
+        rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isMenu": userMenuRecDBPush}})
+        flash(rec["name"] + " has been added to your menu.")
 
     return redirect(url_for("menu"))
 
@@ -326,6 +440,7 @@ def clearMenu():
                               {'$set': {'isMenu': [] }})
         mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isShopping': [] }})
+        flash("Your menu has been cleared.")
 
         return redirect(url_for("menu"))
 
@@ -338,6 +453,7 @@ def updateMenu():
     if request.method == "POST":
         mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isMenu': [] }})
+        flash("Your menu has been updated.")
 
         for index, rec in enumerate(userMenuRecs):
             userMenuRecId = request.form.get(f'id-{index+1}')
@@ -354,6 +470,11 @@ def updateMenu():
 
 @app.route("/menu")
 def menu():
+    isSession = session.get("user")
+
+    if not isSession:
+        return redirect(url_for("browse"))
+
     # Find user and all recipe ObjectIds on their menu
     user = mongo.db.users.find_one({"username": session["user"]})
     userMenuRecs = user["isMenu"]
@@ -529,7 +650,7 @@ def menu():
                            )
 
 
-# Shopping list functions
+# SHOPPING LIST FUNCTIONS
 @app.route("/addShopping", methods=["GET", "POST"])
 def addShopping():
     if request.method == "POST":
@@ -545,90 +666,6 @@ def addShopping():
                                   {'$push': {"isShopping": shoppingListIng}})
 
     return redirect(url_for("menu"))
-
-
-@app.route("/search", methods=["GET", "POST"])
-def search():
-    if request.method == "POST":
-        # Get all recipes from db
-        recsDB = list(mongo.db.recipes.find())
-
-        # Get query text from user search
-        query = request.form.get("query").split('&')
-
-        # Search for name
-        queryRec = query[0]
-        searchRecsNames = list(mongo.db.recipes.find({"$text": {"$search": f"\"{queryRec}\""}}))
-        searchRecsNamesIds = []
-        for rec in searchRecsNames:
-            searchRecsNamesIds.append(rec['_id'])
-
-        # Search for ingredients
-        queryIngs = query[1].rstrip().split(' ')
-        searchRecsIngsIds = []
-        for rec in recsDB:
-            isMatch = all(item in rec['ingredientTags'].rstrip().split(' ') for item in queryIngs)
-            if isMatch:
-                searchRecsIngsIds.append(rec['_id'])
-
-        # Search for categories
-        queryCats = query[2].rstrip().split(' ')
-        searchRecsCatsIds = []
-        for rec in recsDB:
-            isMatch = all(item in rec['categoryTags'].rstrip().split(' ') for item in queryCats)
-            if isMatch:
-                searchRecsCatsIds.append(rec['_id'])
-
-        searchRecsIds = []
-
-        if (len(searchRecsNamesIds) > 0):
-            searchRecsIds = searchRecsNamesIds
-        if (len(searchRecsIngsIds) > 0):
-            searchRecsIds = searchRecsIngsIds
-        if (len(searchRecsCatsIds) > 0):
-            searchRecsIds = searchRecsCatsIds
-        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0):
-            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds))
-        if (len(searchRecsNamesIds) > 0) and (len(searchRecsCatsIds) > 0):
-            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsCatsIds))
-        if (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
-            searchRecsIds = (set(searchRecsIngsIds) & set(searchRecsCatsIds))
-        if (len(searchRecsNamesIds) > 0) and (len(searchRecsIngsIds) > 0) and (len(searchRecsCatsIds) > 0):
-            searchRecsIds = (set(searchRecsNamesIds) & set(searchRecsIngsIds) & set(searchRecsCatsIds))
-
-        searchRecs = []
-        for recId in searchRecsIds:
-            rec = mongo.db.recipes.find_one({"_id": ObjectId(recId)})
-            searchRecs.append(rec)
-
-        isFav = findFavMenu()[0]
-        isMenu = findFavMenu()[1]
-
-    return render_template("pages/browse_recipe/browse_recipe.html",
-                            recs=searchRecs,
-                            isFav=isFav,
-                            isMenu=isMenu)
-
-
-@app.route("/viewRecipe/<rec_id>")
-def viewRecipe(rec_id):
-    # python > viewRecipe > viewRecipe.py
-    data = viewRecipeData(rec_id)
-    recDB = data[0]
-    ings = data[1]
-    recCat_names = data[2]
-    user = data[3]
-
-    isFav = findFavMenu()[0]
-    isMenu = findFavMenu()[1]
-
-    return render_template("pages/view_recipe/view_recipe.html",
-                           rec=recDB,
-                           ings=ings,
-                           recCats=recCat_names,
-                           user=user,
-                           isFav=isFav,
-                           isMenu=isMenu)
 
 
 if __name__ == "__main__":

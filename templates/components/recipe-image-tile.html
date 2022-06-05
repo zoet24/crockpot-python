@@ -2,18 +2,20 @@
     <div class="recipe-tile">
         <div class="recipe-image">
             <div class="recipe-image__container">
-                <div class="recipe-image__icons">
-                    <form class="recipe-image__link-wrapper" action="/menu/{{recipe_id}}/4">
-                        <button class="btn-submit" type="submit">
-                            <i class="fas fa-utensils icon{% if recipe_id in isMenu %} icon--active{% endif %}"></i>
-                        </button>
-                    </form>
-                    <form class="recipe-image__link-wrapper" action="/fav/{{recipe_id}}">
-                        <button class="btn-submit" type="submit">
-                            <i class="fas fa-heart icon{% if recipe_id in isFav %} icon--active{% endif %}"></i>
-                        </button>
-                    </form>
-                </div>
+                {% if session.user %}
+                    <div class="recipe-image__icons">
+                        <form class="recipe-image__link-wrapper" action="/menu/{{recipe_id}}/4">
+                            <button class="btn-submit" type="submit">
+                                <i class="fas fa-utensils icon{% if recipe_id in isMenu %} icon--active{% endif %}"></i>
+                            </button>
+                        </form>
+                        <form class="recipe-image__link-wrapper" action="/fav/{{recipe_id}}">
+                            <button class="btn-submit" type="submit">
+                                <i class="fas fa-heart icon{% if recipe_id in isFav %} icon--active{% endif %}"></i>
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
                 <div class="recipe-image__img">
                     <img src="{{ recipe_image }}" alt="">
                 </div>
