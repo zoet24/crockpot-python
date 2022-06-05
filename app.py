@@ -210,16 +210,32 @@ def cookbook():
 @app.route("/deleteRecipe/<rec_id>")
 def deleteRecipe(rec_id):
     rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
-    mongo.db.recipes.remove({"_id": ObjectId(rec_id)})
+    user = mongo.db.users.find_one({"username": session["user"]})
+
+    # Check to see if current user created recipe
+    if user["_id"] == rec["user"]:
+        flash(rec["name"] + " has been deleted from your recipes.")
+        mongo.db.recipes.remove({"_id": ObjectId(rec_id)})
+    else:
+        flash("You can't delete " + rec["name"])
 
     return redirect(url_for("browse"))
 
 
 @app.route("/editRecipe/<rec_id>", methods=["GET", "POST"])
 def editRecipe(rec_id):
+    rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
+    user = mongo.db.users.find_one({"username": session["user"]})
+
+     # Check to see if current user created recipe
+    if user["_id"] != rec["user"]:
+        flash("You can't edit " + rec["name"])
+        return redirect(url_for("browse"))
+
     if request.method == "POST":
         # python > editRecipe > editRecipe.py
         editRecipePost(rec_id)
+        flash(rec["name"] + " has been updated.")
 
         return redirect(url_for("viewRecipe", rec_id=rec_id))
 

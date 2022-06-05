@@ -7,12 +7,14 @@
             <a class="recipe-image__link-wrapper" href="/fav/{{rec._id}}">
                 <i class="fas fa-heart icon{% if recipe_id in isFav %} icon--active{% endif %}"></i>
             </a>
-            <a class="recipe-image__link-wrapper" href="/editRecipe/{{rec._id}}">
-                <i class="fas fa-edit icon"></i>
-            </a>
-            <div class="modal__buttons modal__buttons--delete-recipe recipe-image__link-wrapper">
-                <i class="fas fa-trash icon modal__button--open modal__button--open--delete-recipe"></i>
-            </div>
+            {% if user.username == session.user %}
+                <a class="recipe-image__link-wrapper" href="/editRecipe/{{rec._id}}">
+                    <i class="fas fa-edit icon"></i>
+                </a>
+                <div class="modal__buttons modal__buttons--delete-recipe recipe-image__link-wrapper">
+                    <i class="fas fa-trash icon modal__button--open modal__button--open--delete-recipe"></i>
+                </div>
+            {% endif %}
         </div>
         <div class="recipe-image__img">
             <img src="{{ recipe_image }}" alt="">
