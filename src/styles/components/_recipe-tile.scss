@@ -2,6 +2,7 @@
     width: 48vw;
     margin-bottom: 1.5vw;
     position: relative;
+    transition: $a-medium;
 
     & .recipe-image__icons {
         justify-content: space-between;
@@ -14,11 +15,17 @@
         bottom: 0;
         z-index: 1;
         padding: 0.5rem;
-        background: rgba(0,0,0,0.5);
+        background: rgba($neutral--drkst, 0.6);
+        border-bottom-left-radius: $br-lg;
+        border-bottom-right-radius: $br-lg;
 
         & h4 {
             line-height: 1.25rem;
-            color: white;
+            color: $neutral--ltst;
         }
+    }
+
+    &:hover {
+        transform: $a-scale;
     }
 }

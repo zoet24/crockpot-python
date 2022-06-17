@@ -1,7 +1,7 @@
 // Toggle switch
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.toggle__input')) return;
-    
+
     const slider = e.target.closest('.toggle').querySelector('.toggle__slider');
     const isToggleBox = e.target.closest('.toggle-box__container');
 

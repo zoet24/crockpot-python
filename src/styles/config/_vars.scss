@@ -1,25 +1,40 @@
 // Imports
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
 
 //  Colours
 $neutral--ltst: #f7f7f2;
-// $neutral--lt: #;
-// $neutral--md: #;
-// $neutral--drk: #;
-$neutral--drkst: #282828;
+$neutral--lt: #eeeeee; // Background
+// $neutral: #;
+$neutral--drk: #808080;
+$neutral--drkst: #333d47;
 
 // $primary--lt: #;
-// $primary--md: #;
+$primary: #3e3ac2;
 // $primary--drk: #;
 
 // $secondary--lt: #;
-// $secondary--md: #;
+$secondary: #e63b2e;
 // $secondary--drk: #;
 
+// $success--lt: ;
+// $success: ;
+// $success--drk: ;
+
+// $error--lt: ;
+// $error: ;
+// $error--drk: ;
+
+// $info--lt: ;
+// $info: ;
+// $info--drk: ;
+
 // Box shadows
+$bs-card: rgba($neutral--drkst, 0.25) 0px 13px 27px -5px, rgba($neutral--drkst, 0.3) 0px 8px 16px -8px;
 
 // Fonts
 $f-primary: 'Poppins', sans-serif;
+$f-secondary: 'Fredoka', sans-serif;
 
 // Font Weights
 $f-skinny: 200;
@@ -31,6 +46,7 @@ $f-bold: 700;
 
 // Border radii
 $br-sm: 5px;
+$br-lg: 20px;
 
 // Animation Transition
 $a-short: .3s;
@@ -38,6 +54,7 @@ $a-medium: .6s;
 $a-long: 1s;
 
 // Animations
+$a-scale: scale(1.025);
 
 // Header heights
 

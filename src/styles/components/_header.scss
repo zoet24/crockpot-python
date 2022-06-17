@@ -3,12 +3,12 @@
     position: fixed;
     top: 0;
     z-index: 10;
-    
+
     width: 100%;
     height: 12.5vh;
 
-    border-bottom: black solid 2px;
-    background-color: white;
+    background-color: $secondary;
+    box-shadow: rgba($neutral--drkst, 0.35) 0px 5px 15px;
 
     &__container {
         @include containerFull();
@@ -24,11 +24,18 @@
 
         & h1 {
             line-height: 1.5rem;
+            color: $neutral--ltst;
         }
     }
 
     &__text-subtitle {
         display: flex;
+    }
+
+    &__text-user {
+        h4 {
+            color: $neutral--ltst;
+        }
     }
 
     &__text-time {
@@ -37,6 +44,10 @@
 
         & .icon {
             margin: 0 0.25rem 0 0;
+        }
+
+        h4 {
+            color: $neutral--ltst;
         }
     }
 

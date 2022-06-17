@@ -110,6 +110,7 @@ def addRecipe():
     isSession = session.get("user")
 
     if not isSession:
+        flash("Please log in to add your own recipes.")
         return redirect(url_for("browse"))
 
     if request.method == "POST":
@@ -204,6 +205,7 @@ def cookbook():
     isSession = session.get("user")
 
     if not isSession:
+        flash("Please log in to access your cookbook.")
         return redirect(url_for("browse"))
 
     # python > cookbook > getFavRecipes.py
@@ -473,6 +475,7 @@ def menu():
     isSession = session.get("user")
 
     if not isSession:
+        flash("Please log in to access your menu.")
         return redirect(url_for("browse"))
 
     # Find user and all recipe ObjectIds on their menu

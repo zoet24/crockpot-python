@@ -1,8 +1,9 @@
 .recipe-image {
-    border: black 2px solid;
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    border-radius: $br-lg;
+    box-shadow: $bs-card;
 
     &__container {
         padding-bottom: 100%;
@@ -10,6 +11,9 @@
     }
 
     &--full {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+
         & .recipe-image__container {
             padding-bottom: 50%;
         }

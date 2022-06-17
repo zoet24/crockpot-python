@@ -1,15 +1,27 @@
 .icon {
     align-items: center;
     display: inline-flex;
+    flex-shrink: 0;
     justify-content: center;
     height: 30px;
     width: 30px;
-
-    background: white;
-    border: solid 2px black;
-    border-radius: 50%;
-
     margin: 0 0.5rem;
+    transition: $a-short;
+
+    background: $neutral--ltst;
+    border: solid 2px $primary;
+    border-radius: 50%;
+    color: $primary;
+
+    &--secondary {
+        background: $secondary;
+        border-color: $neutral--ltst;
+        color: $neutral--ltst;
+    }
+
+    &--no-m {
+        margin: 0;
+    }
 
     &--no-ml {
         margin-left: 0;
@@ -24,7 +36,29 @@
         height: auto;
     }
 
-    &--active {
-        border: black 4px solid;
+    svg {
+        height: 16px;
+        width: 16px;
+        fill: $neutral--ltst;
+    }
+}
+
+.icon.icon--active, .icon:hover, .icon:focus {
+    background: $primary;
+    border-color: $primary;
+    color: $neutral--ltst;
+
+    svg {
+        fill: $neutral--ltst;
+    }
+}
+
+.icon--secondary.icon--active, .icon--secondary:hover, .icon--secondary:focus {
+    background: $neutral--ltst;
+    border-color: $neutral--ltst;
+    color: $secondary;
+
+    svg {
+        fill: $secondary;
     }
 }

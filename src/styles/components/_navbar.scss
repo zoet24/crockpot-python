@@ -4,7 +4,7 @@
     align-content: center;
     flex-direction: row;
     text-align: center;
-    
+
     position: fixed;
     bottom: 0;
     z-index: 10;
@@ -12,8 +12,8 @@
     width: 100%;
     height: 12.5vh;
 
-    border-top: black solid 2px;
-    background-color: white;
+    background-color: $secondary;
+    box-shadow: rgba($neutral--drkst, 0.35) 0px -5px 15px;
 
     &__link-wrapper {
         width: 25%;
@@ -27,10 +27,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        white-space: nowrap;
 
         & h6 {
             font-size: 0.8rem;
             margin-top: 5px;
+            color: $neutral--ltst;
         }
     }
 

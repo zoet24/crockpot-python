@@ -1,8 +1,9 @@
 .btn {
     font-family: $f-primary;
-    border: 2px black solid;
+    border: 2px $neutral--ltst solid;
     border-radius: 25px;
-    background: white;
+    background: $primary;
+    color: $neutral--ltst;
     font-size: 1rem;
     width: fit-content;
     min-width: 125px;
@@ -12,6 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     &--sm {
         padding: 0.25rem!important;
@@ -68,4 +70,5 @@
     font-size: 1rem;
     padding: 0;
     width: min-content;
+    cursor: pointer;
 }
