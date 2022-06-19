@@ -20,7 +20,7 @@
                         <label class="toggle__option toggle__option--2" for="toggle__MenuShopping__Shopping">Shopping List</label>
                         <span class="toggle__slider"></span>
                     </div>
-                    <div class="toggle-box__box toggle-box__box--py-0 toggle-box--no-border">
+                    <div class="toggle-box__box toggle-box__box--px-0 toggle-box__box--py-0 toggle-box--no-border">
                         <div class="toggle-box__box-left">
                             <!-- Show recipes on menu -->
                             {% for menuRec in menuRecs %}
@@ -51,7 +51,7 @@
                                             </form>
                                             <form class="recipe-image__link-wrapper" action="/fav/{{menuRec[0]}}">
                                                 <button class="btn-submit" type="submit">
-                                                    <i class="fas fa-heart icon{% if menuRec[0] in isFav %} icon--active{% endif %}"></i>
+                                                    <i class="fas fa-heart icon{% if menuRec[0] in isFav %} icon--active{% endif %} icon--no-m"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -367,7 +367,7 @@
     <!-- Edit, update and clear menu buttons -->
     <div class="menu__fixed-btns">
         <div class="modal__buttons modal__buttons--edit-menu modal__button--open--edit-menu">
-          <i class="fas fa-edit icon"></i>
+          <i class="fas fa-edit icon icon--secondary"></i>
         </div>
         <form method="POST" action="{{ url_for('updateMenu') }}">
             <div class="hide">
@@ -377,11 +377,11 @@
                 {% endfor %}
             </div>
             <button type="submit" style="background: none;border: none;padding: 0">
-              <i class="fa fa-rotate-right icon" id="update-menu" style="margin: 0"></i>
+              <i class="fa fa-rotate-right icon icon--secondary" id="update-menu" style="margin: 0"></i>
             </button>
         </form>
         <div class="modal__buttons modal__buttons--clear-menu modal__button--open--clear-menu">
-          <i class="fas fa-trash icon"></i>
+          <i class="fas fa-trash icon icon--secondary"></i>
         </div>
     </div>
 

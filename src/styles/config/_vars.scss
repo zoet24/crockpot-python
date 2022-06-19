@@ -5,29 +5,18 @@
 //  Colours
 $neutral--ltst: #f7f7f2;
 $neutral--lt: #eeeeee; // Background
-// $neutral: #;
+$neutral: #b0b0b0;
 $neutral--drk: #808080;
 $neutral--drkst: #333d47;
 
-// $primary--lt: #;
 $primary: #3e3ac2;
-// $primary--drk: #;
-
-// $secondary--lt: #;
 $secondary: #333d47;
-// $secondary--drk: #;
 
-// $success--lt: ;
-// $success: ;
-// $success--drk: ;
+$success--lt: #ceeddf;
+$success: #008148;
 
-// $error--lt: ;
-// $error: ;
-// $error--drk: ;
-
-// $info--lt: ;
-// $info: ;
-// $info--drk: ;
+$error--lt: #f1dddc;
+$error: #e63b2e;
 
 // Box shadows
 $bs-card: rgba($neutral--drkst, 0.25) 0px 13px 27px -5px, rgba($neutral--drkst, 0.3) 0px 8px 16px -8px;
@@ -46,6 +35,7 @@ $f-bold: 700;
 
 // Border radii
 $br-sm: 5px;
+$br-md: 10px;
 $br-lg: 20px;
 
 // Animation Transition
@@ -57,11 +47,5 @@ $a-long: 1s;
 $a-scale: scale(1.025);
 $a-scale-md: scale(1.05);
 
-// Header heights
-
-// Footer heights
-
 // Section padding
 $p-mobile: 0 0 10px 0;
-
-// Z-indicies

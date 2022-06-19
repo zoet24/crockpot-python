@@ -2,7 +2,7 @@
     display: flex;
     text-align: center;
     position: relative;
-    background-color: $neutral--drk;
+    background-color: $neutral;
 
     &__input {
         opacity: 0;
@@ -114,15 +114,19 @@ ul.toggle-checkboxes li{
 ul.toggle-checkboxes li label, ul.toggle-checkboxes li.toggle-checkboxes__label{
     display: inline-block;
     background-color: $neutral--ltst;
-    border: 2px solid lightgrey;
-    color: lightgrey;
+    border: 2px solid $neutral;
+    color: $neutral;
     border-radius: 25px;
     white-space: nowrap;
     margin: 0.25rem;
-    transition: all .2s;
+    transition: all $a-short;
     padding: 0.25rem 0.5rem;
     cursor: pointer;
     line-height: 1.5rem;
+
+    &:hover {
+        transform: $a-scale;
+    }
 }
 
 ul.toggle-checkboxes li label::before {
@@ -132,13 +136,13 @@ ul.toggle-checkboxes li label::before {
     font-size: 12px;
     padding: 0px 6px 0px 2px;
     content: "\f00c";
-    transition: transform .3s ease-in-out;
+    transition: transform $a-short ease-in-out;
 }
 
 ul.toggle-checkboxes li input[type="checkbox"]:checked + label::before {
     content: "\f067";
     transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
+    transition: transform $a-short ease-in-out;
 }
 
 ul.toggle-checkboxes--inverse li label::before {
@@ -154,6 +158,7 @@ ul.toggle-checkboxes li input[type="checkbox"]:checked + label, ul.toggle-checkb
     background: $primary;
     color: $neutral--ltst;
     transition: all $a-short;
+    transform: $a-scale;
 }
 
 ul.toggle-checkboxes li input[type="checkbox"] {

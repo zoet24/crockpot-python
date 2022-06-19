@@ -1,13 +1,31 @@
 .toasts {
-    z-index: 11;
+    z-index: 20;
     position: fixed;
     width: 100%;
 }
 
 .toast {
-    border: 2px solid black;
+    border: 2px solid;
+    border-radius: $br-md;
     margin: calc($g-mobile / 2) calc($g-mobile / 2) 0;
     padding: calc($g-mobile / 2);
-    background: white;
     transition: all ease-in-out $a-long;
+}
+
+.success {
+    border-color: $success;
+    background: $success--lt;
+
+    h4 {
+        color: $success;
+    }
+}
+
+.error {
+    border-color: $error;
+    background: $error--lt;
+
+    h4 {
+        color: $error;
+    }
 }

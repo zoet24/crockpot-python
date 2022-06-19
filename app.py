@@ -53,15 +53,15 @@ def login():
             if check_password_hash(existing_user["password"], request.form.get("password")):
                 # Add user to session cookie
                 session["user"] = request.form.get("username").lower()
-                flash("Welcome back " + session["user"] + "!")
+                flash("Welcome back " + session["user"] + "!", 'success')
                 return redirect(url_for("cookbook"))
             else:
                 # Invalid password match
-                flash("Sorry, we can't find an account with those details.")
+                flash("Sorry, we can't find an account with those details.", 'error')
                 return redirect(url_for("login"))
         else:
             # Username doesn't exist
-            flash("Sorry, we can't find an account with those details.")
+            flash("Sorry, we can't find an account with those details.", 'error')
             return redirect(url_for("login"))
 
     return render_template("pages/login/login.html")
@@ -70,7 +70,7 @@ def login():
 @app.route("/logout")
 def logout():
     # Remove user from session cookie
-    flash("See you later " + session["user"] + "!")
+    flash("See you later " + session["user"] + "!", 'success')
     session.pop("user")
 
     return redirect(url_for("login"))
@@ -83,7 +83,7 @@ def signup():
         existing_user = mongo.db.users.find_one({"username": request.form.get("username").lower()})
 
         if existing_user:
-            flash("This username already exists!")
+            flash("This username already exists!", 'error')
             return redirect(url_for("signup"))
 
         signup = {
@@ -98,7 +98,7 @@ def signup():
 
         # Put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
-        flash("Welcome " + session["user"] + "!")
+        flash("Welcome " + session["user"] + "!", 'success')
         return redirect(url_for("cookbook"))
 
     return render_template("pages/signup/signup.html")
@@ -110,7 +110,7 @@ def addRecipe():
     isSession = session.get("user")
 
     if not isSession:
-        flash("Please log in to add your own recipes.")
+        flash("Please log in to add your own recipes.", 'error')
         return redirect(url_for("browse"))
 
     if request.method == "POST":
@@ -150,7 +150,7 @@ def addIng():
     }
 
     mongo.db.ingredients.insert_one(ingDB)
-    flash(ingDB["name"] + " (" + request.form.get("category").title() + ") has been added to your ingredients.")
+    flash(ingDB["name"] + " (" + request.form.get("category").title() + ") has been added to your ingredients.", 'success')
 
     return redirect(url_for("addRecipe"))
 
@@ -166,7 +166,7 @@ def addCat():
     }
 
     mongo.db.recipeCategories.insert_one(catDB)
-    flash(catDB["name"] + " has been added to your categories.")
+    flash(catDB["name"] + " has been added to your categories.", 'success')
 
     return redirect(url_for("addRecipe"))
 
@@ -205,7 +205,7 @@ def cookbook():
     isSession = session.get("user")
 
     if not isSession:
-        flash("Please log in to access your cookbook.")
+        flash("Please log in to access your cookbook.", 'error')
         return redirect(url_for("browse"))
 
     # python > cookbook > getFavRecipes.py
@@ -232,10 +232,10 @@ def deleteRecipe(rec_id):
 
     # Check to see if current user created recipe
     if user["_id"] == rec["user"]:
-        flash(rec["name"] + " has been deleted from your recipes.")
+        flash(rec["name"] + " has been deleted from your recipes.", 'success')
         mongo.db.recipes.remove({"_id": ObjectId(rec_id)})
     else:
-        flash("You can't delete " + rec["name"])
+        flash("You can't delete " + rec["name"], 'error')
 
     return redirect(url_for("browse"))
 
@@ -247,13 +247,13 @@ def editRecipe(rec_id):
 
      # Check to see if current user created recipe
     if user["_id"] != rec["user"]:
-        flash("You can't edit " + rec["name"])
+        flash("You can't edit " + rec["name"], 'error')
         return redirect(url_for("browse"))
 
     if request.method == "POST":
         # python > editRecipe > editRecipe.py
         editRecipePost(rec_id)
-        flash(rec["name"] + " has been updated.")
+        flash(rec["name"] + " has been updated.", 'success')
 
         return redirect(url_for("viewRecipe", rec_id=rec_id))
 
@@ -289,13 +289,13 @@ def isFav(rec_id):
     if ObjectId(rec_id) in user["isFav"]:
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isFav": ObjectId(rec_id)}})
-        flash(rec["name"] + " has been removed from your favourites.")
+        flash(rec["name"] + " has been removed from your favourites.", 'success')
 
     # Otherwise add it to favs
     else:
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isFav": ObjectId(rec_id)}})
-        flash(rec["name"] + " has been added to your favourites.")
+        flash(rec["name"] + " has been added to your favourites.", 'success')
 
     return redirect(url_for("cookbook"))
 
@@ -420,13 +420,13 @@ def isMenu(rec_id, serves):
         rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$pull': {"isMenu": userMenuRecDBPull}})
-        flash(rec["name"] + " has been removed from your menu.")
+        flash(rec["name"] + " has been removed from your menu.", 'success')
     # Otherwise add it to menu
     else:
         rec = mongo.db.recipes.find_one({"_id": ObjectId(rec_id)})
         mongo.db.users.update_one({"_id": ObjectId(user["_id"])},
                                   {'$push': {"isMenu": userMenuRecDBPush}})
-        flash(rec["name"] + " has been added to your menu.")
+        flash(rec["name"] + " has been added to your menu.", 'success')
 
     return redirect(url_for("menu"))
 
@@ -442,7 +442,7 @@ def clearMenu():
                               {'$set': {'isMenu': [] }})
         mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isShopping': [] }})
-        flash("Your menu has been cleared.")
+        flash("Your menu has been cleared.", 'success')
 
         return redirect(url_for("menu"))
 
@@ -455,7 +455,7 @@ def updateMenu():
     if request.method == "POST":
         mongo.db.users.update({"_id": ObjectId(user["_id"])},
                               {'$set': {'isMenu': [] }})
-        flash("Your menu has been updated.")
+        flash("Your menu has been updated.", 'success')
 
         for index, rec in enumerate(userMenuRecs):
             userMenuRecId = request.form.get(f'id-{index+1}')
@@ -475,7 +475,7 @@ def menu():
     isSession = session.get("user")
 
     if not isSession:
-        flash("Please log in to access your menu.")
+        flash("Please log in to access your menu.", 'error')
         return redirect(url_for("browse"))
 
     # Find user and all recipe ObjectIds on their menu

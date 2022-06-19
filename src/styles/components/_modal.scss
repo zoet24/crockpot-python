@@ -4,20 +4,28 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba($neutral--drkst,0.5);
     z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
 
     &__container {
-        background: white;
-        border: 2px black solid;
+        background: $neutral--lt;
+        border: 2px $neutral--drkst solid;
         width: calc(100% - 70px);
         height: fit-content;
         max-height: 70vh;
         overflow: scroll;
         position: relative;
+
+        &--small {
+            max-height: 40vh;
+
+            & .modal__buttons {
+                top: 31vh;
+            }
+        }
     }
 
     &__content {
@@ -27,10 +35,18 @@
     &__text {
         margin-bottom: 0.5rem;
         text-align: center;
+
+        h3 {
+            margin-bottom: 0.5rem;
+        }
     }
 
     &__buttons {
         display: flex;
         justify-content: center;
+    }
+
+    .modal__buttons--edit-menu {
+        width: 100%;
     }
 }

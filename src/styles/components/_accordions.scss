@@ -1,16 +1,14 @@
 .accordion {
-    border: solid 2px black;
+    border: solid 2px $primary;
+    border-radius: $br-lg;
     width: 100%;
+    overflow: hidden;
+    box-shadow: $bs-card;
 
     &__button {
         width: 100%;
-        border-bottom: solid 2px black;
         overflow: hidden;
         box-sizing: border-box;
-
-        &:last-of-type {
-            border-bottom: none;
-        }
     }
 
     &__button-label {
@@ -18,9 +16,9 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem;
-        background: white;
+        background: $neutral--ltst;
         cursor: pointer;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid $primary;
 
         &::after {
             content: "\276F";
@@ -32,8 +30,13 @@
     &__content {
         max-height: 0;
         padding: 0 0.5rem;
-        background: white;
-        transition: all $a-short;
+        background: $neutral--lt;
+        transition: all $a-long;
+        border-bottom: 1px solid $primary;
+
+        .toggle-checkboxes {
+            padding: 0.5rem 0;
+        }
     }
 
     input {
@@ -42,16 +45,8 @@
         z-index: -1;
     }
 
-    input:not(:checked) {
-        ~ .accordion__content ul.toggle-checkboxes {
-            display: none;
-        }
-    }
-
     input:checked {
         + .accordion__button-label {
-            // background: darken(blue, 10%);
-
             &::after {
                 transform: rotate(90deg);
                 transform-origin: center;
@@ -59,11 +54,7 @@
         }
 
         ~ .accordion__content {
-            max-height: 100vh;
-
-            ul.toggle-checkboxes {
-                display: block;
-            }
+            max-height: 1000px;
         }
     }
 }
