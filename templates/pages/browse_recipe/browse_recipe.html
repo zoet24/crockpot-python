@@ -12,8 +12,12 @@
     <section class="browse-recipe">
         <div class="browse-recipe__container">
             <form class="form browse-recipe__form" action="{{ url_for('search') }}" method="POST">
-                <div class="form__row">
-                    <input type="text" name="query" id="query" placeholder="Search for a recipe!">
+                <div class="form__row form--row">
+                    <input style="margin-right: 0.5rem;" class="form__subrow-grow" type="text" name="query" id="query" placeholder="Search for a recipe!">
+                    <button class="btn-submit" onclick="search()"><i class="fas fa-search icon"></i></button>
+                    <a class="btn-submit" href="/browse">
+                        <i class="fas fa-redo-alt icon icon--no-mr"></i>
+                    </a>
                 </div>
                 <div class="form__row form--row form--center">
                     <div class="modal__buttons modal__buttons--search-categories">
@@ -26,12 +30,6 @@
                             Ingredients
                         </div>
                     </div>
-                </div>
-                <div class="form__row form--row form--center">
-                    <button class="btn-submit" onclick="search()"><i class="fas fa-search icon"></i></button>
-                    <a class="btn-submit" href="/browse">
-                        <i class="fas fa-redo-alt icon"></i>
-                    </a>
                 </div>
             </form>
             {% if recs|length > 0 %}

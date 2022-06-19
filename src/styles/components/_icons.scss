@@ -7,17 +7,12 @@
     width: 30px;
     margin: 0 0.5rem;
     transition: $a-short;
+    cursor: pointer;
 
     background: $neutral--ltst;
     border: solid 2px $primary;
     border-radius: 50%;
     color: $primary;
-
-    &--secondary {
-        background: $secondary;
-        border-color: $neutral--ltst;
-        color: $neutral--ltst;
-    }
 
     &--no-m {
         margin: 0;
@@ -25,6 +20,10 @@
 
     &--no-ml {
         margin-left: 0;
+    }
+
+    &--no-mr {
+        margin-right: 0;
     }
 
     &--no-border {
@@ -36,10 +35,24 @@
         height: auto;
     }
 
+    &--no-hover {
+        cursor: initial;
+    }
+
     svg {
         height: 16px;
         width: 16px;
         fill: $neutral--ltst;
+    }
+
+    &--secondary {
+        background: $neutral--ltst;
+        border-color: $secondary;
+        color: $secondary;
+
+        svg {
+            fill: $secondary;
+        }
     }
 }
 
@@ -53,12 +66,22 @@
     }
 }
 
-.icon--secondary.icon--active, .icon--secondary:hover, .icon--secondary:focus {
+.icon--no-hover.icon--active, .icon--no-hover:hover, .icon--no-hover:focus {
     background: $neutral--ltst;
     border-color: $neutral--ltst;
-    color: $secondary;
+    color: $primary;
 
     svg {
-        fill: $secondary;
+        fill: $primary;
+    }
+}
+
+.icon--secondary.icon--active, .icon--secondary:hover, .icon--secondary:focus {
+    background: $secondary;
+    border-color: $secondary;
+    color: $neutral--ltst;
+
+    svg {
+        fill: $neutral--ltst;
     }
 }

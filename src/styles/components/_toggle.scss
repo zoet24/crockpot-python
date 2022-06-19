@@ -46,9 +46,16 @@
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
+    box-shadow: $bs-card;
 
     &--no-border {
-        border: none;
+        border: none!important;
+    }
+
+    &--no-bg {
+        background: none!important;
+        box-shadow: none!important;
+        overflow: visible!important;
     }
 
     &__box {
@@ -106,7 +113,7 @@ ul.toggle-checkboxes li{
 
 ul.toggle-checkboxes li label, ul.toggle-checkboxes li.toggle-checkboxes__label{
     display: inline-block;
-    background-color: white;
+    background-color: $neutral--ltst;
     border: 2px solid lightgrey;
     color: lightgrey;
     border-radius: 25px;
@@ -143,9 +150,10 @@ ul.toggle-checkboxes--inverse li input[type="checkbox"]:checked + label::before 
 }
 
 ul.toggle-checkboxes li input[type="checkbox"]:checked + label, ul.toggle-checkboxes li.toggle-checkboxes__label {
-    border: 2px solid black;
-    color: black;
-    transition: all .2s;
+    border: 2px solid $primary;
+    background: $primary;
+    color: $neutral--ltst;
+    transition: all $a-short;
 }
 
 ul.toggle-checkboxes li input[type="checkbox"] {

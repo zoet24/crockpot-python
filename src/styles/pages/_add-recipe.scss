@@ -1,4 +1,6 @@
 .add-recipe {
+    margin-top: 20px;
+    
     &__container {
         @include container300();
     }

@@ -1,4 +1,4 @@
-.btn {
+.btn, input[type="submit"].btn {
     font-family: $f-primary;
     border: 2px $neutral--ltst solid;
     border-radius: 25px;
@@ -14,10 +14,14 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: $a-medium;
 
     &--sm {
         padding: 0.25rem!important;
-        min-width: 75px;
+    }
+
+    &:hover {
+        transform: $a-scale-md;
     }
 }
 
@@ -36,21 +40,25 @@
     justify-content: center;
 
     &__btn {
-        outline: 2px black solid;
+        outline: 2px $primary solid;
+        background: $neutral--ltst;
         border-radius: 20px;
 
         & .icon {
             border: none;
-            background: lightgrey;
+            background: $primary;
+            color: $neutral--ltst;
             margin: 0;
         }
     }
 
     &__num {
+        background: $neutral--ltst;
         width: 25px;
         font-size: 1rem;
         text-align: center;
-        border: none;
+        border: none!important;
+        padding: 0.25rem!important;
 
         &:focus-visible {
             outline: none;

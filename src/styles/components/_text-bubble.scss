@@ -1,8 +1,11 @@
 .text-bubble {
-    border: 2px solid black;
+    border: 2px solid $primary;
+    background: $primary;
+    color: $neutral--ltst;
     border-radius: 20px;
     padding: 0.25rem;
     margin: 0.25rem;
     min-width: 75px;
     text-align: center;
+    box-shadow: $bs-card;
 }

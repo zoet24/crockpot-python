@@ -30,23 +30,36 @@
 
         & label {
             font-size: 1rem;
-            padding: 0.25rem;
+            padding: 0.5rem;
             padding-bottom: 0;
         }
 
         & input {
             font-size: 1rem;
-            padding: 0.25rem;
+            padding: 0.5rem;
+            border-radius: $br-sm;
+            border: 2px solid $neutral--drk;
+
+            &:focus-visible {
+                border: 2px solid $primary;
+            }
         }
 
         & select {
             font-size: 1rem;
-            padding: 0.25rem;
+            padding: 0.5rem;
+            border-radius: $br-sm;
+            border: 2px solid $neutral--drk;
+
+            &:focus-visible {
+                border: 2px solid $primary;
+            }
         }
     }
 
     &--row {
         flex-direction: row;
+        align-items: center;
     }
 
     &--center {
@@ -56,12 +69,17 @@
     &__inputs {
         display: flex;
         flex-direction: column;
+        margin-top: 0.25rem;
 
         &--subrow {
             flex-direction: row;
             width: 100%;
             justify-content: space-between;
         }
+    }
+
+    &__subrow-grow {
+        flex-grow: 1;
     }
 
     &__subrow {

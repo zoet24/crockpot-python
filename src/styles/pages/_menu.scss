@@ -1,16 +1,21 @@
 .menu {
+    margin-top: 20px;
+
     &__container {
         @include containerFull();
-        margin-top: 20px;
     }
 
     &__item {
         display: flex;
         align-items: center;
-        border: black 2px solid;
+        border: $primary 2px solid;
+        border-radius: $br-lg;
+        box-shadow: $bs-card;
         width: 100%;
+        min-height: 100px;
         margin-bottom: 1rem;
         box-sizing: border-box;
+        overflow: hidden;
     }
 
     &__item-image-wrapper {
@@ -46,6 +51,9 @@
     &__item-content-wrapper {
         width: 60%;
         padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     &__item-icons {
